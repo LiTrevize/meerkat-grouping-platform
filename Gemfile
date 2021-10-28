@@ -40,6 +40,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'omniauth-google-oauth2'
 # js runtime
 gem 'execjs'
+# set local env
+gem "figaro"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

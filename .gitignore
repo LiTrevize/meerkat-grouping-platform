@@ -6,6 +6,7 @@
 
 # Ignore .env
 .env
+config/application.yml
 
 # Ignore bundler config.
 /.bundle
