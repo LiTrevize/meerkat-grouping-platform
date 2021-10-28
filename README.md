@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
+Ruby version: 2.7.4
 
-Things you may want to cover:
+Rails version: 5.2.6
 
-* Ruby version
+Install sqlite3:
+```
+sudo apt install sqlite3
+```
 
-* System dependencies
+Install JavaScript Runtime (e.g. Node.js)
+```
+sudo apt install nodejs
+```
 
-* Configuration
+Install all gems:
+```
+bundle install
+```
 
-* Database creation
+Migrate database:
+```
+bundle exec bin/rake db:migrate
+```
 
-* Database initialization
+Set local ENV variable (e.g. google auth) in `./config/application.yml`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Run server:
+```
+bundle exec bin/rails server
+```
