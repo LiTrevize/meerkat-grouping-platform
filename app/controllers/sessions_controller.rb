@@ -13,7 +13,12 @@ class SessionsController < ApplicationController
       refresh_token = access_token.credentials.refresh_token
       user.google_refresh_token = refresh_token if refresh_token.present?
       user.save
-      redirect_to root_path
+      if Profile.where(user_id: user.id).length == 0
+        redirect_to new_profiles_path
+      else
+        redirect_to root_path
+      end
+
     end
 
   def index
