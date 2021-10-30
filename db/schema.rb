@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_28_175339) do
+ActiveRecord::Schema.define(version: 2021_10_30_181155) do
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "school"
+    t.string "degree"
+    t.string "major"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"

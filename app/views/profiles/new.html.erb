@@ -1,0 +1,19 @@
+<h1>Complete Your Profile</h1>
+<%= form_tag profiles_path, :class => 'form' do %>
+  <%= label nil, nil, 'Name', :class => 'col-form-label' %>
+  <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
+  <br/>
+  <%= label nil, nil, 'Email', :class => 'col-form-label' %>
+  <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :school, 'School', :class => 'col-form-label' %>
+  <%= text_field :profile, :school, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
+  <%= text_field :profile, :major, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
+  <%= text_field :profile, :major, :class => 'form-control' %>
+  <br/>
+  <%= submit_tag 'Continue', :class => 'btn btn-primary' %>
+<% end %>
