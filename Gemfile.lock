@@ -48,15 +48,9 @@ GEM
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
-    autoprefixer-rails (10.3.3.0)
-      execjs (~> 2)
     bindex (0.8.1)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
-    bootstrap (5.1.0)
-      autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.9.3, < 3)
-      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.35.3)
@@ -114,13 +108,17 @@ GEM
       railties (>= 5.0, < 7)
       rexml (~> 3.0)
       webrick (~> 1.7)
-    cucumber-rails-training-wheels (1.0.0)
-      cucumber-rails (>= 1.1.1)
     cucumber-tag-expressions (4.1.0)
     cucumber-wire (6.2.0)
       cucumber-core (~> 10.1, >= 10.1.0)
       cucumber-cucumber-expressions (~> 14.0, >= 14.0.0)
       cucumber-messages (~> 17.1, >= 17.1.1)
+    database_cleaner (2.0.1)
+      database_cleaner-active_record (~> 2.0.0)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     diff-lcs (1.4.4)
     docile (1.4.0)
     erubi (1.10.0)
@@ -202,7 +200,6 @@ GEM
     omniauth-oauth2 (1.7.1)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
-    popper_js (2.9.3)
     public_suffix (4.0.6)
     puma (3.12.6)
     racc (1.6.0)
@@ -272,14 +269,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     selenium-webdriver (4.0.3)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -333,13 +322,12 @@ PLATFORMS
 DEPENDENCIES
   ZenTest
   bootsnap (>= 1.1.0)
-  bootstrap (~> 5.1.0)
   byebug
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
   cucumber-rails
-  cucumber-rails-training-wheels
+  database_cleaner
   execjs
   figaro
   jbuilder (~> 2.5)
