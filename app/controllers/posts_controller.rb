@@ -1,0 +1,2 @@
+class PostsController < SessionsController
+end
