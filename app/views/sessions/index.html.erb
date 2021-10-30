@@ -8,11 +8,16 @@
     background-repeat: no-repeat;
     background-size: 37px 40px;
     padding-left: 42px;
-    color: black;
   }
   .link{
     color: black;
     text-decoration: none;
+  }
+  .welcome{
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
   }
   </style>
 </head>
@@ -24,12 +29,16 @@
   <a class="btn btn-primary sign-google" href="/auth/google_oauth2" role="button">Log in with Google</a>
   
   <% else %>
-  <div>   
-    Hello <%=@current_user.name%>
-    You already had an account
+  <div class="welcome">   
+    Hello, <%=@current_user.name%>
+    
   </div>
   <div class="btn btn-primary sign-google">
-  <%= link_to "Log Out with google", logout_path, :method => :delet, :class => "link"%>   
+  <%= link_to "Log Out with google", logout_path, :method => :delete, :class => "link"%>   
+ </div>
+  
+  <div class="btn btn-primary">
+  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
  </div>
  
   

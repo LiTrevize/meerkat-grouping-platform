@@ -8,6 +8,7 @@ class ProfilesController < SessionsController
     @profile = Profile.where(user_id: @current_user.id).first_or_initialize do |profile|
       profile.major = profile_params['major']
     end
+    
     @profile.save
     redirect_to posts_path
   end
