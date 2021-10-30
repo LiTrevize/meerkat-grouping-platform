@@ -3,7 +3,11 @@
   <meta name="google-signin-client_id" content="786247611893-foni64gupe521f9a990nlaqtgg0jolo0.apps.googleusercontent.com">
 </head>
 <body>
-  <div id="my-signin2"></div>
+  
+  
+  <% if @current_user == nil %>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  <div id="my-signin2" href="/auth/google_oauth2"></div>
   <script>
     function onSuccess(googleUser) {
       console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
@@ -23,7 +27,11 @@
       });
     }
   </script>
-
-  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+  <% else %>
+  <div>   
+    You already had an account
+  </div>
+  <% end %>
+  
 </body>
 

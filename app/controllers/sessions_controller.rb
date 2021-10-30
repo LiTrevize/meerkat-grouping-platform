@@ -17,13 +17,16 @@ class SessionsController < ApplicationController
     end
 
   def index
-
-    render 'index'
+    if session[:uid]!=nil 
+      @current_user = User.find(session[:uid])       
+    else
+      @current_user=nil    
+    end
   end
 
   protected
   def check_current_user
-    if session[:uid] == null
+    if session[:uid] == nil
       flash[:msg] = "Please log in"
       redirect_to root_path
     end
