@@ -23,6 +23,14 @@ class SessionsController < ApplicationController
       @current_user=nil    
     end
   end
+  
+  
+  def logout
+    reset_session
+    @current_user = nil
+    render 'index'
+  end 
+  
 
   protected
   def check_current_user
@@ -37,5 +45,6 @@ class SessionsController < ApplicationController
   def log_in(user)
     session[:uid] = user.id
   end
+  
 
 end

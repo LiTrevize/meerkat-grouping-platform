@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Routes for Google authentication
   get 'auth/:provider/callback', to: 'sessions#googleAuth'
   get 'auth/failure', to: redirect('/')
+  
+  delete 'logout' => 'sessions#logout'
 
   # /posts
   resource :posts
