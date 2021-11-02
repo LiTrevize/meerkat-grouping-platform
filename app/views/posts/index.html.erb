@@ -21,5 +21,35 @@
 <body>
   <div class="btn btn-primary sign-google">
   <%= link_to "Log Out with google", logout_path, :method => :delete, :class => "link"%>   
- </div>
+  </div>
 </body>
+
+<table class="table table-striped col-md-12" id="post">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Post Time</th>
+      <th>Category</th>
+      <th>Post</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td>
+          <%= post.title %>
+        </td>
+        <td>
+          <%= post.user %>
+        </td>
+        <td>
+          <%= post.content %>
+        </td>
+        <td>
+          <%= post.updated_at %>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
