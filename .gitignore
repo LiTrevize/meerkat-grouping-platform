@@ -7,6 +7,7 @@
 # Ignore .env
 .env
 config/application.yml
+**.DS_Store
 
 # Ignore bundler config.
 /.bundle
