@@ -35,7 +35,7 @@ bundle exec rake cucumber
 
 Run rspec
 ```
-bundle exec rake spec
+bundle exec rspec
 ```
 
 ## Run Server
