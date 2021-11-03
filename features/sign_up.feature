@@ -20,7 +20,7 @@ Scenario: fill out Profile, go to the home page, check posts and log out
   
   Then I should be on the home page
   And I should see "Hello, Test User"
-  And I should see "Log Out with google"
+  And I should see "Log out"
   And I should see "Go to Posts"
   
   Then I follow "Go to Posts"

@@ -20,7 +20,7 @@ module NavigationHelpers
       #
       #   when /^(.*)'s profile page$/i
       #     user_profile_path(User.find_by_login($1))
-      when /^the profile page$/ then new_profiles_path
+      when /^the profile page$/ then new_profile_path
         
       when /^the post page$/ then posts_path
   

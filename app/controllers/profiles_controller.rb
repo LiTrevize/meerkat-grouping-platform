@@ -6,7 +6,8 @@ class ProfilesController < SessionsController
 
   def create
     @profile = @current_user.create_profile(profile_info)
-    redirect_to posts_path
+    session[:uid] = @current_user.id
+    redirect_to root_path
   end
 
   def update
