@@ -5,9 +5,12 @@ ruby '>=2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6'
+<<<<<<< HEAD
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+=======
+>>>>>>> 98f5e09b6389f82bbac1db1f6b81dc4cb6736039
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -53,6 +56,8 @@ group :development, :test do
   # rspec unit test
   gem 'rspec-rails'
   gem 'ZenTest'
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
 end
 
 group :development do
@@ -75,6 +80,10 @@ group :test do
   # database_cleaner is not mandatory, but highly recommended
   gem 'database_cleaner'
   gem 'simplecov'
+end
+
+group :production do
+  gem 'pg'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
