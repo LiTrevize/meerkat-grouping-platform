@@ -51,7 +51,9 @@
         <td>
           <%= post.user.name %>
         </td>
- 
+        <td>
+          <%= post.created_at %>
+        </td>
         <td>
           <% if @current_user.id==post.user.id %>
           <%= link_to "Edit", edit_post_path(post), :method => :get %>
