@@ -1,8 +1,7 @@
 class Comments < ActiveRecord::Migration[5.2]
   def change
     create_table :comments do |t|
-      t.int :comment_id
-      t.string :content
+      t.text :content
       t.boolean :is_public
       t.timestamp :created_at
 
