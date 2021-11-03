@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-
+  
+  
   def googleAuth
       # Get access tokens from the google server
       logger.debug(request.env["omniauth.state"])
@@ -18,7 +19,6 @@ class SessionsController < ApplicationController
       else
         redirect_to root_path
       end
-
     end
 
   def index
@@ -39,12 +39,19 @@ class SessionsController < ApplicationController
 
   protected
   def check_current_user
+    if Rails.env.test?  
+      @current_user = User.find(1)
+      puts "THIS IS TEST ENV 2 in session controller"  
+      puts @current_user.name
+    else 
+      
     if session[:uid] == nil
       flash[:msg] = "Please log in"
       redirect_to root_path
     end
     @current_user = User.find(session[:uid])
-  end
+    end
+  end 
 
   protected
   def log_in(user)

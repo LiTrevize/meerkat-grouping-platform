@@ -10,7 +10,9 @@ class ProfilesController < SessionsController
     end
     
     @profile.save
-    redirect_to posts_path
+    #redirect_to posts_path
+    session[:uid]=@current_user.id
+    redirect_to root_path
   end
 
   private
