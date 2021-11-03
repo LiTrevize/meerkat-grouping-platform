@@ -31,14 +31,15 @@ require 'rails_helper'
 
 describe ProfilesController do
   render_views
-  
+
   before :each do
     # User.where(id: 1).first_or_initialize do |user|
     #   user.name = 't1'
     #   user.email = 't1@columbia.edu'
     # end
     @user = User.create(:id => 1, :name => 't1', :email => 't1@columbia.edu' )
-    @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+    # @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+
   end
   
   # describe "create profile" do
@@ -53,6 +54,7 @@ describe ProfilesController do
   # end
   describe "test update profile" do
     it 'calls the model method that update profile' do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
       url = "/profile/#{@tmp_profile.id}"
       put :update, params: { profile: {degree: "ms"}, id: @tmp_profile.id}
 
@@ -63,18 +65,37 @@ describe ProfilesController do
   end
 
   describe "test show profile" do
-    it 'calls the model method that create profile' do
-      # tmp_show_profile = Profile.find_by_user_id(1)
+    it 'calls the model method that show profile' do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+
       @tmp_profile.school = "art"
       @tmp_profile.save
-      # put :update, params: { profile: {school: "art"}, id: @tmp_profile.id}
       get :show
       expect(response).to have_http_status(:ok)
       expect(response).to render_template(:show)
-      # puts(response.body)
       expect(response.body).to include("art")
-
-      # profile.find_by_user_id
     end
   end
+
+  describe "test new profile" do
+    it 'calls the model method that direct to new profile' do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      get :new
+      expect(response).to have_http_status(:ok)
+      expect(response).to render_template(:new)
+      expect(response.body).to include("school")
+      expect(response.body).to_not include("art")
+    end
+  end
+
+
+  describe "test create profile" do
+    it 'calls the model method that direct to create profile' do
+      get :new
+      post :create, params: { profile: {:school => 'art', :degree => 'bs', :major => 'photo' }}
+      new_profile = Profile.find_by_user_id(1)
+      expect(new_profile.major).to eq 'photo'
+    end
+  end
+
 end
