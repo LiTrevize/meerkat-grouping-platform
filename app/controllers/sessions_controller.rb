@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  
+  before_action :test_func
   
   def googleAuth
     # Get access tokens from the google server
@@ -53,7 +53,15 @@ class SessionsController < ApplicationController
     end
     @current_user = User.find(session[:uid])
     end
-  end 
+  end
+
+  protected
+  def test_func
+    if Rails.env.test?
+      # @current_user = User.find(1)
+      session[:uid] = 1
+    end
+  end
 
   protected
   def log_in(user)
