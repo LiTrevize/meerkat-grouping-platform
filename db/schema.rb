@@ -24,9 +24,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_022801) do
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
-    t.string "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text "content"
     t.integer "user_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
