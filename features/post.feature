@@ -7,7 +7,7 @@ Background: test user already logged in and went to the post page
  And I follow "Go to Posts"
  Then I should see "Posts"
 
-Scenario: create new post and edit post
+Scenario: create new post, edit post, and delete post
  When I follow "New Post"
  Then I should see "Complete Your Post"
  
@@ -28,3 +28,12 @@ Scenario: create new post and edit post
  
  When I follow "Delete"
  Then I should not see "Edit Post"
+ 
+Scenario: Edit Profile in Post page
+  When I follow "My Profile"
+  Then I should be on the old profile page
+  
+  And I fill in "School" with "SEAS"
+  And I fill in "Degree" with "Bachelor"
+  And I fill in "Major" with "Computer Science"
+  And I press "Save"
