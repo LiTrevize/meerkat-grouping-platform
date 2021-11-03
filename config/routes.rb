@@ -10,7 +10,5 @@ Rails.application.routes.draw do
   resource :profiles
 
   # /posts
-  # get '/posts', to: 'posts#index', as: 'posts_path'
-  resource :posts
-  root "posts#index"
+  get '/posts', to: 'posts#index', as: 'posts'
 end
