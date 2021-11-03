@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#logout'
 
   # /profiles
-  resource :profiles
+  get '/profile', to: 'profiles#show', as: 'profile'
+  get '/profile/new', to: 'profiles#new', as: 'new_profile'
+  post '/profile', to: 'profiles#create'
+  put '/profile/:id', to: 'profiles#update', as: 'put_profile'
 
   # /posts
   get '/posts', to: 'posts#index', as: 'posts'

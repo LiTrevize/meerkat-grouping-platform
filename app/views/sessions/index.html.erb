@@ -31,16 +31,20 @@
   <% else %>
   <div class="welcome">   
     Hello, <%=@current_user.name%>
-    
   </div>
-  <div class="btn btn-primary sign-google">
-  <%= link_to "Log Out with google", logout_path, :method => :delete, :class => "link"%>   
- </div>
+  
   
   <div class="btn btn-primary">
-  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
- </div>
+    <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
+  </div>
+
+  <div class="btn btn-primary">
+    <%= link_to "My Profile", profile_path, :method => :get, :class => "link"%> 
+  </div>
  
+  <div class="btn btn-primary sign-google">
+    <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
+  </div>
   
   <% end %>
   

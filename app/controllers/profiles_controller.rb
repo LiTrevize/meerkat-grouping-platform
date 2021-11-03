@@ -5,12 +5,22 @@ class ProfilesController < SessionsController
   end
 
   def create
-    @profile = Profile.where(user_id: @current_user.id).first_or_initialize do |profile|
-      profile.major = profile_params['major']
-    end
-    
-    @profile.save
+    @profile = @current_user.create_profile(profile_info)
     redirect_to posts_path
+  end
+
+  def update
+    @profile = Profile.find(params[:id])
+    @profile.update_attributes(profile_info)
+    redirect_to posts_path
+  end
+
+  def show
+    @profile = Profile.find_by_user_id(@current_user.id)
+  end
+
+  def profile_info
+    params.require(:profile).permit(:school, :degree, :major)
   end
 
   private

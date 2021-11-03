@@ -1,5 +1,5 @@
 <h1>Complete Your Profile</h1>
-<%= form_tag profile_path, :class => 'form' do %>
+<%= form_tag put_profile_path(@profile), :method => :put, :class => 'form' do %>
   <%= label nil, nil, 'Name', :class => 'col-form-label' %>
   <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
   <br/>
@@ -7,13 +7,13 @@
   <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
   <br/>
   <%= label :profile, :school, 'School', :class => 'col-form-label' %>
-  <%= text_field :profile, :school, :class => 'form-control' %>
+  <%= text_field :profile, :school, :value => @profile.school, :class => 'form-control' %>
   <br/>
   <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
-  <%= text_field :profile, :degree, :class => 'form-control' %>
+  <%= text_field :profile, :degree, :value => @profile.degree, :class => 'form-control' %>
   <br/>
   <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
-  <%= text_field :profile, :major, :class => 'form-control' %>
+  <%= text_field :profile, :major, :value => @profile.major, :class => 'form-control' %>
   <br/>
-  <%= submit_tag 'Continue', :class => 'btn btn-primary' %>
+  <%= submit_tag 'Save', :class => 'btn btn-primary' %>
 <% end %>
