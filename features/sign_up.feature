@@ -27,12 +27,12 @@ Scenario: fill out Profile, go to the home page, check posts and log out
   And I should be on the post page
   And I should see "Posts"
   
-  Then I follow "Log Out with google"
+  Then I follow "Log out"
   And I should see "Meerkat"
   And I should see "Log in with Google"   
 
 #Scenario: log out and re-login
   #Given "TestUser@columbia.edu" is logged in and profile is filled out
   #When I am on the the home page
-  #And I press "Log Out with google"
+  #And I press "Log out"
   #Then I should see "Meerkat"
