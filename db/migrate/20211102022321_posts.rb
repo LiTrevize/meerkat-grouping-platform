@@ -4,7 +4,7 @@ class Posts < ActiveRecord::Migration[5.2]
       # t.string :user_id
       t.string :title
       t.text :content
-      t.timestamp
+      t.timestamps
 
       t.references :user, index: true, foreign_key: true
     end
