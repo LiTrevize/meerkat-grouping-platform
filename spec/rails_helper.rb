@@ -8,6 +8,11 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'simplecov'
 SimpleCov.start 'rails' do
+  add_filter 'app/channels/'
+  add_filter 'app/jobs/'
+  add_filter 'app/mailers/'
+  add_filter 'pp/models/comment.rb'
+  add_filter 'app/helpers/'
 end
 SimpleCov.coverage_dir 'coverage/rspec'
 # Requires supporting ruby files with custom matchers and macros, etc, in
