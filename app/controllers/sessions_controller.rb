@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     user.google_refresh_token = refresh_token if refresh_token.present?
     user.save
     if Profile.where(user_id: user.id).length == 0
-      redirect_to new_profiles_path
+      redirect_to new_profile_path
     else
       redirect_to root_path
     end
