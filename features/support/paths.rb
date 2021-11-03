@@ -22,6 +22,8 @@ module NavigationHelpers
       #     user_profile_path(User.find_by_login($1))
       when /^the profile page$/ then new_profile_path
         
+      when /^the old profile page$/ then '/profile'
+        
       when /^the post page$/ then posts_path
   
       else

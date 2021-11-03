@@ -24,13 +24,13 @@ class ProfilesController < SessionsController
     params.require(:profile).permit(:school, :degree, :major)
   end
 
-  private
+  #private
   # Making "internal" methods private is not required, but is a common practice.
   # This helps make clear which methods respond to requests, and which ones do not.
-  def profile_params
-    ret = params.require(:profile).permit(:major)
-    ret[:user_id] = @current_user.id
-    ret
-  end
+  #def profile_params
+    #ret = params.require(:profile).permit(:major)
+    #ret[:user_id] = @current_user.id
+    #ret
+  #end
 
 end

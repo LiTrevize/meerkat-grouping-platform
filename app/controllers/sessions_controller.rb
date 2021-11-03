@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
     else
       redirect_to root_path
     end
+    
   end
 
   def index
@@ -44,8 +45,6 @@ class SessionsController < ApplicationController
   def check_current_user
     if Rails.env.test?  
       @current_user = User.find(1)
-      puts "THIS IS TEST ENV 2 in session controller"  
-      puts @current_user.name
     else 
       
     if session[:uid] == nil
