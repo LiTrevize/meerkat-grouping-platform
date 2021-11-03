@@ -17,17 +17,29 @@ sudo apt install nodejs
 
 Install all gems:
 ```
-bundle install
+bundle install --without production
 ```
 
 Migrate database:
 ```
-bundle exec bin/rake db:migrate
+bundle exec rake db:migrate
 ```
 
 Set local ENV variable (e.g. google auth) in `./config/application.yml`
 
+## Run Tests
+Run cucumber
+```
+bundle exec rake cucumber
+```
+
+Run rspec
+```
+bundle exec rake spec
+```
+
+## Run Server
 Run server:
 ```
-bundle exec bin/rails server
+bundle exec rails server
 ```
