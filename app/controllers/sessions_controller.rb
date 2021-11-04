@@ -46,20 +46,22 @@ class SessionsController < ApplicationController
     if Rails.env.test?  
       @current_user = User.find(1)
     else 
-      
-    if session[:uid] == nil
-      flash[:msg] = "Please log in"
-      redirect_to root_path
-    end
-    @current_user = User.find(session[:uid])
+      if session[:uid] == nil
+        flash[:msg] = "Please log in"
+        redirect_to root_path
+      end
+      @current_user = User.find(session[:uid])
     end
   end
 
   protected
   def test_func
     if Rails.env.test?
-      # @current_user = User.find(1)
-      session[:uid] = 1
+      begin
+        User.find(1)
+        session[:uid] = 1
+      rescue
+      end
     end
   end
 
