@@ -6,5 +6,11 @@
   <%= label :post, :content, 'Content', :class => 'col-form-label' %>
   <%= text_field :post, :content, :class => 'form-control' %>
   <br/>
+  <%= label :post, :start, 'Start Date', :class => 'col-form-label' %>
+  <%= date_field :post, :start, :class => 'form-control' %>
+  <br/>
+  <%= label :post, :end, 'End Date', :class => 'col-form-label' %>
+  <%= date_field :post, :end, :class => 'form-control' %>
+  <br/>
   <%= submit_tag 'Create', :class => 'btn btn-primary' %>
 <% end %>
