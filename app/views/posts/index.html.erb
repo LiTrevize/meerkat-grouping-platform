@@ -36,7 +36,7 @@
       <th>Title</th>
       <th>Content</th>
       <th>User</th>
-      <th>Time</th>
+      <th>Start Time</th>
     </tr>
   </thead>
   <tbody>
@@ -52,7 +52,7 @@
           <%= post.user.name %>
         </td>
         <td>
-          <%= post.created_at %>
+          <%= post.start %>
         </td>
         <td>
           <% if @current_user.id==post.user.id %>

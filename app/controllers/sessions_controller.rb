@@ -26,6 +26,7 @@ class SessionsController < ApplicationController
   end
 
   def index
+    #reset_session
     if session[:uid]!=nil 
       @current_user = User.find(session[:uid])       
     else
@@ -40,7 +41,6 @@ class SessionsController < ApplicationController
     render 'index'
   end 
   
-
   protected
   def check_current_user
     if Rails.env.test?  
