@@ -40,7 +40,7 @@ class PostsController < SessionsController
   private
   
   def post_info
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :start, :end)
   end
 
 end

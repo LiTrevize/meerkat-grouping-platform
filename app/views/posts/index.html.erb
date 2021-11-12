@@ -36,7 +36,8 @@
       <th>Title</th>
       <th>Content</th>
       <th>User</th>
-      <th>Start Time</th>
+      <th>Created at</th>
+      <th>Start at</th>
     </tr>
   </thead>
   <tbody>
@@ -50,6 +51,9 @@
         </td>
         <td>
           <%= post.user.name %>
+        </td>
+        <td>
+          <%= post.created_at %>
         </td>
         <td>
           <%= post.start %>
