@@ -6,8 +6,6 @@ class PostsController < SessionsController
   end
   
   def new
-    @post = Post.new
-    @group= Group.new
   end
 
   def show
@@ -15,7 +13,11 @@ class PostsController < SessionsController
   end
   
   def create
-    if @current_user.posts.create(post_info)
+    post = @current_user.posts.create(post_info)
+    if post
+      #group = post.group.create
+      group = Group.create
+      group.id=post.id
       redirect_to posts_path
     else
       render 'new'
