@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
 
   create_table "group_users", force: :cascade do |t|
     t.integer "status"
+    t.text "intro"
     t.integer "group_id"
     t.integer "user_id"
     t.index ["group_id"], name: "index_group_users_on_group_id"
@@ -42,8 +43,6 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.text "content"
     t.date "start"
     t.date "end"
-    t.integer "low_number"
-    t.integer "high_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
