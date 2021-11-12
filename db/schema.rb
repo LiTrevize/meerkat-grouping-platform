@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
   end
 
   create_table "group_users", force: :cascade do |t|
+    t.string "status"
     t.integer "group_id"
     t.integer "user_id"
     t.index ["group_id"], name: "index_group_users_on_group_id"

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_one :profile
   has_many :posts
+  has_many :groups, through: :group_users
 
   def self.from_omniauth(auth)
     # Creates a new user only if it doesn't exist
