@@ -5,7 +5,9 @@ class Posts < ActiveRecord::Migration[5.2]
       t.string :title
       t.text :content
       t.date :start
-      t.date :end
+      t.date :end   
+      t.integer :low_number
+      t.integer :high_number   
       t.timestamps
 
       t.references :user, index: true, foreign_key: true

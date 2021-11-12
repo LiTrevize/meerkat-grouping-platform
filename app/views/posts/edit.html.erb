@@ -11,6 +11,14 @@
   <br/>
   <%= label :post, :end, 'End Date', :class => 'col-form-label' %>
   <%= date_field :post, :end, :class => 'form-control' %>
+
+
+  <br/>
+  <%= label :post, :low_number, 'The least number of people your group need:', :class => 'col-form-label' %>
+  <%= text_field :post, :low_number, :class => 'form-control' %>
+  <br/>
+  <%= label :post, :high_number, 'The most number of people your group need:', :class => 'col-form-label' %>
+  <%= text_field :post, :high_number, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Save', :class => 'btn btn-primary' %>
 <% end %>
