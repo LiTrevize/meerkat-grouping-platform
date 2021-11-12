@@ -23,8 +23,9 @@ Rails.application.routes.draw do
 
   # group
   post '/post/:id/apply', to: 'groups#apply'
-  post '/post/:id/approve', to: 'groups#approve'
-  post '/post/:id/reject', to: 'groups#reject'
+  post '/post/:id/approve/:user_id', to: 'groups#approve'
+  post '/post/:id/reject/:user_id', to: 'groups#reject'
   post '/post/:id/accept', to: 'groups#accept'
   post '/post/:id/refuse', to: 'groups#refuse'
+  get '/group/:id', to: 'groups#show'
 end
