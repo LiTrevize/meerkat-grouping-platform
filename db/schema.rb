@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.text "content"
     t.date "start"
     t.date "end"
+    t.integer "low_number"
+    t.integer "high_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"

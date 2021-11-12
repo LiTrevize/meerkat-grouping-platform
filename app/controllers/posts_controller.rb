@@ -7,6 +7,7 @@ class PostsController < SessionsController
   
   def new
     @post = Post.new
+    @group= Group.new
   end
 
   def show
@@ -40,7 +41,7 @@ class PostsController < SessionsController
   private
   
   def post_info
-    params.require(:post).permit(:title, :content, :start, :end)
+    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number)
   end
 
 end
