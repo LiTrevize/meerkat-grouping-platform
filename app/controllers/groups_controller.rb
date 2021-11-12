@@ -43,6 +43,12 @@ class GroupsController < PostsController
     redirect_back(fallback_location: posts_path)
   end
 
+  def show
+  end
+
+  def send
+  end
+
   protected
   def is_owner?
     return Post.find(params[:id]).user_id == @current_user.id

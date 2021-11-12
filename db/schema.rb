@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_160041) do
+ActiveRecord::Schema.define(version: 2021_11_12_212659) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.integer "user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "group_chats", force: :cascade do |t|
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "group_id"
+    t.integer "user_id"
+    t.index ["group_id"], name: "index_group_chats_on_group_id"
+    t.index ["user_id"], name: "index_group_chats_on_user_id"
   end
 
   create_table "group_users", force: :cascade do |t|

@@ -21,11 +21,15 @@ Rails.application.routes.draw do
   put '/post/:id', to: 'posts#update', as: 'update_post'
   get '/posts/new', to: 'posts#new', as: 'new_post'
 
-  # group
+  # group apply
   post '/post/:id/apply', to: 'groups#apply'
   post '/post/:id/approve/:user_id', to: 'groups#approve'
   post '/post/:id/reject/:user_id', to: 'groups#reject'
   post '/post/:id/accept', to: 'groups#accept'
   post '/post/:id/refuse', to: 'groups#refuse'
+
+  # group chat
   get '/group/:id', to: 'groups#show'
+  post '/group/:id/chat', to: 'groups#send'
+
 end
