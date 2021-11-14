@@ -6,8 +6,10 @@ class Comments < ActiveRecord::Migration[5.2]
       t.timestamp :created_at
 
       t.references :post, index: true, foreign_key: true
-      t.references :user, index: true, foreign_key: true
-
+      t.references :from_user, foreign_key: true
+      t.references :to_comment, foreign_key: true
+      
+      
     end
   end
 end

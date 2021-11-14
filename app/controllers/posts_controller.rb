@@ -11,6 +11,8 @@ class PostsController < SessionsController
 
   def show
     @post = Post.find(params[:id])
+    @comments = Comment.where(post_id: params[:id]).order(:created_at)
+    @to_comment_id = params[:to_comment_id]
   end
   
   def create

@@ -4,3 +4,46 @@
 <p>
   <%= @post.content %>
 </p>
+
+<table class="table table-striped col-md-12" id="comment">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Date</th>
+      <th>Content</th>
+      <th>Reply</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        
+        <td>
+          <%= @current_user.name %>
+        </td>
+        <td>
+          <%= comment.created_at %>
+        </td>
+        <td>
+          <%= comment.content %>
+        </td>
+        <td>
+          
+          <%= link_to "Reply", post_path(@post), method: :get, data: {to_comment_id: comment.id} %>
+          
+        </td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_tag create_comment_path, :class => 'form' do %>
+  <%= label :to_comment, :content, 'Content', :class => 'col-form-label' %>
+  <%= text_field :to_comment, :content, :class => 'form-control' %>
+  <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
+  <%= check_box_tag "is_public", true %>
+  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+  <br/>
+  <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
+<% end %>

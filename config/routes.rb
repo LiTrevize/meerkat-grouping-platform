@@ -20,4 +20,17 @@ Rails.application.routes.draw do
   get '/post/:id', to: 'posts#edit', as: 'edit_post'
   put '/post/:id', to: 'posts#update', as: 'update_post'
   get '/posts/new', to: 'posts#new', as: 'new_post'
+    
+    
+  # /comments
+#   get '/post/:id/comments', to: 'comments#index', as: 'comments'
+  post '/post/:id/comments', to: 'comments#create', as: 'create_comment'
+  
+    
+#   resources :posts do
+#   	resources :comments
+#   end
+
+#   root 'posts#index'
+    
 end
