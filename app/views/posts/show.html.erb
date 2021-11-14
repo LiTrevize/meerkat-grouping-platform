@@ -29,7 +29,7 @@
         </td>
         <td>
           
-          <%= link_to "Reply", post_path(@post), method: :get, data: {to_comment_id: comment.id} %>
+          <%= link_to "Reply", post_path(@post, to_comment_id: comment.id), method: :get %>
           
         </td>
         
@@ -43,7 +43,7 @@
   <%= text_field :to_comment, :content, :class => 'form-control' %>
   <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
   <%= check_box_tag "is_public", true %>
-  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+  <%= text_field :to_comment, :id, :value => @to_comment_id, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
 <% end %>
