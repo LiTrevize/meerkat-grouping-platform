@@ -16,34 +16,36 @@
   </thead>
   <tbody>
     <% @comments.each do |comment| %>
+      <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
       <tr>
-        
         <td>
           <%= @current_user.name %>
         </td>
         <td>
-          <%= comment.created_at %>
+          <%= time_format comment.created_at %>
         </td>
         <td>
           <%= comment.content %>
         </td>
         <td>
-          
-          <%= link_to "Reply", post_path(@post, to_comment_id: comment.id), method: :get %>
-          
+          <%= link_to "Reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id), method: :get %>
         </td>
-        
       </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <%= form_tag create_comment_path, :class => 'form' do %>
-  <%= label :to_comment, :content, 'Content', :class => 'col-form-label' %>
+  <% if @to_comment_id %>
+    <%= label :to_comment, :content, "Reply to #{@to_comment_id}", :class => 'col-form-label' %>
+  <% else %>
+    <%= label :to_comment, :content, 'Reply to all', :class => 'col-form-label' %>
+  <% end %>
   <%= text_field :to_comment, :content, :class => 'form-control' %>
   <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
   <%= check_box_tag "is_public", true %>
-  <%= text_field :to_comment, :id, :value => @to_comment_id, :class => 'form-control' %>
+  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
 <% end %>

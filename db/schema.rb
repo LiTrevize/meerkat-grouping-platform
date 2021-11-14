@@ -18,10 +18,12 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.datetime "created_at"
     t.integer "post_id"
     t.integer "from_user_id"
+    t.integer "to_user_id"
     t.integer "to_comment_id"
     t.index ["from_user_id"], name: "index_comments_on_from_user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["to_comment_id"], name: "index_comments_on_to_comment_id"
+    t.index ["to_user_id"], name: "index_comments_on_to_user_id"
   end
 
   create_table "group_users", force: :cascade do |t|
