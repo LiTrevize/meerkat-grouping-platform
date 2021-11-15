@@ -9,7 +9,38 @@
 user = User.create!(name: 'Debug', email: 'debug@columbia.edu')
 user1 = User.create!(name: 'Debug1', email: 'debug1@columbia.edu')
 user2 = User.create!(name: 'Debug2', email: 'debug2@columbia.edu')
+Nickname.create([
+    {name: "Alice"},
+    {name: "Bob"},
+    {name: "Carol"},
+    {name: "David"},
+    {name: "Eve"},
+    {name: "Frank"},
+    {name: "Ginny"},
+    {name: "Henry"},
+    {name: "Ivy"},
+    {name: "James"},
+    {name: "Kate"},
+    {name: "Leo"},
+    {name: "Maria"},
+    {name: "Newton"},
+    {name: "Oscar"},
+    {name: "Peter"},
+    {name: "Quita"},
+    {name: "Rick"},
+    {name: "Sylvie"},
+    {name: "Thanos"},
+    {name: "Uda"},
+    {name: "Vincent"},
+    {name: "Wanda"},
+    {name: "Xin"},
+    {name: "Yvonne"},
+    {name: "Zoe"}
+])
 profile = Profile.create!(user_id: user.id, school: 'SEAS', degree: 'MS', major: 'CS')
-post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.")
-Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true)
-Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: false)
+post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.", next_nickname_id: 2)
+Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true, from_user_id: user1.id)
+Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: false, from_user_id: user.id)
+PostUserNickname.create([
+    {post_id: post.id, user_id: user1.id, nickname_id: 1}
+])

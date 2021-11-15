@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_160041) do
+ActiveRecord::Schema.define(version: 2021_11_14_232140) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.datetime "created_at"
     t.integer "post_id"
     t.integer "from_user_id"
+    t.integer "from_user_nickname"
     t.integer "to_user_id"
     t.integer "to_comment_id"
     t.index ["from_user_id"], name: "index_comments_on_from_user_id"
@@ -40,11 +41,24 @@ ActiveRecord::Schema.define(version: 2021_11_08_160041) do
     t.index ["post_id"], name: "index_groups_on_post_id"
   end
 
+  create_table "nicknames", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "post_user_nicknames", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.integer "nickname_id", null: false
+    t.index ["post_id"], name: "index_post_user_nicknames_on_post_id"
+    t.index ["user_id"], name: "index_post_user_nicknames_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.date "start"
     t.date "end"
+    t.integer "next_nickname_id", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"

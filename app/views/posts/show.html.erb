@@ -1,3 +1,7 @@
+<div class="btn btn-primary">
+  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
+</div>
+
 <h1>
   <%= @post.title %>
 </h1>
@@ -19,7 +23,7 @@
       <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
       <tr>
         <td>
-          <%= @current_user.name %>
+          <%= comment.from_nickname %>
         </td>
         <td>
           <%= time_format comment.created_at %>

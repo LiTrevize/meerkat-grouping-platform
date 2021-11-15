@@ -12,11 +12,12 @@ class CommentsController < PostsController
             to_comment_id = nil
         end
         to_user_id = nil
-        tmp = Comment.find_by(id: to_comment_id)
-        if tmp
-            to_user_id = tmp.from_user_id
+        to_comment = Comment.find_by(id: to_comment_id)
+        if to_comment
+            to_user_id = to_comment.from_user_id
         end
         comment = post.comments.create(content: params[:to_comment][:content], from_user_id: @current_user.id, to_user_id: to_user_id, to_comment_id: to_comment_id, is_public: is_public)
+        update_nickname(post, @current_user.id)
         redirect_to post_path(post)
     end
     

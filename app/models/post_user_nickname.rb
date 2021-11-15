@@ -1,0 +1,2 @@
+class PostUserNickname < ApplicationRecord
+end

@@ -35,7 +35,6 @@
     <tr>
       <th>Title</th>
       <th>Content</th>
-      <th>User</th>
       <th>Time</th>
     </tr>
   </thead>
@@ -49,10 +48,7 @@
           <%= post.content %>
         </td>
         <td>
-          <%= post.user.name %>
-        </td>
-        <td>
-          <%= post.created_at %>
+          <%= time_format post.created_at %>
         </td>
         <td>
           <% if @current_user.id==post.user.id %>
