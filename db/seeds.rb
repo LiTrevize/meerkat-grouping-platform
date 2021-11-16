@@ -38,7 +38,7 @@ Nickname.create([
     {name: "Zoe"}
 ])
 profile = Profile.create!(user_id: user.id, school: 'SEAS', degree: 'MS', major: 'CS')
-post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.", next_nickname_id: 2)
+post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.", next_nickname_id: 2, low_number: 3, high_number: 4, tag1: 'coursework')
 group = Group.create(post_id: post.id)
 Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true, from_user_id: user1.id)
 Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: false, from_user_id: user.id)

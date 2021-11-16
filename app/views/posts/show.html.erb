@@ -8,8 +8,9 @@
 <p>
   <%= @post.content %>
 </p>
-
-<<<<<<< HEAD
+<p>
+   Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
+</p>
 <table class="table table-striped col-md-12" id="comment">
   <thead>
     <tr>
@@ -53,10 +54,7 @@
   <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
-=======
-<p>
-   Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
-</p>
+<% end %>
 
 
 <% if @post.user_id === @current_user.id%>
@@ -64,8 +62,7 @@
   You are the host
 </p>
 
-<p>
-</p>
+<br/>
 
 <div>
   Pending Applications:
@@ -82,8 +79,7 @@
   <% end %> 
 </div>
 
-<p>
-</p>
+<br/>
 
 <div>
   Approved Applications:
@@ -140,5 +136,4 @@
   <% end %>
 </div>
 
->>>>>>> group
 <% end %>

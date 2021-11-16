@@ -31,7 +31,7 @@ class PostsController < SessionsController
     @approve_url=[]
     @reject_url=[]
     
-    for applied_user in @all_applied_user
+    for applied_user in @all_applied_user do
       this_user=User.find(applied_user.user_id)
       @applied_user_name.append(this_user.name)
       this_approve="/post/#{@post.group.id}/approve/#{applied_user.user_id}"
@@ -40,12 +40,12 @@ class PostsController < SessionsController
       @reject_url.append(this_reject)
     end
     
-    for approved_user in @all_approved_user
+    for approved_user in @all_approved_user do
       this_user=User.find(approved_user.user_id)
       @approved_user_name.append(this_user.name)
     end 
     
-    if current_group_user ==nil 
+    if current_group_user == nil 
       @current_group_user_status= "You haven't applied for this Group"
     else
       @current_group_user_status=current_group_user.status     
@@ -63,7 +63,7 @@ class PostsController < SessionsController
       if tag_name == ""
         tag_name = "other"
       end
-      puts tag_name
+      # puts tag_name
       tmp_tag = Tag.find_by(name: tag_name)
       if tmp_tag == nil
         tmp_tag = Tag.create(name: tag_name, freq: 0)
@@ -141,7 +141,6 @@ class PostsController < SessionsController
       def #{symbol}
         return @#{symbol}
       end
-
       def #{symbol}=(value)
         @#{symbol} = value
       end
