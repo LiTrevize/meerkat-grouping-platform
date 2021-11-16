@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_022801) do
+ActiveRecord::Schema.define(version: 2021_11_08_153206) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 2021_11_02_022801) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "content"
+    t.string "tag1"
+    t.string "tag2"
+    t.string "tag3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -37,6 +40,11 @@ ActiveRecord::Schema.define(version: 2021_11_02_022801) do
     t.string "major"
     t.integer "user_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "tags", id: false, force: :cascade do |t|
+    t.string "name"
+    t.integer "freq"
   end
 
   create_table "users", force: :cascade do |t|

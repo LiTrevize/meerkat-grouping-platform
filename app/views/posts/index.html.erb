@@ -16,6 +16,8 @@
   </style>
 </head>
 
+
+
 <h1>Posts</h1>
 
 <div class="btn btn-primary">
@@ -29,6 +31,16 @@
 <div class="btn btn-primary sign-google">
   <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
 </div>
+
+<ul>
+  <% @tags.each do |a| %>
+    <li>
+
+    <%= check_box_tag "names[#{a.name}]", 'yes', false -%>
+    <%=  a.name %>
+    </li>
+  <% end %>
+</ul>
 
 <table class="table table-striped col-md-12" id="post">
   <thead>
