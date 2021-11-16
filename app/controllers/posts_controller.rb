@@ -75,6 +75,7 @@ class PostsController < SessionsController
     if post
       # group
       group = Group.create
+      post.group = group
       # group.id=post.id
       # post.update(tag1: tmp_tag.name)
       post.update(tag1: tag_name_list[0],tag2: tag_name_list[1],tag3: tag_name_list[2])
