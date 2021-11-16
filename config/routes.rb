@@ -22,10 +22,12 @@ Rails.application.routes.draw do
   get '/posts/new', to: 'posts#new', as: 'new_post'
 
   # group
-  post '/post/:id/apply', to: 'groups#apply'
+  post '/post/:id/apply', to: 'groups#apply', as: "apply"
+  #post '/post/:id/drop_apply', to: 'groups#drop_apply', as: "drop_apply"
+  
   post '/post/:id/approve/:user_id', to: 'groups#approve'
   post '/post/:id/reject/:user_id', to: 'groups#reject'
-  post '/post/:id/accept', to: 'groups#accept'
-  post '/post/:id/refuse', to: 'groups#refuse'
+  post '/post/:id/accept', to: 'groups#accept', as: "accept"
+  post '/post/:id/refuse', to: 'groups#refuse', as: "refuse"
   get '/group/:id', to: 'groups#show'
 end

@@ -5,16 +5,32 @@ class GroupsController < PostsController
     if is_owner?
       flash[:msg] = 'Cannot apply to your own group'
     else
-      group_user = GroupUser.create(group_id: params[:id], user_id: @current_user.id, status: :apply)
-      flash[:msg] = 'Group applied'
+      group_user = GroupUser.create(group_id: params[:id], user_id: @current_user.id, status: :applied)
+      flash[:msg] = 'Group applied' 
     end
     redirect_back(fallback_location: posts_path)
   end
+  
+  '''
+  def drop_apply
+    if is_owner?
+      
+    else
+      group_user = GroupUser.where(group_id: params[:id], user_id: @current_user.id, status: :applied).first
+      group_user.destroy   
+      
+    end
+    redirect_to(posts_path)
+    #redirect_back(fallback_location: posts_path)
+  end
+  '''
 
   def approve
     if not is_owner?
-      flash[:msg] = 'Only owner can process applications'
-    else
+      puts "this is post_user id in approve"
+      puts Post.find(params[:id]).user_id
+      flash[:msg] = "Only owner can process applications #{Post.find(params[:id]).user.id}"
+    else   
       group_user = GroupUser.where(group_id: params[:id], user_id: params[:user_id]).first
       group_user.update(status: :approved)
     end
@@ -34,17 +50,24 @@ class GroupsController < PostsController
   def accept
     group_user = GroupUser.where(group_id: params[:id], user_id: @current_user.id).first
     group_user.update(status: :accepted)
+    flash[:msg]="Invitation accepted"
     redirect_back(fallback_location: posts_path)
+    
   end
 
   def refuse
     group_user = GroupUser.where(group_id: params[:id], user_id: @current_user.id).first
     group_user.update(status: :refused)
-    redirect_back(fallback_location: posts_path)
+    flash[:msg]="Invitation refused"
+    redirect_back(fallback_location: posts_path) 
   end
 
   protected
   def is_owner?
-    return Post.find(params[:id]).user_id == @current_user.id
+    post_id=Group.find(params[:id]).post.id
+    return Post.find(post_id).user_id == @current_user.id
+    #return Post.find(params[:id]).user_id == @current_user.id
+  end
 
 end
+  

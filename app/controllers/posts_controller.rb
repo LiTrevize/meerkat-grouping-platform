@@ -9,13 +9,57 @@ class PostsController < SessionsController
   end
 
   def show
-    @post = Post.find(params[:id])
+    puts "this is user id"
+    puts @current_user.id
+    puts @current_user.name
+    
+    @post = Post.find(params[:id]) 
+    @all_applied_user=GroupUser.where(group_id: @post.group.id, status: :applied)
+    @all_approved_user=GroupUser.where(group_id: @post.group.id, status: :approved)   
+    current_group_user=GroupUser.where(group_id: @post.group.id,user_id: @current_user.id).first
+    #puts "THIS IS current_group_user in post"
+    #puts current_group_user
+    
+    
+    
+    puts @post.user.id
+    puts Post.find(params[:id]).user_id
+    
+    #puts "This is all applied user"
+    #puts @all_applied_user
+
+    @applied_user_name = []
+    @approved_user_name = []   
+    @approve_url=[]
+    @reject_url=[]
+    
+    for applied_user in @all_applied_user
+        this_user=User.find(applied_user.user_id)
+        @applied_user_name.append(this_user.name)
+        this_approve="/post/#{@post.group.id}/approve/#{applied_user.user_id}"
+        @approve_url.append(this_approve)     
+        this_reject="/post/#{@post.group.id}/reject/#{applied_user.user_id}"
+        @reject_url.append(this_reject)
+    end
+    
+    for approved_user in @all_approved_user
+       this_user=User.find(approved_user.user_id)
+       @approved_user_name.append(this_user.name)
+    end 
+    
+    #puts "This is finding non-host user in GroupUser"
+    #puts (GroupUser.where(group_id: params[:id],user_id: @current_user.id)).length
+    
+    if current_group_user ==nil 
+      @current_group_user_status= "You haven't applied for this Group"
+    else
+      @current_group_user_status=current_group_user.status     
+    end
   end
   
   def create
     post = @current_user.posts.create(post_info)
     if post
-      #group = post.group.create
       group = Group.create
       group.id=post.id
       redirect_to posts_path
@@ -39,6 +83,7 @@ class PostsController < SessionsController
     @post.update_attributes(post_info)
     redirect_to posts_path
   end
+  
   
   private
   
