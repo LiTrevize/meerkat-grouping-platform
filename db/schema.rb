@@ -27,7 +27,19 @@ ActiveRecord::Schema.define(version: 2021_11_14_232140) do
     t.index ["to_user_id"], name: "index_comments_on_to_user_id"
   end
 
+  create_table "group_chats", force: :cascade do |t|
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "group_id"
+    t.integer "user_id"
+    t.index ["group_id"], name: "index_group_chats_on_group_id"
+    t.index ["user_id"], name: "index_group_chats_on_user_id"
+  end
+
   create_table "group_users", force: :cascade do |t|
+    t.integer "status"
+    t.text "intro"
     t.integer "group_id"
     t.integer "user_id"
     t.index ["group_id"], name: "index_group_users_on_group_id"
@@ -58,7 +70,9 @@ ActiveRecord::Schema.define(version: 2021_11_14_232140) do
     t.text "content"
     t.date "start"
     t.date "end"
-    t.integer "next_nickname_id", default: 0
+    t.integer "next_nickname_id", default: 1
+    t.integer "low_number"
+    t.integer "high_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"

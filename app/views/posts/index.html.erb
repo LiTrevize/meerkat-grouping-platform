@@ -35,7 +35,8 @@
     <tr>
       <th>Title</th>
       <th>Content</th>
-      <th>Time</th>
+      <th>Created at</th>
+      <th>Start at</th>
     </tr>
   </thead>
   <tbody>
@@ -49,6 +50,9 @@
         </td>
         <td>
           <%= time_format post.created_at %>
+        </td>
+        <td>
+          <%= post.start %>
         </td>
         <td>
           <% if @current_user.id==post.user.id %>

@@ -6,7 +6,6 @@ class PostsController < SessionsController
   end
   
   def new
-    @post = Post.new
   end
 
   def show
@@ -26,6 +25,9 @@ class PostsController < SessionsController
     post = @current_user.posts.create(post_info)
     if post
       # update_nickname(post, @current_user.id)
+      # group = post.group.create
+      group = Group.create
+      group.id=post.id
       redirect_to posts_path
     else
       render 'new'
@@ -50,7 +52,7 @@ class PostsController < SessionsController
   
   private
   def post_info
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number)
   end
 
   def get_nickname(id)

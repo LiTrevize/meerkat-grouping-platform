@@ -7,6 +7,8 @@ class Posts < ActiveRecord::Migration[5.2]
       t.date :start
       t.date :end
       t.integer :next_nickname_id, default: 1
+      t.integer :low_number
+      t.integer :high_number   
       t.timestamps
 
       t.references :user, index: true, foreign_key: true
