@@ -1,0 +1,19 @@
+<div class="btn btn-primary">
+  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
+</div>
+<div class="btn btn-primary">
+  <%= link_to "Go to Post", post_path(@group.post), :method => :get, :class => "link"%> 
+</div>
+
+<h1>Group Chat</h1>
+
+<h2><%= @group.post.title %></h2>
+
+<% @group_chats.each do |chat| %>
+  <p><%= "#{chat.user.name} (#{time_format chat.created_at}): #{chat.text}" %></p>
+<% end %>
+
+<%= form_tag send_chat_path, :class => 'form' do %>
+  <%= text_field :msg, :text, :class => 'form-control' %>
+  <%= submit_tag 'Send', :class => 'btn btn-primary' %>
+<% end %>
