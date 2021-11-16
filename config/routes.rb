@@ -23,7 +23,6 @@ Rails.application.routes.draw do
 
   # group
   post '/post/:id/apply', to: 'groups#apply', as: "apply"
-  #post '/post/:id/drop_apply', to: 'groups#drop_apply', as: "drop_apply"
   
   post '/post/:id/approve/:user_id', to: 'groups#approve'
   post '/post/:id/reject/:user_id', to: 'groups#reject'

@@ -17,17 +17,7 @@ class PostsController < SessionsController
     @all_applied_user=GroupUser.where(group_id: @post.group.id, status: :applied)
     @all_approved_user=GroupUser.where(group_id: @post.group.id, status: :approved)   
     current_group_user=GroupUser.where(group_id: @post.group.id,user_id: @current_user.id).first
-    #puts "THIS IS current_group_user in post"
-    #puts current_group_user
     
-    
-    
-    puts @post.user.id
-    puts Post.find(params[:id]).user_id
-    
-    #puts "This is all applied user"
-    #puts @all_applied_user
-
     @applied_user_name = []
     @approved_user_name = []   
     @approve_url=[]
@@ -46,9 +36,6 @@ class PostsController < SessionsController
        this_user=User.find(approved_user.user_id)
        @approved_user_name.append(this_user.name)
     end 
-    
-    #puts "This is finding non-host user in GroupUser"
-    #puts (GroupUser.where(group_id: params[:id],user_id: @current_user.id)).length
     
     if current_group_user ==nil 
       @current_group_user_status= "You haven't applied for this Group"

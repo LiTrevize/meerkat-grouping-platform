@@ -11,20 +11,6 @@ class GroupsController < PostsController
     redirect_back(fallback_location: posts_path)
   end
   
-  '''
-  def drop_apply
-    if is_owner?
-      
-    else
-      group_user = GroupUser.where(group_id: params[:id], user_id: @current_user.id, status: :applied).first
-      group_user.destroy   
-      
-    end
-    redirect_to(posts_path)
-    #redirect_back(fallback_location: posts_path)
-  end
-  '''
-
   def approve
     if not is_owner?
       puts "this is post_user id in approve"
