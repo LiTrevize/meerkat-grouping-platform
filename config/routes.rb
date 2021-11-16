@@ -32,5 +32,7 @@ Rails.application.routes.draw do
   post '/post/:id/reject/:user_id', to: 'groups#reject'
   post '/post/:id/accept', to: 'groups#accept', as: "accept"
   post '/post/:id/refuse', to: 'groups#refuse', as: "refuse"
-  get '/group/:id', to: 'groups#show'
+  # group chat
+  get '/group/:id', to: 'groups#show', as: "group"
+  post '/group/:id', to: 'groups#send_chat', as: "send_chat"
 end

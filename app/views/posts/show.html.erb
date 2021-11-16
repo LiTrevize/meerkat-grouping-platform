@@ -1,16 +1,27 @@
 <div class="btn btn-primary">
   <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
 </div>
+<div class="btn btn-primary">
+  <%= link_to "Go to Group", group_path(@group), :method => :get, :class => "link"%> 
+</div>
+
+<p><%= flash[:msg] %></p>
 
 <h1>
   <%= @post.title %>
 </h1>
 <p>
-  <%= @post.content %>
+  Host: <%= @post.content %>
 </p>
 <p>
    Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
 </p>
+Accepted Group Members:<br/>
+<% @all_members.each do |member| %>
+  <%= member.name %><br/>
+<% end %>
+<br/>
+Comments:
 <table class="table table-striped col-md-12" id="comment">
   <thead>
     <tr>

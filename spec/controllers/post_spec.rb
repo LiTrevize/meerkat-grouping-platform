@@ -3,7 +3,7 @@ require 'rails_helper'
 describe PostsController do
   before :each do
     @user = User.create(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+    @test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
   end
   
   describe "all posts"do 

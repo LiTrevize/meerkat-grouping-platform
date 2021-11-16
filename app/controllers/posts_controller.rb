@@ -11,6 +11,7 @@ class PostsController < SessionsController
 
   def show
     @post = Post.find(params[:id])
+    @group = @post.group
     # comments
     @comments = Comment.where(post_id: params[:id]).order(:created_at)
     @comments.each do |comment|
@@ -22,6 +23,10 @@ class PostsController < SessionsController
     @to_comment_id = params[:to_comment_id]
     @to_user_id = params[:to_user_id]
     # application status
+    @all_members = []
+    GroupUser.where(group_id: @post.group.id, status: :accepted).each do |groupuser|
+      @all_members.push(User.find(groupuser.user_id))
+    end
     @all_applied_user=GroupUser.where(group_id: @post.group.id, status: :applied)
     @all_approved_user=GroupUser.where(group_id: @post.group.id, status: :approved)   
     current_group_user=GroupUser.where(group_id: @post.group.id,user_id: @current_user.id).first
