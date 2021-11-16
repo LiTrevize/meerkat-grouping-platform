@@ -13,8 +13,6 @@ class GroupsController < PostsController
   
   def approve
     if not is_owner?
-      puts "this is post_user id in approve"
-      puts Post.find(params[:id]).user_id
       flash[:msg] = "Only owner can process applications #{Post.find(params[:id]).user.id}"
     else   
       group_user = GroupUser.where(group_id: params[:id], user_id: params[:user_id]).first
