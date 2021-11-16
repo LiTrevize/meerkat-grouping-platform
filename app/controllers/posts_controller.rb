@@ -11,6 +11,7 @@ class PostsController < SessionsController
 
   def show
     @post = Post.find(params[:id])
+    # comments
     @comments = Comment.where(post_id: params[:id]).order(:created_at)
     @comments.each do |comment|
       add_attribute(comment, :from_nickname)
@@ -20,21 +21,42 @@ class PostsController < SessionsController
     end
     @to_comment_id = params[:to_comment_id]
     @to_user_id = params[:to_user_id]
+    # application status
+    @all_applied_user=GroupUser.where(group_id: @post.group.id, status: :applied)
+    @all_approved_user=GroupUser.where(group_id: @post.group.id, status: :approved)   
+    current_group_user=GroupUser.where(group_id: @post.group.id,user_id: @current_user.id).first
+    
+    @applied_user_name = []
+    @approved_user_name = []   
+    @approve_url=[]
+    @reject_url=[]
+    
+    for applied_user in @all_applied_user
+      this_user=User.find(applied_user.user_id)
+      @applied_user_name.append(this_user.name)
+      this_approve="/post/#{@post.group.id}/approve/#{applied_user.user_id}"
+      @approve_url.append(this_approve)     
+      this_reject="/post/#{@post.group.id}/reject/#{applied_user.user_id}"
+      @reject_url.append(this_reject)
+    end
+    
+    for approved_user in @all_approved_user
+      this_user=User.find(approved_user.user_id)
+      @approved_user_name.append(this_user.name)
+    end 
+    
+    if current_group_user ==nil 
+      @current_group_user_status= "You haven't applied for this Group"
+    else
+      @current_group_user_status=current_group_user.status     
+    end
   end
   
   def create
-<<<<<<< HEAD
-    post = @current_user.posts.create(post_info)
-    if post
-      # update_nickname(post, @current_user.id)
-      # group = post.group.create
-      group = Group.create
-      group.id=post.id
-=======
 
     tag_name_list = Array[post_info[:tag1], post_info[:tag2], post_info[:tag3]]
-    puts tag_name_list
-    puts 'HI!!!!!!!'
+    # puts tag_name_list
+    # puts 'HI!!!!!!!'
 
     tag_name_list.each do |tag_name|
 
@@ -48,31 +70,15 @@ class PostsController < SessionsController
       end
     
     end
-    
-    puts "ye!!!!!!"
-    puts Tag.find_by(name: "other")
-
-    # tmp_tag = Tag.find_by(name: post_info[:tag1])
-
-    # if tmp_tag == nil
-    #   tmp_tag = Tag.create(name: post_info[:tag1], freq: 0)
-    # else
-    #   # tmp_tag.freq = tmp_tag.freq + 1
-    #   puts 'HI!!!!!!'
-
-    #   puts tmp_tag.name
-    #   # tmp_tag.update(freq: tmp_tag.freq + 1)
-    #   puts tmp_tag.freq
-
-    #   # tmp_tag.save
-    # end
-     
+ 
     post = @current_user.posts.create(post_info)
     if post
+      # group
+      group = Group.create
+      # group.id=post.id
       # post.update(tag1: tmp_tag.name)
       post.update(tag1: tag_name_list[0],tag2: tag_name_list[1],tag3: tag_name_list[2])
       post.save
->>>>>>> abdd79d5ca3259b72eafffd933e77e60486ca167
       redirect_to posts_path
     else
       render 'new'
@@ -95,10 +101,10 @@ class PostsController < SessionsController
     redirect_to posts_path
   end
   
+  
   private
   def post_info
-<<<<<<< HEAD
-    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number)
+    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number, :tag1, :tag2, :tag3)
   end
 
   def get_nickname(id)
@@ -128,9 +134,6 @@ class PostsController < SessionsController
       nickname_id = assoc.nickname_id
     end
     return get_nickname(nickname_id)
-=======
-    params.require(:post).permit(:title, :content, :tag1, :tag2, :tag3)
->>>>>>> abdd79d5ca3259b72eafffd933e77e60486ca167
   end
 
   def add_attribute(klass, symbol)
@@ -145,6 +148,6 @@ class PostsController < SessionsController
     }
 
     klass.instance_eval(codes)
-end
-
+  end
+  
 end

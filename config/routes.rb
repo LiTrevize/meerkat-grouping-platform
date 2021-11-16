@@ -26,14 +26,11 @@ Rails.application.routes.draw do
   post '/post/:id/comments', to: 'comments#create', as: 'create_comment'
 
   # group apply
-  post '/post/:id/apply', to: 'groups#apply'
+  post '/post/:id/apply', to: 'groups#apply', as: "apply"
+  
   post '/post/:id/approve/:user_id', to: 'groups#approve'
   post '/post/:id/reject/:user_id', to: 'groups#reject'
-  post '/post/:id/accept', to: 'groups#accept'
-  post '/post/:id/refuse', to: 'groups#refuse'
-
-  # group chat
+  post '/post/:id/accept', to: 'groups#accept', as: "accept"
+  post '/post/:id/refuse', to: 'groups#refuse', as: "refuse"
   get '/group/:id', to: 'groups#show'
-  post '/group/:id/chat', to: 'groups#send'
-
 end

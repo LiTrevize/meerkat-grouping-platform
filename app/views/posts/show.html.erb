@@ -9,6 +9,7 @@
   <%= @post.content %>
 </p>
 
+<<<<<<< HEAD
 <table class="table table-striped col-md-12" id="comment">
   <thead>
     <tr>
@@ -52,4 +53,92 @@
   <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
+=======
+<p>
+   Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
+</p>
+
+
+<% if @post.user_id === @current_user.id%>
+<p>
+  You are the host
+</p>
+
+<p>
+</p>
+
+<div>
+  Pending Applications:
+</div>
+<div>
+  <% for i in 0..@applied_user_name.length()-1 %>
+  <div>
+    This person applied: <%= @applied_user_name[i] %>
+    <div class="btn btn-primary">
+        <%= link_to "Approve",@approve_url[i], :method => :post, :class => "link"%>
+        <%= link_to "Reject",@reject_url[i], :method => :post, :class => "link"%>   
+    </div>
+  </div>
+  <% end %> 
+</div>
+
+<p>
+</p>
+
+<div>
+  Approved Applications:
+</div>
+<div>
+  <% for i in 0..@approved_user_name.length()-1 %>
+  <div>
+    This person is in the group: <%= @approved_user_name[i] %>
+  </div>
+  <% end %>  
+</div>
+  
+
+<% else %>
+<div>
+  You are not the host
+  <div>
+    status:<%=  @current_group_user_status %>
+  </div>
+    
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  
+  <% if @current_group_user_status == "You haven't applied for this Group" %>
+    <div class="btn btn-primary">
+        <%= link_to "Apply", apply_path(@post), :method => :post, :class => "link"%>   
+    </div>
+  <% elsif @current_group_user_status == "rejected" %>
+    <div>
+      Sorry, your application is rejected by the host. Feel free to check out other groups
+    </div>
+  <% elsif @current_group_user_status == "approved" %>
+      <div>
+        Your application is approved and the host has sent you an invitation!
+        Once you accepted the invitation, you will have access to the group chat.
+        <p>      
+        <%= link_to "Join the group!",accept_path(@post), :method => :post, :class => "link"%>
+        <%= link_to "Hmmm..I don't want to join anymore",refuse_path(@post), :method => :post, :class => "link"%>
+        </p>
+  </div>
+  <% elsif @current_group_user_status == "refused" %>
+    <div>
+      You have applied for this group before and you were invited to join, but you refused the invitation.
+  </div>
+  
+  <% elsif @current_group_user_status == "accepted" %>
+  <div>
+      Woho! You are a group member!
+  </div>
+  
+  <% end %>
+</div>
+
+>>>>>>> group
 <% end %>
