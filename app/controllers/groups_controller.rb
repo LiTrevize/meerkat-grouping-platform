@@ -46,11 +46,40 @@ class GroupsController < PostsController
     redirect_back(fallback_location: posts_path) 
   end
 
+  def show
+    @group = Group.find(params[:id])
+    if is_member?
+      @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).limit(10).reverse_order
+    else
+      flash[:msg] = "You have not joined the group"
+      redirect_to post_path(@group.post)
+    end
+  end
+
+  def send_chat
+    group = Group.find(params[:id])
+    if not is_member?
+      redirect_to post_path(group.post)
+    end
+    chat = GroupChat.create(group_id: group.id, text: params[:msg][:text], user_id: @current_user.id)
+    redirect_to group_path(group)
+  end
+
   protected
   def is_owner?
     post_id=Group.find(params[:id]).post.id
     return Post.find(post_id).user_id == @current_user.id
     #return Post.find(params[:id]).user_id == @current_user.id
+  end
+
+  def is_member?
+    groupusers = GroupUser.where(group_id: params[:id], user_id: @current_user.id, status: :accepted)
+    group = Group.find(params[:id])
+    if groupusers.length>0 or group.post.user_id==@current_user.id
+      return true
+    else
+      return false
+    end
   end
 
 end
