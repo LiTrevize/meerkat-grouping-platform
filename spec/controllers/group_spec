@@ -23,5 +23,5 @@ describe GroupsController do
       expect(chat).to be_nil
     end
 
-  end 
+  end
 end
