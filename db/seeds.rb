@@ -39,7 +39,8 @@ Nickname.create([
 ])
 profile = Profile.create!(user_id: user.id, school: 'SEAS', degree: 'MS', major: 'CS')
 # post
-post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.", next_nickname_id: 3, low_number: 3, high_number: 4, tag1: 'coursework')
+post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: "I would like to find teammates for Project Meerkat.", next_nickname_id: 3, low_number: 3, high_number: 4, tag1: 'coursework', start: '2021-09-09', end: '2021-12-12')
+Tag.create!(name: 'coursework')
 group = Group.create(post_id: post.id)
 GroupUser.create(group_id: group.id, user_id: user1.id, status: :accepted)
 GroupUser.create(group_id: group.id, user_id: user2.id, status: :accepted)

@@ -46,9 +46,11 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Tags</th>
+      <th>Need members</th>
       <th>Content</th>
+      <th>Period</th>
       <th>Created at</th>
-      <th>Start at</th>
     </tr>
   </thead>
   <tbody>
@@ -58,13 +60,19 @@
           <%= link_to post.title, post_path(post) %>
         </td>
         <td>
+          <%= [post.tag1, post.tag2, post.tag3].join(' ') %>
+        </td>
+        <td>
+          <%= interval_format(post.low_number, post.high_number) %>
+        </td>
+        <td>
           <%= post.content %>
         </td>
         <td>
-          <%= time_format post.created_at %>
+          <%= interval_format(datef(post.start), datef(post.end)) %>
         </td>
         <td>
-          <%= post.start %>
+          <%= timef post.created_at %>
         </td>
         <td>
           <% if @current_user.id==post.user.id %>
