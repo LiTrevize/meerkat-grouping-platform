@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 describe PostsController do
+  render_views
   before :each do
-    @user = User.create(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
+    @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
   end
   
   describe "all posts"do 
@@ -47,12 +48,20 @@ describe PostsController do
   
   
   describe "delete a post" do
-        it "deletes a post" do
-            delete :destroy, params: {id: @test_post.id}
-            expect(response.body).to_not include("group project")
-        end
-    end
+      it "deletes a post" do
+          delete :destroy, params: {id: @test_post.id}
+          expect(response.body).to_not include("group project")
+      end
+  end
 
- 
+  describe "visit a specific post" do
+    it 'shows comments' do
+      @test_group = Group.create!(post_id: @test_post.id)
+      @test_comment = Comment.create(post_id: @test_post.id, :content => 'test comment', :from_user_id => @user.id, :to_user_id => nil, 
+        :to_comment_id => nil, :is_public => true)
+      get :show, params: {id: @test_post.id}
+      expect(response.body).to include 'test comment'
+    end
+  end
    
 end

@@ -35,7 +35,7 @@ describe GroupsController do
       expect(after_apply.status).to eq("accepted")
     end
     
-    it "can refuse group incitation" do
+    it "can refuse group invitation" do
       test_host2=User.create(:name => 'test_host2', :email => 'h2@columbia.edu' )
       test_approve_post = Post.create(:user_id => test_host2.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
       test_approve_group=Group.create(:post_id=>test_approve_post.id)
