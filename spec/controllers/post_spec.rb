@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe PostsController do
+  controller do
+  end
+    
   before :each do
     @user = User.create(:name => 't1', :email => 't1@columbia.edu' )
     @test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
@@ -52,6 +55,23 @@ describe PostsController do
             expect(response.body).to_not include("group project")
         end
     end
+  
+  describe "find all applied user" do
+    it "find things" do
+      test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+      test_group=Group.create(:post_id=>test_post.id)
+      test_user1=User.create(:name => 'test_user1', :email => 't1@columbia.edu')
+      test_user2=User.create(:name => 'test_user2', :email => 't1@columbia.edu')
+      test_user3=User.create(:name => 'test_user3', :email => 't1@columbia.edu')
+      test_gu1=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user1.id, :status=>"applied")
+      test_gu2=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user2.id, :status=>"applied")
+      test_gu3=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user3.id, :status=>"approved")
+      post :show, params: {id: test_post.id}
+      expect (controller.instance_eval{@all_applied_user}.count)==2
+       expect (controller.instance_eval{@all_approved_user}.count)==1
+      expect (controller.instance_eval{@approved_user_name}.count)==1
+    end
+ end 
 
  
    
