@@ -59,7 +59,7 @@ Comments:
   <% else %>
     <%= label :to_comment, :content, 'Reply to all', :class => 'col-form-label' %>
   <% end %>
-  <%= text_field :to_comment, :content, :class => 'form-control' %>
+  <%= text_field :to_comment, :content, :class => 'form-control', :id => 'comment_box' %>
   <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
   <%= check_box_tag "is_public", true %>
   <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>

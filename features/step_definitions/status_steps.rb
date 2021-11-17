@@ -30,3 +30,9 @@ Given /^I joined group for post "([^"]*)"$/ do |title|
   group = Group.find_by_post_id(post.id)
   GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :accepted)
 end
+
+Given /^Nicknames contain \[(.*)\]$/ do |nicknames|
+  nicknames.split(',').each do |name|
+    Nickname.create!(name: name)
+  end
+end
