@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 describe PostsController do
-<<<<<<< HEAD
   render_views
-=======
   controller do
   end
     
->>>>>>> f55ef68b435327d55be2bb549d4f807d03659dd7
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
     @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
@@ -54,13 +51,6 @@ describe PostsController do
   
   
   describe "delete a post" do
-<<<<<<< HEAD
-      it "deletes a post" do
-          delete :destroy, params: {id: @test_post.id}
-          expect(response.body).to_not include("group project")
-      end
-  end
-=======
         it "deletes a post" do
             delete :destroy, params: {id: @test_post.id}
             expect(response.body).to_not include("group project")
@@ -83,7 +73,6 @@ describe PostsController do
       expect (controller.instance_eval{@approved_user_name}.count)==1
     end
  end 
->>>>>>> f55ef68b435327d55be2bb549d4f807d03659dd7
 
   describe "visit a specific post" do
     it 'shows comments' do
