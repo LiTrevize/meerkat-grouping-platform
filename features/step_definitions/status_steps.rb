@@ -1,7 +1,6 @@
 
 Given /^"([^"]*)" has go to the post page$/ do |name|
-  @current_user = User.create(:name=>"Test User 2", :email => "test_user2")
-  puts "test user2 id: #{@current_user.id}"
+  @current_user = User.create(:name=>name, :email => "#{name}@columbia.edu")
   profile=Profile.create(:major=>"CS")
   profile.user=@current_user
 end
@@ -24,4 +23,10 @@ Given /^I created a post with name "([^"]*)", and "([^"]*)" applied for it$/ do 
   this_group=Group.create!(:post_id=>this_post.id) 
   applied_user1=User.create!(:name=>name1, :email => "test_email1")  
   GroupUser.create!(:group_id=>this_group.id, :user_id=>applied_user1.id, :status=>"applied")
+end
+
+Given /^I joined group for post "([^"]*)"$/ do |title|
+  post = Post.find_by_title(title)
+  group = Group.find_by_post_id(post.id)
+  GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :accepted)
 end

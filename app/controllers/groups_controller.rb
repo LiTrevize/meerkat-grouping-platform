@@ -60,9 +60,10 @@ class GroupsController < PostsController
     group = Group.find(params[:id])
     if not is_member?
       redirect_to post_path(group.post)
+    else
+      chat = GroupChat.create(group_id: group.id, text: params[:msg][:text], user_id: @current_user.id)
+      redirect_to group_path(group)
     end
-    chat = GroupChat.create(group_id: group.id, text: params[:msg][:text], user_id: @current_user.id)
-    redirect_to group_path(group)
   end
 
   protected

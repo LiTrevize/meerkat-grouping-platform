@@ -3,7 +3,7 @@ Feature: I apply for a group and my status should change
 Background: User is on the post page
 Given "Test_user2" has go to the post page
 
-Scenario: User applise for a group and the status should change to applied
+Scenario: User applis for a group and the status should change to applied
    Given Post with name "Apply Test Post" is created by "apply_test_host"
    When I am on the post page
    Then I should see "Apply Test Post"
