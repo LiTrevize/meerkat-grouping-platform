@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 describe PostsController do
+<<<<<<< HEAD
   render_views
+=======
+  controller do
+  end
+    
+>>>>>>> f55ef68b435327d55be2bb549d4f807d03659dd7
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
     @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
@@ -48,11 +54,36 @@ describe PostsController do
   
   
   describe "delete a post" do
+<<<<<<< HEAD
       it "deletes a post" do
           delete :destroy, params: {id: @test_post.id}
           expect(response.body).to_not include("group project")
       end
   end
+=======
+        it "deletes a post" do
+            delete :destroy, params: {id: @test_post.id}
+            expect(response.body).to_not include("group project")
+        end
+    end
+  
+  describe "find all applied user" do
+    it "find things" do
+      test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+      test_group=Group.create(:post_id=>test_post.id)
+      test_user1=User.create(:name => 'test_user1', :email => 't1@columbia.edu')
+      test_user2=User.create(:name => 'test_user2', :email => 't1@columbia.edu')
+      test_user3=User.create(:name => 'test_user3', :email => 't1@columbia.edu')
+      test_gu1=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user1.id, :status=>"applied")
+      test_gu2=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user2.id, :status=>"applied")
+      test_gu3=GroupUser.create(:group_id=>test_group.id, :user_id=>test_user3.id, :status=>"approved")
+      post :show, params: {id: test_post.id}
+      expect (controller.instance_eval{@all_applied_user}.count)==2
+       expect (controller.instance_eval{@all_approved_user}.count)==1
+      expect (controller.instance_eval{@approved_user_name}.count)==1
+    end
+ end 
+>>>>>>> f55ef68b435327d55be2bb549d4f807d03659dd7
 
   describe "visit a specific post" do
     it 'shows comments' do
