@@ -1,6 +1,6 @@
 
 Given /^"([^"]*)" has go to the post page$/ do |name|
-  @current_user = User.create(:name=>"Test User 2", :email => "test_user2")
+  @current_user = User.create(:name=>name, :email => "test_user2")
   puts "test user2 id: #{@current_user.id}"
   profile=Profile.create(:major=>"CS")
   profile.user=@current_user

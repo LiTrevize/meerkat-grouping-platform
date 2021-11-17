@@ -1,7 +1,7 @@
 Feature: I apply for a group and my status should change
 
 Background: User is on the post page
-Given "Test_user2" has go to the post page
+Given "Test_User_2" has go to the post page
 
 Scenario: User applise for a group and the status should change to applied
    Given Post with name "Apply Test Post" is created by "apply_test_host"
@@ -10,8 +10,7 @@ Scenario: User applise for a group and the status should change to applied
    And  I follow "Apply Test Post"
    Then I should see "Apply Test Post content"
    And I should see "You haven't applied for this Group"
-   And I should see "Apply"
-   
+   And I should see "Apply" 
    Then I follow "Apply"
    And I should see "status:applied"
 
