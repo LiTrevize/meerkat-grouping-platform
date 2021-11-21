@@ -2,8 +2,19 @@ class PostsController < SessionsController
   before_action :check_current_user
 
   def index
-    @posts = Post.all
-    @tags = Tag.all
+    @tags = Tag.all.order(freq: :desc)
+    @tags_to_show = []
+    tagnames = params[:tagnames]
+    if tagnames
+      @tags_to_show = tagnames.keys
+      post_tags = PostTag.where(tag_name: tagnames.keys)
+      @posts = []
+      post_tags.each do |post_tag|
+        @posts.append(Post.find(post_tag.post_id))
+      end
+    else
+      @posts = Post.all
+    end
   end
   
   def new

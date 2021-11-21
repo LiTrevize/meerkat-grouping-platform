@@ -32,15 +32,17 @@
   <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
 </div>
 
-<ul>
-  <% @tags.each do |a| %>
-    <li>
-
-    <%= check_box_tag "names[#{a.name}]", 'yes', false -%>
-    <%=  a.name %>
-    </li>
+<%= form_tag posts_path(@post), :method => :get, :class => 'form' do %>
+  <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
+  <% @tags.each do |tag| %>
+    <%= check_box_tag "tagnames[#{tag.name}]", "1", @tags_to_show.include?(tag.name) %>
+    <%= tag.name %>
   <% end %>
-</ul>
+  
+  <%= submit_tag 'filter', id: 'filter_submit' %>
+  <%= link_to "reset", posts_path %>
+<% end %>
+
 
 <table class="table table-striped col-md-12" id="post">
   <thead>
