@@ -20,5 +20,16 @@
   <%= label :post, :high_number, 'The most number of people your group need:', :class => 'col-form-label' %>
   <%= text_field :post, :high_number, :class => 'form-control' %>
   <br/>
+
+  <%= label :tags, :tag1, 'tag1', :class => 'col-form-label' %>
+  <%= text_field :tags, :tag1, :class => 'form-control' %>
+  <br/>
+  <%= label :tags, :tag2, 'tag2', :class => 'col-form-label' %>
+  <%= text_field :tags, :tag2, :class => 'form-control' %>
+  <br/>
+  <%= label :tags, :tag3, 'tag3', :class => 'col-form-label' %>
+  <%= text_field :tags, :tag3, :class => 'form-control' %>
+  <br/>
+
   <%= submit_tag 'Save', :class => 'btn btn-primary' %>
 <% end %>

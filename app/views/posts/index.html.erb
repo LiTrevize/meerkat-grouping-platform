@@ -60,7 +60,9 @@
           <%= link_to post.title, post_path(post) %>
         </td>
         <td>
-          <%= [post.tag1, post.tag2, post.tag3].join(' ') %>
+          <% post.tags.each do |tag| %>
+            <%= "#{tag.name} " %>
+          <% end %>
         </td>
         <td>
           <%= interval_format(post.low_number, post.high_number) %>
