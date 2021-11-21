@@ -82,6 +82,12 @@ class PostsController < SessionsController
 
   def edit
     @post = Post.find(params[:id])
+    @tags = TagStruct.new
+    @post.tags.each_with_index do |tag, idx|
+      key = "tag#{idx+1}"
+      # @tags.key = tag.name
+      @tags.send("#{key}=", tag.name)
+    end
   end
 
   def update
@@ -165,6 +171,10 @@ class PostsController < SessionsController
       tag.update(freq: tag.freq + 1)
     end
     post.save
+  end
+
+  class TagStruct
+    attr_accessor :tag1, :tag2, :tag3, :tag4, :tag5
   end
   
 end
