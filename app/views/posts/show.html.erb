@@ -52,8 +52,9 @@ Comments:
              Host
           <% end %>
         </td>
+        
         <td>
-          <%= time_format comment.created_at %>
+          <%= timef comment.created_at %>
         </td>
         <td>
           <%= comment.content %>

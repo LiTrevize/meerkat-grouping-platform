@@ -10,7 +10,7 @@
 <h2><%= @group.post.title %></h2>
 
 <% @group_chats.each do |chat| %>
-  <p><%= "#{chat.user.name} (#{time_format chat.created_at}): #{chat.text}" %></p>
+  <p><%= "#{chat.user.name} (#{timef chat.created_at}): #{chat.text}" %></p>
 <% end %>
 
 <%= form_tag send_chat_path, :class => 'form' do %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_232140) do
+ActiveRecord::Schema.define(version: 2021_11_21_194236) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -57,6 +57,13 @@ ActiveRecord::Schema.define(version: 2021_11_14_232140) do
     t.string "name"
   end
 
+  create_table "post_tags", force: :cascade do |t|
+    t.integer "post_id"
+    t.string "tag_name"
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_name"], name: "index_post_tags_on_tag_name"
+  end
+
   create_table "post_user_nicknames", force: :cascade do |t|
     t.integer "post_id"
     t.integer "user_id"
@@ -73,9 +80,6 @@ ActiveRecord::Schema.define(version: 2021_11_14_232140) do
     t.integer "next_nickname_id", default: 1
     t.integer "low_number"
     t.integer "high_number"
-    t.string "tag1"
-    t.string "tag2"
-    t.string "tag3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -90,9 +94,8 @@ ActiveRecord::Schema.define(version: 2021_11_14_232140) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "tags", id: false, force: :cascade do |t|
-    t.string "name"
-    t.integer "freq"
+  create_table "tags", primary_key: "name", id: :string, force: :cascade do |t|
+    t.integer "freq", default: 0
   end
 
   create_table "users", force: :cascade do |t|

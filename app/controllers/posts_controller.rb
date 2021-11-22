@@ -2,8 +2,19 @@ class PostsController < SessionsController
   before_action :check_current_user
 
   def index
-    @posts = Post.all
-    @tags = Tag.all
+    @tags = Tag.all.order(freq: :desc)
+    @tags_to_show = []
+    tagnames = params[:tagnames]
+    if tagnames
+      @tags_to_show = tagnames.keys
+      post_tags = PostTag.where(tag_name: tagnames.keys)
+      @posts = []
+      post_tags.each do |post_tag|
+        @posts.append(Post.find(post_tag.post_id))
+      end
+    else
+      @posts = Post.all
+    end
   end
   
   def new
@@ -58,32 +69,15 @@ class PostsController < SessionsController
   end
   
   def create
-
-    tag_name_list = Array[post_info[:tag1], post_info[:tag2], post_info[:tag3]]
-    # puts tag_name_list
-    # puts 'HI!!!!!!!'
-
-    tag_name_list.each do |tag_name|
-
-      if tag_name == ""
-        tag_name = "other"
-      end
-      # puts tag_name
-      tmp_tag = Tag.find_by(name: tag_name)
-      if tmp_tag == nil
-        tmp_tag = Tag.create(name: tag_name, freq: 0)
-      end
-    
-    end
  
     post = @current_user.posts.create(post_info)
     if post
+      # tag
+      update_tags(post)
       # group
       group = Group.create
       post.group = group
       # group.id=post.id
-      # post.update(tag1: tmp_tag.name)
-      post.update(tag1: tag_name_list[0],tag2: tag_name_list[1],tag3: tag_name_list[2])
       post.save
       redirect_to posts_path
     else
@@ -99,11 +93,18 @@ class PostsController < SessionsController
 
   def edit
     @post = Post.find(params[:id])
+    @tags = TagStruct.new
+    @post.tags.each_with_index do |tag, idx|
+      key = "tag#{idx+1}"
+      # @tags.key = tag.name
+      @tags.send("#{key}=", tag.name)
+    end
   end
 
   def update
     @post = Post.find(params[:id])
-    @post.update_attributes(post_info)
+    @post.update(post_info)
+    update_tags(@post)
     redirect_to posts_path
   end
   
@@ -153,6 +154,38 @@ class PostsController < SessionsController
     }
 
     klass.instance_eval(codes)
+  end
+
+  def update_tags(post)
+    post.tags.each do |tag|
+      tag.freq -= 1
+      if tag.freq == 0
+        tag.destroy
+      else
+        tag.save
+      end
+    end
+    post.post_tags.destroy_all
+    params[:tags].each do |_, name|
+      if not name.blank?
+        tag = Tag.find_or_create_by!(name: name)
+        post.tags.append(tag)
+        tag.update(freq: tag.freq + 1)
+      end
+    end
+    puts '#######'
+    puts post.tags
+    puts post.tags.length
+    if post.tags.length == 0
+      tag = Tag.find_or_create_by!(name: 'other')
+      post.tags.append(tag)
+      tag.update(freq: tag.freq + 1)
+    end
+    post.save
+  end
+
+  class TagStruct
+    attr_accessor :tag1, :tag2, :tag3, :tag4, :tag5
   end
   
 end

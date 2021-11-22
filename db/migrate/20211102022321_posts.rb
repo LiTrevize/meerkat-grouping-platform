@@ -8,10 +8,7 @@ class Posts < ActiveRecord::Migration[5.2]
       t.date :end
       t.integer :next_nickname_id, default: 1
       t.integer :low_number
-      t.integer :high_number   
-      t.string :tag1
-      t.string :tag2
-      t.string :tag3
+      t.integer :high_number
 
       t.timestamps
 

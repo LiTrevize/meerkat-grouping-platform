@@ -32,23 +32,27 @@
   <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
 </div>
 
-<ul>
-  <% @tags.each do |a| %>
-    <li>
-
-    <%= check_box_tag "names[#{a.name}]", 'yes', false -%>
-    <%=  a.name %>
-    </li>
+<%= form_tag posts_path(@post), :method => :get, :class => 'form' do %>
+  <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
+  <% @tags.each do |tag| %>
+    <%= check_box_tag "tagnames[#{tag.name}]", "1", @tags_to_show.include?(tag.name) %>
+    <%= tag.name %>
   <% end %>
-</ul>
+  
+  <%= submit_tag 'filter', id: 'filter_submit' %>
+  <%= link_to "reset", posts_path %>
+<% end %>
+
 
 <table class="table table-striped col-md-12" id="post">
   <thead>
     <tr>
       <th>Title</th>
+      <th>Tags</th>
+      <th>Need members</th>
       <th>Content</th>
+      <th>Period</th>
       <th>Created at</th>
-      <th>Start at</th>
     </tr>
   </thead>
   <tbody>
@@ -58,13 +62,21 @@
           <%= link_to post.title, post_path(post) %>
         </td>
         <td>
+          <% post.tags.each do |tag| %>
+            <%= "#{tag.name} " %>
+          <% end %>
+        </td>
+        <td>
+          <%= interval_format(post.low_number, post.high_number) %>
+        </td>
+        <td>
           <%= post.content %>
         </td>
         <td>
-          <%= time_format post.created_at %>
+          <%= interval_format(datef(post.start), datef(post.end)) %>
         </td>
         <td>
-          <%= post.start %>
+          <%= timef post.created_at %>
         </td>
         <td>
           <% if @current_user.id==post.user.id %>
