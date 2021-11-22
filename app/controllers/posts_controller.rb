@@ -78,7 +78,7 @@ class PostsController < SessionsController
       post.group = group
       # group.id=post.id
       post.save
-      GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :accepted)
+      GroupUser.create(group_id: group.id, user_id: @current_user.id, is_host: true, status: :accepted)
       redirect_to posts_path
     else
       render 'new'

@@ -20,6 +20,67 @@
   <%= submit_tag 'Save', :class => 'btn btn-primary' %>
 <% end %>
 
+<h2>Pending Action</h2>
+<h3>Applications to process</h3>
+<table class="table table-striped col-md-12" id="post">
+  <thead>
+    <tr>
+      <th>Post</th>
+      <th>Applicant Message</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pendings.each do |group| %>
+      <tr>
+        <td><%= group.title %></td>
+        <td><%= group.intro %></td>
+        <td>
+          <div class="btn btn-primary">
+            <%= link_to "Approve", approve_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
+            <%= link_to "Reject", reject_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Applications you sent</h3>
+<table class="table table-striped col-md-12" id="post">
+  <thead>
+    <tr>
+      <th>Post</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @applied.each do |group| %>
+      <tr>
+        <td><%= group.title %></td>
+        <td>
+          <% if group.status == 'applied' %>
+            Application was sent.
+          <% else %>
+            <%= "Application was #{group.status}" %>
+          <% end %>
+        </td>
+        <td>
+          <% if group.status == :approved %>
+          <div class="btn btn-primary">
+            <%= link_to "Accept", accept_path({id: group.post_id}), :method => :post, :class => "link" %>
+            <%= link_to "Refuse", refuse_path({id: group.post_id}), :method => :post, :class => "link" %>
+          </div>
+          <% else %>
+            None
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <h2>My Groups</h2>
 
 <table class="table table-striped col-md-12" id="post">
@@ -39,3 +100,4 @@
       </tr>
     <% end %>
   </tbody>
+</table>

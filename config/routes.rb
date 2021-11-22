@@ -28,8 +28,8 @@ Rails.application.routes.draw do
   # group apply
   post '/post/:id/apply', to: 'groups#apply', as: "apply"
   
-  post '/post/:id/approve/:user_id', to: 'groups#approve'
-  post '/post/:id/reject/:user_id', to: 'groups#reject'
+  post '/post/:id/approve/:user_id', to: 'groups#approve', as: "approve"
+  post '/post/:id/reject/:user_id', to: 'groups#reject', as: "reject"
   post '/post/:id/accept', to: 'groups#accept', as: "accept"
   post '/post/:id/refuse', to: 'groups#refuse', as: "refuse"
   # group chat
