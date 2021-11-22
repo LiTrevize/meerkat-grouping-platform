@@ -1,9 +1,29 @@
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <style>
+  .container_all{
+    padding-right:100px;
+    padding-left:100px;  
+  }
+  .p1{
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+  .title{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-weight: bold;
+  }
+  .content{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 40px;
+  }
+  .comment_box_format{
+    width:500px;  
+  }
   </style>
 </head>
 
+<div class="container_all">
+  
 <div class="btn btn-primary">
   <%= link_to "Go Back to Posts", posts_path, :method => :get, :class => "link"%> 
 </div>
@@ -11,92 +31,31 @@
   <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
 </div>
 
-<p><%= flash[:msg] %></p>
+<p class="p1"><%= flash[:msg] %></p>
 
-<h1>
+<h1 class="title">
   <%= @post.title %>
 </h1>
-<p>
-  Host: <%= @post.content %>
+<p class="content">
+   <%= @post.content %>
 </p>
 <p>
    Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
 </p>
-Accepted Group Members:<br/>
-<% @all_members.each do |member| %>
-  <%= member.name %><br/>
-<% end %>
-<br/>
-Comments:
-<table class="table table-striped col-md-12" id="comment">
-  <thead>
-    <tr>
-      <th>From</th>
-      <th>To</th>
-      <th>Date</th>
-      <th>Content</th>
-      <th>Reply</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @comments.each do |comment| %>
-      <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
-      <tr>
-        <td>
-          <%= comment.from_nickname %>
-        </td>
-        <td>
-          <% if comment.to_nickname%>
-            <%= comment.to_nickname %>
-          <% else %>
-             Host
-          <% end %>
-        </td>
-        
-        <td>
-          <%= timef comment.created_at %>
-        </td>
-        <td>
-          <%= comment.content %>
-        </td>
-        <td>
-          <%= link_to "Reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id), method: :get %>
-        </td>
-      </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-<%= form_tag create_comment_path, :class => 'form' do %>
-  <% if @to_comment_id %>
-    <%= label :to_comment, :content, "Reply to #{@to_comment_id}", :class => 'col-form-label' %>
-  <% else %>
-    <%= label :to_comment, :content, 'Reply to all', :class => 'col-form-label' %>
-  <% end %>
-  <%= text_field :to_comment, :content, :class => 'form-control', :id => 'comment_box' %>
-  <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
-  <%= check_box_tag "is_public", true %>
-  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
-  <br/>
-  <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
-<% end %>
 
 
 <% if @post.user_id === @current_user.id%>
 <p>
   You are the host
 </p>
-
 <br/>
-
 <div>
   Pending Applications:
 </div>
 <div>
   <% for i in 0..@applied_user_name.length()-1 %>
   <div>
-    This person applied: <%= @applied_user_name[i] %>
+    Application from: <%= @applied_user_name[i] %>
     <div class="btn btn-primary">
         <%= link_to "Approve",@approve_url[i], :method => :post, :class => "link"%>
         <%= link_to "Reject",@reject_url[i], :method => :post, :class => "link"%>   
@@ -113,7 +72,7 @@ Comments:
 <div>
   <% for i in 0..@approved_user_name.length()-1 %>
   <div>
-    This person is in the group: <%= @approved_user_name[i] %>
+    <%= @approved_user_name[i] %>
   </div>
   <% end %>  
 </div>
@@ -121,13 +80,12 @@ Comments:
 
 <% else %>
 <div>
-  You are not the host
   <div>
     status:<%=  @current_group_user_status %>
   </div>
     
   <% flash.each do |type, msg| %>
-    <div>
+    <div class="p1">
       <%= msg %>
     </div>
   <% end %>
@@ -161,5 +119,90 @@ Comments:
   
   <% end %>
 </div>
+ <% end %>  
+ 
+  
+  
+<p class="p1">Comments</p>
+<table class="table table-striped col-md-12 p1" id="comment">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Date</th>
+      <th>Content</th>
+      <th>Reply</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @comments.each do |comment| %>
+      <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
+      <tr>
+        <td>
+          <%= comment.id %>
+        </td>
+        
+        <td>
+          <%= comment.from_nickname %>
+        </td>
+        <td>
+          <% if comment.to_nickname%>
+            <%= comment.to_nickname %>
+          <% else %>
+             Public
+          <% end %>
+        </td>
+        
+        <td>
+          <%= timef comment.created_at %>
+        </td>
+        <td>
+          <%= comment.content %>
+        </td>
+        <td>
+          <%= link_to "Reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id), method: :get %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
+<%= form_tag create_comment_path, :class => 'form' do %>
+  <% if @to_comment_id %>
+    <%= label :to_comment, :content, "Reply to #{@to_comment_id}", :class => 'col-form-label' %>
+  <% else %>
+    <%= label :to_comment, :content, 'Reply to all', :class => 'col-form-label' %>
+  <% end %>
+  <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+  <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
+  <%= check_box_tag "is_public", true %>
+  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+  <br/>
+  <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
 <% end %>
+  
+
+<br/>
+<p class="p1">Group Members</p>
+<table class="table table-striped col-md-12 p1" id="comment">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_members.each do |member| %>
+    <tr>
+        <td>
+          <%= member.name %><br/>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+  
+  
