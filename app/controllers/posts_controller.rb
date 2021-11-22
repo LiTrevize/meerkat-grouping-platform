@@ -69,7 +69,6 @@ class PostsController < SessionsController
   end
   
   def create
- 
     post = @current_user.posts.create(post_info)
     if post
       # tag
@@ -79,6 +78,7 @@ class PostsController < SessionsController
       post.group = group
       # group.id=post.id
       post.save
+      GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :accepted)
       redirect_to posts_path
     else
       render 'new'
@@ -141,19 +141,6 @@ class PostsController < SessionsController
       nickname_id = assoc.nickname_id
     end
     return get_nickname(nickname_id)
-  end
-
-  def add_attribute(klass, symbol)
-    codes = %Q{
-      def #{symbol}
-        return @#{symbol}
-      end
-      def #{symbol}=(value)
-        @#{symbol} = value
-      end
-    }
-
-    klass.instance_eval(codes)
   end
 
   def update_tags(post)

@@ -18,6 +18,12 @@ class ProfilesController < SessionsController
 
   def show
     @profile = Profile.find_by_user_id(@current_user.id)
+    @groups = GroupUser.where(user_id: @current_user.id)
+    @groups.each do |group_user|
+      add_attribute(group_user, :title)
+      group = Group.find(group_user.group_id)
+      group_user.title = Post.find(group.post_id).title
+    end
   end
 
   def profile_info
