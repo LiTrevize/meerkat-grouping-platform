@@ -1,5 +1,11 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+  </style>
+</head>
+
 <div class="btn btn-primary">
-  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
+  <%= link_to "Go Back to Posts", posts_path, :method => :get, :class => "link"%> 
 </div>
 <div class="btn btn-primary">
   <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
@@ -25,7 +31,8 @@ Comments:
 <table class="table table-striped col-md-12" id="comment">
   <thead>
     <tr>
-      <th>User</th>
+      <th>From</th>
+      <th>To</th>
       <th>Date</th>
       <th>Content</th>
       <th>Reply</th>
@@ -37,6 +44,13 @@ Comments:
       <tr>
         <td>
           <%= comment.from_nickname %>
+        </td>
+        <td>
+          <% if comment.to_nickname%>
+            <%= comment.to_nickname %>
+          <% else %>
+             Host
+          <% end %>
         </td>
         <td>
           <%= time_format comment.created_at %>
