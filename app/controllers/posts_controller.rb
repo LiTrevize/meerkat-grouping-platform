@@ -57,7 +57,7 @@ class PostsController < SessionsController
     for applied_user in @all_applied_user do
       this_user=User.find(applied_user.user_id)
       @applied_user_name.append(this_user.name)
-      @applied_user_intro.append(this_user.name)
+      @applied_user_intro.append(applied_user.intro)
       this_approve="/post/#{@post.group.id}/approve/#{applied_user.user_id}"
       @approve_url.append(this_approve)     
       this_reject="/post/#{@post.group.id}/reject/#{applied_user.user_id}"
@@ -67,6 +67,7 @@ class PostsController < SessionsController
     for approved_user in @all_approved_user do
       this_user=User.find(approved_user.user_id)
       @approved_user_name.append(this_user.name)
+      @approved_user_intro.append(approved_user.intro)
     end 
     
     if current_group_user == nil 

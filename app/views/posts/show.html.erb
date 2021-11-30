@@ -40,7 +40,7 @@
   }
   
   .link{
-    color: white;
+    color: #0F52BA;
     text-decoration: none;
   }
   .link:hover{
@@ -48,15 +48,19 @@
     text-decoration: none;
   }
   
+  .two_bnt{
+    padding-right:10px;
+  }
+  
   </style>
 </head>
 
 <div class="container_all">
   
-<div class="btn btn-primary">
+<div class="btn btn-outline-primary">
   <%= link_to "Go Back to Posts", posts_path, :method => :get, :class => "link"%> 
 </div>
-<div class="btn btn-primary">
+<div class="btn btn-outline-primary">
   <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
 </div>
 
@@ -78,33 +82,62 @@
 <hr class="hr1">
   
 <br/>
-<div>
-  Pending Applications:
-</div>
-<div>
-  <% for i in 0..@applied_user_name.length()-1 %>
-  <div>
-    Application from: <%= @applied_user_name[i] %>
-    <div class="btn btn-primary">
+<p class="table_title">Pending Applications</p>
+<table class="table table-striped col-md-12 table_content" id="comment">
+  <thead>
+    <tr>
+      <th>Application from</th>
+      <th>Self Introduction</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for i in 0..@applied_user_name.length()-1 %>
+    <tr>
+        <td>
+          <%= @applied_user_name[i] %><br/>
+      </td>
+      <td>
+          <%= @applied_user_intro[i] %><br/>
+      </td>
+      <td>
+      <div class="btn btn-outline-primary">
         <%= link_to "Approve",@approve_url[i], :method => :post, :class => "link"%>
+        </div>
+        <div class="btn btn-outline-primary">
         <%= link_to "Reject",@reject_url[i], :method => :post, :class => "link"%>   
-    </div>
-  </div>
-  <% end %> 
-</div>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>    
 
+<hr class="hr1">  
+  
 <br/>
+<p class="table_title">Approved Applicationss</p>
+<table class="table table-striped col-md-12 table_content" id="comment">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Self Introduction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for i in 0..@applied_user_name.length()-1 %>
+    <tr>
+        <td>
+          <%= @approved_user_name[i] %><br/>
+      </td>
+      <td>
+          <%= @approved_user_intro[i] %><br/>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>    
 
-<div>
-  Approved Applications:
-</div>
-<div>
-  <% for i in 0..@approved_user_name.length()-1 %>
-  <div>
-    <%= @approved_user_name[i] %>
-  </div>
-  <% end %>  
-</div>
   
 
 <% else %>
@@ -128,11 +161,9 @@
     <%= label :applyuser, :intro, 'Introduce yourself a bit: ', :class => 'col-form-label' %>
     <%= text_field :applyuser, :intro, :class => 'form-control comment_box_format', :id => 'comment_box' %>
   <br>
-  <%= submit_tag 'Apply', :class => 'btn btn-primary' %>
+  <%= submit_tag 'Apply', :class => 'btn btn-outline-primary' %>
   <% end %>
   
-        
-  <hr class="hr1">
   
   <% elsif @current_group_user_status == "rejected" %>
     <div>
@@ -142,11 +173,14 @@
       <div>
         Your application is approved and the host has sent you an invitation!
         Once you accepted the invitation, you will have access to the group chat.
-        <p>      
-        <%= link_to "Join the group!",accept_path(@post), :method => :post, :class => "link"%>
+       </div>
+        <div class="btn btn-outline-primary">     
+        <%= link_to "Accept the invitation!",accept_path(@post), :method => :post, :class => "link"%>
+        </div>
+        <div class="btn btn-outline-primary">
         <%= link_to "Hmmm..I don't want to join anymore",refuse_path(@post), :method => :post, :class => "link"%>
-        </p>
-  </div>
+        </div>
+  
   <% elsif @current_group_user_status == "refused" %>
     <div>
       You have applied for this group before and you were invited to join, but you refused the invitation.
@@ -154,13 +188,15 @@
   
   <% elsif @current_group_user_status == "accepted" %>
   <div>
-      Woho! You are a group member!
+      Yeah! You are a group member!
   </div>
   
   <% end %>
 </div>
  <% end %>  
    
+  
+<hr class="hr1">
 <p class="table_title">Comments</p>
 <table class="table table-striped col-md-12 table_content" id="comment">
   <thead>
@@ -198,7 +234,7 @@
         <td>
           <%= comment.content %>
         </td>
-        <td>
+        <td>     
           <%= link_to "Reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id), method: :get %>
         </td>
       </tr>
@@ -218,7 +254,7 @@
   <%= check_box_tag "is_public", true %>
   <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
   <br/>
-  <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
+  <%= submit_tag 'Reply', :class => 'link btn btn-outline-primary' %>
 <% end %>
   
 
