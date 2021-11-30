@@ -9,10 +9,16 @@
     background-size: 37px 40px;
     padding-left: 42px;
   }
+  
   .link{
-    color: black;
+    color: #0F52BA;
     text-decoration: none;
   }
+  .link:hover{
+    color: white;
+    text-decoration: none;
+  }
+  
   .welcome{
   font-family: "Lucida Console", "Courier New", monospace;
   font-size: 20px;
@@ -26,22 +32,22 @@
   
   <% if @current_user == nil %>
   
-  <a class="btn btn-primary sign-google" href="/auth/google_oauth2" role="button">Log in with Google</a>
+  <a class="btn btn-outline-primary link" href="/auth/google_oauth2" role="button">Log in with Google</a>
   
   <% else %>
   <div class="welcome">   
     Hello, <%=@current_user.name%>
   </div>
   
-  <div class="btn btn-primary">
+  <div class="btn btn-outline-primary">
     <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
   </div>
 
-  <div class="btn btn-primary">
+  <div class="btn bbtn-outline-primary">
     <%= link_to "My Profile", profile_path, :method => :get, :class => "link"%> 
   </div>
  
-  <div class="btn btn-primary sign-google">
+  <div class="btn btn-outline-primary">
     <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
   </div>
   
