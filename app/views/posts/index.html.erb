@@ -36,7 +36,7 @@
   <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
   <% @tags.each do |tag| %>
     <%= check_box_tag "tagnames[#{tag.name}]", "1", @tags_to_show.include?(tag.name) %>
-    <%= tag.name %>
+    <%= "#{tag.name} (#{tag.freq})" %>
   <% end %>
   
   <%= submit_tag 'filter', id: 'filter_submit' %>
