@@ -18,6 +18,40 @@ class ProfilesController < SessionsController
 
   def show
     @profile = Profile.find_by_user_id(@current_user.id)
+    # my groups
+    @groups = GroupUser.where(user_id: @current_user.id, status: [:accepted, :dismissed])
+    @groups.each do |group_user|
+      add_attribute(group_user, :title)
+      group = Group.find(group_user.group_id)
+      group_user.title = Post.find(group.post_id).title
+    end
+    # my pending action
+    # approve or reject
+    hosted = GroupUser.where(user_id: @current_user.id, is_host: true)
+    @pendings = []
+    hosted.each do |host_group_user|
+      group_user = GroupUser.where(group_id: host_group_user.group_id).where.not(user_id: @current_user.id).first
+      if not group_user
+        next
+      end
+      group = Group.find(group_user.group_id)
+      post = Post.find(group.post_id)
+      add_attribute(group_user, :title)
+      group_user.title = post.title
+      add_attribute(group_user, :post_id)
+      group_user.post_id = post.id
+      @pendings.push(group_user)
+    end
+    # applied
+    @applied = GroupUser.where(user_id: @current_user.id, is_host: false, status: [:applied, :approved, :rejected])
+    @applied.each do |group_user|
+      group = Group.find(group_user.group_id)
+      post = Post.find(group.post_id)
+      add_attribute(group_user, :title)
+      group_user.title = post.title
+      add_attribute(group_user, :post_id)
+      group_user.post_id = post.id
+    end
   end
 
   def profile_info
