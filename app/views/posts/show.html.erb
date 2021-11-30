@@ -19,6 +19,7 @@
     font-family: "Sans-serif", "Arial", monospace;
     font-weight: bold;
     font-size: 40px;
+    padding-top:10px;
   }
   .content{
     font-family: "Sans-serif", "Arial", monospace;
@@ -63,8 +64,7 @@
 <div class="btn btn-outline-primary">
   <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
 </div>
-
-
+  
 <h1 class="title">
   <%= @post.title %>
 </h1>
@@ -83,6 +83,8 @@
   
 <br/>
 <p class="table_title">Pending Applications</p>
+  
+<% if @applied_user_name.length()>0 %>
 <table class="table table-striped col-md-12 table_content" id="comment">
   <thead>
     <tr>
@@ -112,11 +114,17 @@
     <% end %>
   </tbody>
 </table>    
-
+<% else %>
+  <div class = "sub_content">
+    There are no pending applications
+  </div>
+<% end %>
 <hr class="hr1">  
   
 <br/>
 <p class="table_title">Approved Applicationss</p>
+
+<% if @approved_user_name.length()>0 %>
 <table class="table table-striped col-md-12 table_content" id="comment">
   <thead>
     <tr>
@@ -125,7 +133,7 @@
     </tr>
   </thead>
   <tbody>
-    <% for i in 0..@applied_user_name.length()-1 %>
+    <% for i in 0..@approved_user_name.length()-1 %>
     <tr>
         <td>
           <%= @approved_user_name[i] %><br/>
@@ -137,7 +145,11 @@
     <% end %>
   </tbody>
 </table>    
-
+<% else %>
+  <div class = "sub_content">
+    There are no approved applications
+  </div>
+<%  end %>
   
 
 <% else %>
@@ -242,7 +254,7 @@
     <% end %>
   </tbody>
 </table>
-
+  
 <%= form_tag create_comment_path, :class => 'form' do %>
   <% if @to_comment_id %>
     <%= label :to_comment, :content, "Reply to #{@to_comment_id}", :class => 'col-form-label' %>
@@ -262,6 +274,8 @@
   
 <hr class="hr1">
 <p class="table_title">Current Group Members</p>
+  
+<% if @all_members_name.length()>0 %>
 <table class="table table-striped col-md-12 table_content" id="comment">
   <thead>
     <tr>
@@ -282,7 +296,11 @@
     <% end %>
   </tbody>
 </table>
-
+<% else %>
+  <div class = "sub_content">
+    Currently there are no group members
+  </div>
+  <% end %>
 </div>
   
   
