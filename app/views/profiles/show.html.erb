@@ -1,3 +1,5 @@
+<%= render 'posts/header' %>
+
 <h1>Complete Your Profile</h1>
 <%= form_tag put_profile_path(@profile), :method => :put, :class => 'form' do %>
   <%= label nil, nil, 'Name', :class => 'col-form-label' %>
