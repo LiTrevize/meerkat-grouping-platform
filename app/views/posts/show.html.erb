@@ -1,31 +1,135 @@
-<div class="btn btn-primary">
-  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+  .container_all{
+    padding-right:100px;
+    padding-left:100px;  
+  }
+  .p1{
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+  .title{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-weight: bold;
+  }
+  .content{
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 40px;
+  }
+  .comment_box_format{
+    width:500px;  
+  }
+  </style>
+</head>
+
+<div class="container_all">
+  
+<div class="btn btn-outline-primary">
+  <%= link_to "Go Back to Posts", posts_path, :method => :get, :class => "link"%> 
 </div>
-<div class="btn btn-primary">
+<div class="btn btn-outline-primary">
   <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
 </div>
 
-<p><%= flash[:msg] %></p>
+<p class="p1"><%= flash[:msg] %></p>
 
-<h1>
-  <%= @post.title %>
-</h1>
-<p>
-  Host: <%= @post.content %>
-</p>
-<p>
+<h5> Post: </h5>
+
+<div>
+  Title: 
+   <%= @post.title %>
+</div>
+
+<div>
+  Content:
+  <%= @post.content %>
+</div>
+
+<div>
    Number of people needed for this group: <%= @post.low_number %>-<%= @post.low_number %>
-</p>
-Accepted Group Members:<br/>
-<% @all_members.each do |member| %>
-  <%= member.name %><br/>
-<% end %>
+</div>
+
 <br/>
-Comments:
-<table class="table table-striped col-md-12" id="comment">
+<h5> Application: </h5>
+
+<% if @post.user_id === @current_user.id%>
+<div>
+  Pending Applications:
+</div>
+<div>
+  <% for i in 0..@applied_user_name.length()-1 %>
+  <div>
+    Application from: <%= @applied_user_name[i] %>
+    <div class="btn btn-primary">
+        <%= link_to "Approve",@approve_url[i], :method => :post, :class => "link"%>
+        <%= link_to "Reject",@reject_url[i], :method => :post, :class => "link"%>   
+    </div>
+  </div>
+  <% end %> 
+</div>
+<div>
+  Approved Applications:
+</div>
+<div>
+  <% for i in 0..@approved_user_name.length()-1 %>
+  <div>
+    <%= @approved_user_name[i] %>
+  </div>
+  <% end %>  
+</div>
+  
+<% else %>
+<div>
+  <div>
+    status:<%=  @current_group_user_status %>
+  </div>
+    
+  <% flash.each do |type, msg| %>
+    <div class="p1">
+      <%= msg %>
+    </div>
+  <% end %>
+  
+  <% if @current_group_user_status == "You haven't applied for this Group" %>
+    <div class="btn btn-primary">
+        <%= link_to "Apply", apply_path(@post), :method => :post, :class => "link"%>   
+    </div>
+  <% elsif @current_group_user_status == "rejected" %>
+    <div>
+      Sorry, your application is rejected by the host. Feel free to check out other groups
+    </div>
+  <% elsif @current_group_user_status == "approved" %>
+      <div>
+        Your application is approved and the host has sent you an invitation!
+        Once you accepted the invitation, you will have access to the group chat.
+        <p>      
+        <%= link_to "Join the group!",accept_path(@post), :method => :post, :class => "link"%>
+        <%= link_to "Hmmm..I don't want to join anymore",refuse_path(@post), :method => :post, :class => "link"%>
+        </p>
+      </div>
+  <% elsif @current_group_user_status == "refused" %>
+    <div>
+      You have applied for this group before and you were invited to join, but you refused the invitation.
+  </div>
+  
+  <% elsif @current_group_user_status == "accepted" %>
+  <div>
+      Woho! You are a group member!
+  </div>
+  
+  <% end %>
+</div>
+ <% end %>  
+ 
+ 
+<br/>
+<h5>Comments: </h5>
+<table class="table col-md-12" id="comment">
   <thead>
     <tr>
-      <th>User</th>
+      <th>ID</th>
+      <th>From</th>
+      <th>To</th>
       <th>Date</th>
       <th>Content</th>
       <th>Reply</th>
@@ -36,8 +140,33 @@ Comments:
       <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
       <tr>
         <td>
+          <%= comment.id %>
+        </td>
+        
+        <td>
           <%= comment.from_nickname %>
         </td>
+        <td>
+          <% if comment.to_nickname%>
+            <%= comment.to_comment_id %>
+
+            <table class="table col-md-12">
+              <thead>
+                <tr>
+                  <th>From</th>
+                  <th>Content</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+
+          <% else %>
+             Public
+          <% end %>
+        </td>
+        
         <td>
           <%= timef comment.created_at %>
         </td>
@@ -59,92 +188,34 @@ Comments:
   <% else %>
     <%= label :to_comment, :content, 'Reply to all', :class => 'col-form-label' %>
   <% end %>
-  <%= text_field :to_comment, :content, :class => 'form-control', :id => 'comment_box' %>
+  <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
   <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
   <%= check_box_tag "is_public", true %>
   <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
   <br/>
   <%= submit_tag 'Reply', :class => 'btn btn-primary' %>
 <% end %>
-
-
-<% if @post.user_id === @current_user.id%>
-<p>
-  You are the host
-</p>
+  
 
 <br/>
+<h5>Group Members: </h5>
+<table class="table col-md-12" id="comment">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_members.each do |member| %>
+    <tr>
+        <td>
+          <%= member.name %><br/>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<div>
-  Pending Applications:
-</div>
-<div>
-  <% for i in 0..@applied_user_name.length()-1 %>
-  <div>
-    This person applied: <%= @applied_user_name[i] %>
-    <div class="btn btn-primary">
-        <%= link_to "Approve",@approve_url[i], :method => :post, :class => "link"%>
-        <%= link_to "Reject",@reject_url[i], :method => :post, :class => "link"%>   
-    </div>
-  </div>
-  <% end %> 
-</div>
-
-<br/>
-
-<div>
-  Approved Applications:
-</div>
-<div>
-  <% for i in 0..@approved_user_name.length()-1 %>
-  <div>
-    This person is in the group: <%= @approved_user_name[i] %>
-  </div>
-  <% end %>  
 </div>
   
-
-<% else %>
-<div>
-  You are not the host
-  <div>
-    status:<%=  @current_group_user_status %>
-  </div>
-    
-  <% flash.each do |type, msg| %>
-    <div>
-      <%= msg %>
-    </div>
-  <% end %>
   
-  <% if @current_group_user_status == "You haven't applied for this Group" %>
-    <div class="btn btn-primary">
-        <%= link_to "Apply", apply_path(@post), :method => :post, :class => "link"%>   
-    </div>
-  <% elsif @current_group_user_status == "rejected" %>
-    <div>
-      Sorry, your application is rejected by the host. Feel free to check out other groups
-    </div>
-  <% elsif @current_group_user_status == "approved" %>
-      <div>
-        Your application is approved and the host has sent you an invitation!
-        Once you accepted the invitation, you will have access to the group chat.
-        <p>      
-        <%= link_to "Join the group!",accept_path(@post), :method => :post, :class => "link"%>
-        <%= link_to "Hmmm..I don't want to join anymore",refuse_path(@post), :method => :post, :class => "link"%>
-        </p>
-  </div>
-  <% elsif @current_group_user_status == "refused" %>
-    <div>
-      You have applied for this group before and you were invited to join, but you refused the invitation.
-  </div>
-  
-  <% elsif @current_group_user_status == "accepted" %>
-  <div>
-      Woho! You are a group member!
-  </div>
-  
-  <% end %>
-</div>
-
-<% end %>
