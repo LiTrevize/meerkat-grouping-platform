@@ -87,6 +87,7 @@ class PostsController < SessionsController
 
   def destroy
     @post = Post.find(params[:id])
+    update_tags(@post)
     @post.destroy
     redirect_to posts_path
   end
@@ -153,20 +154,22 @@ class PostsController < SessionsController
       end
     end
     post.post_tags.destroy_all
-    params[:tags].each do |_, name|
-      if not name.blank?
-        tag = Tag.find_or_create_by!(name: name)
+    if params[:tags]
+      params[:tags].each do |_, name|
+        if not name.blank?
+          tag = Tag.find_or_create_by!(name: name)
+          post.tags.append(tag)
+          tag.update(freq: tag.freq + 1)
+        end
+      end
+      # puts '#######'
+      # puts post.tags
+      # puts post.tags.length
+      if post.tags.length == 0
+        tag = Tag.find_or_create_by!(name: 'other')
         post.tags.append(tag)
         tag.update(freq: tag.freq + 1)
       end
-    end
-    puts '#######'
-    puts post.tags
-    puts post.tags.length
-    if post.tags.length == 0
-      tag = Tag.find_or_create_by!(name: 'other')
-      post.tags.append(tag)
-      tag.update(freq: tag.freq + 1)
     end
     post.save
   end
