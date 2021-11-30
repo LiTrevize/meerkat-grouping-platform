@@ -6,7 +6,7 @@ class GroupsController < PostsController
       flash[:msg] = 'Cannot apply to your own group'
     else
       group_user = GroupUser.create(group_id: params[:id], user_id: @current_user.id, status: :applied)
-      flash[:msg] = 'Group applied' 
+      flash[:msg] = 'You have applied for this group, please wait for the host to review your application' 
     end
     redirect_back(fallback_location: posts_path)
   end
@@ -51,7 +51,7 @@ class GroupsController < PostsController
     if is_member?
       @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).limit(10).reverse_order
     else
-      flash[:msg] = "You have not joined the group"
+      flash[:msg] = "You have not joined the group, only group members can access the group chat"
       redirect_to post_path(@group.post)
     end
   end

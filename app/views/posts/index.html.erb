@@ -25,7 +25,7 @@
 </div>
 
 <div class="btn btn-primary">
-  <%= link_to "My Profile", profile_path, :method => :get, :class => "link"%> 
+  <%= link_to "Me", profile_path, :method => :get, :class => "link"%> 
 </div>
 
 <div class="btn btn-primary sign-google">
@@ -36,13 +36,46 @@
   <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
   <% @tags.each do |tag| %>
     <%= check_box_tag "tagnames[#{tag.name}]", "1", @tags_to_show.include?(tag.name) %>
-    <%= tag.name %>
+    <%= "#{tag.name} (#{tag.freq})" %>
   <% end %>
   
   <%= submit_tag 'filter', id: 'filter_submit' %>
   <%= link_to "reset", posts_path %>
 <% end %>
 
+<div class="container">
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-sm-4">
+        <div class="card" style="width: 16em; height: 16em; border: solid;">
+          <h4 class="card-title" style="text-align: center; margin-bottom: 5px"><%= post.title %></h4>
+          <div style="padding: 0px 5px">
+            <% post.tags.each do |tag| %>
+              <span class="badge bg-primary" style="border-radius: 0.4em"><%= "#{tag.name} " %></span>
+            <% end %>
+          </div>
+          <div class="card-body" style="padding: 5px 10px">
+            <div style="height: 5em"><p class="card-text"><%= post.content %></p></div>
+            <%= "Members: #{interval_format(post.low_number, post.high_number)}" %><br/>
+            <%= "Date: #{interval_format(datef(post.start), datef(post.end))}" %><br/>
+            <%= "Created at #{timef post.created_at}" %><br/>
+            <div style="position: absolute; bottom: 0; padding-bottom: 5px; width: 14em">
+              <%= link_to "More...", post_path(post) %>
+              <div style="float: right">
+                <% if @current_user.id==post.user.id %>
+                  <%= link_to "Edit", edit_post_path(post), method: :get %>
+                <% end %>
+                <% if @current_user.id==post.user.id %>
+                  <%= link_to "Delete", del_post_path(post), method: :delete %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <table class="table table-striped col-md-12" id="post">
   <thead>

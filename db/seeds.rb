@@ -43,6 +43,7 @@ post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: 
 tag = Tag.create!(name: 'coursework', freq: 1)
 PostTag.create!(post_id: post.id, tag_name: tag.name)
 group = Group.create(post_id: post.id)
+GroupUser.create(group_id: group.id, user_id: user.id, is_host: true, status: :accepted)
 GroupUser.create(group_id: group.id, user_id: user1.id, status: :accepted)
 GroupUser.create(group_id: group.id, user_id: user2.id, status: :accepted)
 # comments

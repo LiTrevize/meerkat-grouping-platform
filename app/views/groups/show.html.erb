@@ -14,6 +14,6 @@
 <% end %>
 
 <%= form_tag send_chat_path, :class => 'form' do %>
-  <%= text_field :msg, :text, :class => 'form-control', :id => 'chat_box' %>
+  <%= text_field :msg, :text, :class => 'form-control', :id => 'chat_box', :required => true %>
   <%= submit_tag 'Send', :class => 'btn btn-primary' %>
 <% end %>

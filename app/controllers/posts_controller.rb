@@ -69,7 +69,6 @@ class PostsController < SessionsController
   end
   
   def create
- 
     post = @current_user.posts.create(post_info)
     if post
       # tag
@@ -79,6 +78,7 @@ class PostsController < SessionsController
       post.group = group
       # group.id=post.id
       post.save
+      GroupUser.create(group_id: group.id, user_id: @current_user.id, is_host: true, status: :accepted)
       redirect_to posts_path
     else
       render 'new'
@@ -87,6 +87,7 @@ class PostsController < SessionsController
 
   def destroy
     @post = Post.find(params[:id])
+    update_tags(@post)
     @post.destroy
     redirect_to posts_path
   end
@@ -143,19 +144,6 @@ class PostsController < SessionsController
     return get_nickname(nickname_id)
   end
 
-  def add_attribute(klass, symbol)
-    codes = %Q{
-      def #{symbol}
-        return @#{symbol}
-      end
-      def #{symbol}=(value)
-        @#{symbol} = value
-      end
-    }
-
-    klass.instance_eval(codes)
-  end
-
   def update_tags(post)
     post.tags.each do |tag|
       tag.freq -= 1
@@ -166,20 +154,22 @@ class PostsController < SessionsController
       end
     end
     post.post_tags.destroy_all
-    params[:tags].each do |_, name|
-      if not name.blank?
-        tag = Tag.find_or_create_by!(name: name)
+    if params[:tags]
+      params[:tags].each do |_, name|
+        if not name.blank?
+          tag = Tag.find_or_create_by!(name: name)
+          post.tags.append(tag)
+          tag.update(freq: tag.freq + 1)
+        end
+      end
+      # puts '#######'
+      # puts post.tags
+      # puts post.tags.length
+      if post.tags.length == 0
+        tag = Tag.find_or_create_by!(name: 'other')
         post.tags.append(tag)
         tag.update(freq: tag.freq + 1)
       end
-    end
-    puts '#######'
-    puts post.tags
-    puts post.tags.length
-    if post.tags.length == 0
-      tag = Tag.find_or_create_by!(name: 'other')
-      post.tags.append(tag)
-      tag.update(freq: tag.freq + 1)
     end
     post.save
   end

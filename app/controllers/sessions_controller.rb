@@ -69,6 +69,18 @@ class SessionsController < ApplicationController
   def log_in(user)
     session[:uid] = user.id
   end
-  
+
+  def add_attribute(klass, symbol)
+    codes = %Q{
+    def #{symbol}
+        return @#{symbol}
+    end
+    def #{symbol}=(value)
+        @#{symbol} = value
+    end
+    }
+
+    klass.instance_eval(codes)
+  end
 
 end
