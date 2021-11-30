@@ -42,8 +42,8 @@ gem 'execjs'
 # set local env
 gem "figaro"
 
-#install bootstrap
-#gem 'bootstrap', '~> 5.1.0'
+# install bootstrap
+gem 'bootstrap-sass'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
