@@ -1,6 +1,6 @@
-<%= render 'posts/header' %>
+<%= render partial: 'posts/header', locals: {title: 'New Post', posts: ''} %>
 
-<h1>Complete Your Post</h1>
+<%# <h1>Complete Your Post</h1> %>
 <%= form_tag posts_path, :class => 'form' do %>
   <%= label :post, :title, 'Title', :class => 'col-form-label' %>
   <%= text_field :post, :title, :class => 'form-control', :required => true %>

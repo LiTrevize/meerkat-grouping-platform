@@ -248,14 +248,7 @@ body{
 }
 </style>
 
-<div class="btn btn-primary">
-  <%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%> 
-</div>
-<div class="btn btn-primary">
-  <%= link_to "Go to Post", post_path(@group.post), :method => :get, :class => "link"%> 
-</div>
-
-<h1>Group Chat</h1>
+<%= render partial: 'posts/header', locals: {title: 'Group Chat', posts: '', post: @group.post} %>
 
 <h2><%= @group.post.title %></h2>
 

@@ -40,14 +40,9 @@
   </style>
 </head>
 
+<%= render partial: 'posts/header', locals: {title: 'Post', posts: '', group: @group} %>
+
 <div class="container_all">
-  
-<div class="btn btn-outline-primary">
-  <%= link_to "Go Back to Posts", posts_path, :method => :get, :class => "link"%> 
-</div>
-<div class="btn btn-outline-primary">
-  <%= link_to "Go to Group Chat", group_path(@group), :method => :get, :class => "link"%> 
-</div>
 
 <p class="p1"><%= flash[:msg] %></p>
 

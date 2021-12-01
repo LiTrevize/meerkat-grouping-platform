@@ -16,21 +16,9 @@
   </style>
 </head>
 
+<%= render partial: 'posts/header', locals: {title: "Posts", new: ""} %>
 
-
-<h1>Posts</h1>
-
-<div class="btn btn-primary">
-  <%= link_to "New Post", new_post_path, :method => :get, :class => "link"%>   
-</div>
-
-<div class="btn btn-primary">
-  <%= link_to "Me", profile_path, :method => :get, :class => "link"%> 
-</div>
-
-<div class="btn btn-primary sign-google">
-  <%= link_to "Log out", logout_path, :method => :delete, :class => "link"%>   
-</div>
+<%# <h1>Posts</h1> %>
 
 <%= form_tag posts_path(@post), :method => :get, :class => 'form' do %>
   <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>

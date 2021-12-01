@@ -21,32 +21,12 @@
   </style>
   <body>
 
+
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <ul class="navbar-nav mr-auto">
-    <% if defined? new %>
-    <li class="nav-item">
-      <%= link_to "New Post", new_post_path, :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
-
-    <% if defined? posts %>
-    <li class="nav-item">
-      <%= link_to "Back to Posts", posts_path, :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
-
-    <% if defined? group %>
-    <li class="nav-item">
-      <%= link_to "Go to Chat", group_path(group), :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
-
-    <% if defined? post %>
-    <li class="nav-item">
-      <%= link_to "Go to Post", post_path(post), :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
   </ul>
 
 
@@ -60,6 +40,9 @@
     </li> %>
     <li class="nav-item">
       <%= link_to "Home", root_path, :method => :get, :class => "nav-link"%>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Posts", posts_path, :method => :get, :class => "nav-link"%>
     </li>
     <li class="nav-item">
       <%= link_to "Me", profile_path, :method => :get, :class => "nav-link" %>
