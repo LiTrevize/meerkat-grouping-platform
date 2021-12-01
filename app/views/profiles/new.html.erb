@@ -1,19 +1,71 @@
-<h1>Complete Your Profile</h1>
+<style>
+  .card_position{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:50px;  
+    width:500px;  
+  }
+  .card_title{
+    font-family: "Sans-serif", "Arial", monospace;
+    font-size: 30px;
+    font-weight: bold;
+  }  
+</style>
+
 <%= form_tag profile_path, :class => 'form' do %>
-  <%= label nil, nil, 'Name', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label nil, nil, 'Email', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :school, 'School', :class => 'col-form-label' %>
-  <%= text_field :profile, :school, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
-  <%= text_field :profile, :degree, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
-  <%= text_field :profile, :major, :class => 'form-control' %>
-  <br/>
-  <%= submit_tag 'Continue', :class => 'btn btn-primary' %>
+<div class="card card_position">
+  <div class="card-header text-center card_title">
+    Complete Your Profile
+  </div>
+  
+  <div class="card-body">
+    <div class="row">  
+      <div class="col-md-12">
+        <%= label nil, nil, 'Name', :class => 'control-label' %>
+        <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
+      </div>
+    </div>
+    <br/>
+    <div class="row">  
+      <div class="col-md-12">
+        <%= label nil, nil, 'Email', :class => 'control-label' %>
+        <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
+      </div>
+    </div>
+    
+    <br/>
+    <div class="row">  
+      <div class="col-md-12">
+       <%= label :profile, :school, 'School', :class => 'control-label' %>
+       <%= text_field :profile, :school, :class => 'form-control' %>
+      </div>
+    </div>
+    
+    <br/>
+    <div class="row">  
+      <div class="col-md-12">
+       <%= label :profile, :degree, 'Degree', :class => 'control-label' %>
+       <%= text_field :profile, :degree, :class => 'form-control' %>
+      </div>
+    </div>
+    
+    <br/>   
+    <div class="row">  
+      <div class="col-md-12">
+       <%= label :profile, :major, 'Major', :class => 'control-label' %>
+       <%= text_field :profile, :major, :class => 'form-control' %>
+      </div>
+    </div>
+    
+    <br/>
+    <div class="row">
+      <div class="col-md-3">
+       <%= submit_tag 'Continue', :class => 'btn btn-primary' %>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
 <% end %>
+ 
