@@ -66,72 +66,9 @@
 </div>
   
 <br/>
-  
 <div class="card">
   <div class="card-header text-center card_title">
-    Pending Applications
-  </div>
-  <div class="card-body">
-    
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"> 
-         <div class="row my_groups_title">
-           <div class="col-md-1">
-           </div>
-          <div class="col-md-3">
-              Post
-          </div>
-         <div class="col-md-5">
-              Applicant Message
-         </div>
-           <div class="col-md-3">
-              Action
-          </div>           
-        </div>
-      </li>
-      
-    <% if @pendings.length()<1 %>  
-       <li class="list-group-item">
-         <div class=" row">
-           <div class="col-md-12 text-center">
-                 No pending applications
-           </div>
-         </div>
-      </li>
-    <% else %>
-    <% @pendings.each do |group| %>
-      <li class="list-group-item">    
-         <div class="row">
-           <div class="col-md-1">
-           </div>
-           
-            <div class="col-md-3">
-              <%= group.title %>
-            </div>
-           
-            <div class="col-md-5">
-             <%= group.intro %>
-            </div>
-           
-            <div class="col-md-3">
-              <div class="btn btn-primary">
-               <%= link_to "Approve", approve_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
-               <%= link_to "Reject", reject_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
-              </div>
-            </div>         
-          </div>
-        </li>    
-      <% end %>
-    <% end %>
-   </ul>    
-  </div>
-</div>
- 
-<br/>
-  
-<div class="card">
-  <div class="card-header text-center card_title">
-    Applications you sent
+    My Applications
   </div>
   <div class="card-body">
     
@@ -155,7 +92,7 @@
        <li class="list-group-item">
          <div class=" row">
            <div class="col-md-12 text-center">
-                 No applications
+                 No action needed
            </div>
          </div>
       </li>
@@ -196,7 +133,68 @@
   </div>
 </div>
 
-  
+<br/>
+<div class="card">
+  <div class="card-header text-center card_title">
+    Applications to review
+  </div>
+  <div class="card-body">
+    
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"> 
+         <div class="row my_groups_title">
+           <div class="col-md-1">
+           </div>
+          <div class="col-md-3">
+              Post
+          </div>
+         <div class="col-md-5">
+              Applicant Message
+         </div>
+           <div class="col-md-3">
+              Action
+          </div>           
+        </div>
+      </li>
+      
+    <% if @pendings.length()<1 %>  
+       <li class="list-group-item">
+         <div class=" row">
+           <div class="col-md-12 text-center">
+                 No action nedded
+           </div>
+         </div>
+      </li>
+    <% else %>
+    <% @pendings.each do |group| %>
+      <li class="list-group-item">    
+         <div class="row">
+           <div class="col-md-1">
+           </div>
+           
+            <div class="col-md-3">
+              <%= group.title %>
+            </div>
+           
+            <div class="col-md-5">
+             <%= group.intro %>
+            </div>
+           
+            <div class="col-md-3">
+              <div class="btn btn-primary">
+               <%= link_to "Approve", approve_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
+               <%= link_to "Reject", reject_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
+              </div>
+            </div>         
+          </div>
+        </li>    
+      <% end %>
+    <% end %>
+   </ul>    
+  </div>
+</div>
+ 
+<br/>  
   
  
 </div>
