@@ -47,10 +47,10 @@ GroupUser.create(group_id: group.id, user_id: user.id, is_host: true, status: :a
 GroupUser.create(group_id: group.id, user_id: user1.id, status: :accepted)
 GroupUser.create(group_id: group.id, user_id: user2.id, status: :accepted)
 # comments
-Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true, from_user_id: user1.id)
-Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: true, from_user_id: user.id)
-Comment.create!(post_id: post.id, content: "How's your background?", is_public: true, from_user_id: user2.id)
-Comment.create!(post_id: post.id, content: "I have one year experience of full stack development", is_public: true, from_user_id: user.id)
+c1 = Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true, from_user_id: user1.id)
+c2 = Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: true, from_user_id: user.id, to_comment_id: c1.id, to_user_id: user1.id, to_comment_leader_id: c1.id)
+c3 = Comment.create!(post_id: post.id, content: "How's your background?", is_public: true, from_user_id: user2.id)
+c4 = Comment.create!(post_id: post.id, content: "I have one year experience of full stack development", is_public: true, from_user_id: user.id, to_comment_id: c3.id, to_user_id: user2.id, to_comment_leader_id: c3.id)
 
 PostUserNickname.create([
     {post_id: post.id, user_id: user1.id, nickname_id: 1},

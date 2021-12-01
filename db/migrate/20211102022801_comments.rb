@@ -10,6 +10,7 @@ class Comments < ActiveRecord::Migration[5.2]
       t.integer :from_user_nickname
       t.references :to_user, foreign_key: {to_table: :users}
       t.references :to_comment, foreign_key: {to_table: :comments}
+      t.references :to_comment_leader, foreign_key: {to_table: :comments}
       
       
     end

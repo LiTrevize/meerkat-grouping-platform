@@ -24,14 +24,22 @@ class PostsController < SessionsController
     @post = Post.find(params[:id])
     @group = @post.group
     # comments
-    @comments = Comment.where(post_id: params[:id]).order(:created_at)
+    @comments = Comment.where(post_id: params[:id], to_comment_leader_id: nil).order(:created_at)
     @comments.each do |comment|
       add_attribute(comment, :from_nickname)
       comment.from_nickname = update_nickname(@post, comment.from_user_id)
       add_attribute(comment, :to_nickname)
       comment.to_nickname = update_nickname(@post, comment.to_user_id)
-      add_attribute(comment, :sub)
-      comment.sub = Hash.new
+      add_attribute(comment, :subs)
+      comment.subs = []
+      subs = Comment.where(post_id: params[:id], to_comment_leader_id: comment.id).order(:created_at)
+      subs.each do |sub|
+        add_attribute(sub, :from_nickname)
+        sub.from_nickname = update_nickname(@post, sub.from_user_id)
+        add_attribute(sub, :to_nickname)
+        sub.to_nickname = update_nickname(@post, sub.to_user_id)
+        comment.subs.push(sub)
+      end
     end
     @to_comment_id = params[:to_comment_id]
     @to_user_id = params[:to_user_id]

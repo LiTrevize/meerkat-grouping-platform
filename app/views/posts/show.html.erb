@@ -29,7 +29,7 @@
   }
   .sub-comment {
     margin-left:55px;
-    margin-top:5px;
+    margin-top:10px;
   }
   .comment-meta {
   font-size: 12px;
@@ -148,7 +148,8 @@
   <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
   <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
   <%= check_box_tag "is_public", true %>
-  <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+  <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+  <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
   <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
 <% end %>
 
@@ -165,42 +166,47 @@
         <div class="comment-text"><%= comment.content %></div>
         <div class="comment-meta">
           <span style="margin-right: 10px"><%= timef comment.created_at %></span>
-          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname), method: :get %>
+          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname, to_comment_leader_id: comment.id), method: :get %>
         </div>
       </div>
 
-      <% if @to_comment_id == comment.id.to_s %>
+      <% if params[:to_comment_id] == comment.id.to_s %>
         <%= form_tag create_comment_path, :class => 'form' do %>
           <%= label :to_comment, :to, "reply to #{comment.from_nickname}", :class => 'col-form-label' %>
           <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
           <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
           <%= check_box_tag "is_public", true %>
-          <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
           <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
         <% end %>
       <% end %>
 
-      <% comment.sub.each do |sub| %>
+      <% comment.subs.each do |sub| %>
       <% if sub.is_public or sub.from_user_id == @current_user.id or @post.user_id == @current_user.id or sub.to_user_id == @current_user.id %>
-      <div class="sub-comment">
+      <div class="row sub-comment">
         <div class="col-auto">
           <span class="media-heading comment-title badge badge-info"><%= sub.from_nickname %></span>
+          <% if sub.to_nickname %>
+          <div class="comment-meta" style="margin-top: 5px"><%= "(to #{sub.to_nickname})" %></div>
+          <% end %>
         </div>
         <div class="col">
           <div class="comment-text"><%= sub.content %></div>
           <div class="comment-meta">
             <span style="margin-right: 10px"><%= timef sub.created_at %></span>
-            <%= link_to "reply", post_path(@post, to_comment_id: sub.id, to_user_id: sub.from_user_id, to_nickname: sub.from_nickname), method: :get %>
+            <%= link_to "reply", post_path(@post, to_comment_id: sub.id, to_user_id: sub.from_user_id, to_nickname: sub.from_nickname, to_comment_leader_id: comment.id), method: :get %>
           </div>
         </div>
 
-        <% if @to_comment_id == sub.id.to_s %>
+        <% if params[:to_comment_id] == sub.id.to_s %>
         <%= form_tag create_comment_path, :class => 'form' do %>
           <%= label :to_comment, :to, "reply to #{sub.from_nickname}", :class => 'col-form-label' %>
           <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
           <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
           <%= check_box_tag "is_public", true %>
-          <%= text_field :to_comment, :id, :value => @to_comment_id, :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
           <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
         <% end %>
       <% end %>
@@ -214,44 +220,6 @@
   <% end %>
 </div>
 
-<div class="container mb-5 mt-5">
-  <div class="card">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <% @comments.each do |comment| %>
-            <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
-              <div class="col-md-12">
-                <div class="media">
-                  <div class="media-body">
-                    <div class="row">
-                      <div class="col-8 d-flex">
-                        <h5><%= comment.from_nickname %></h5> <span> - <%= timef comment.created_at %> </span> 
-                        
-                      </div>
-                      <div class="col-4">
-                        <div class="pull-right reply"> <a href="#"><%= link_to "Reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id), method: :get %></a> </div>
-                      </div>
-                    </div><%= comment.content %><hr>
-                    <div class="media mt-4">
-                      <div class="media-body">
-                        <div class="row">
-                          <div class="col-12 d-flex">
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <%end%>
-          <%end%>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
   
 

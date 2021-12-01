@@ -8,6 +8,9 @@ class CommentsController < PostsController
             #is_public = false
         #end
         to_comment_id = params[:to_comment][:id]
+        to_comment_leader_id = params[:to_comment][:leader_id]
+        puts '################'
+        puts params[:to_comment]
         #if not to_comment_id
             #to_comment_id = nil
         #end
@@ -16,7 +19,7 @@ class CommentsController < PostsController
         if to_comment
             to_user_id = to_comment.from_user_id
         end
-        comment = post.comments.create(content: params[:to_comment][:content], from_user_id: @current_user.id, to_user_id: to_user_id, to_comment_id: to_comment_id, is_public: is_public)
+        comment = post.comments.create(content: params[:to_comment][:content], from_user_id: @current_user.id, to_user_id: to_user_id, to_comment_id: to_comment_id, is_public: is_public, to_comment_leader_id: to_comment_leader_id)
         update_nickname(post, @current_user.id)
         redirect_to post_path(post)
     end
