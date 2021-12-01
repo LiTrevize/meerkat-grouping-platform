@@ -49,7 +49,18 @@ class GroupsController < PostsController
   def show
     @group = Group.find(params[:id])
     if is_member?
-      @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).limit(10).reverse_order
+      group_users = GroupUser.where(group_id: @group.id, status: :accepted)
+      ids = []
+      group_users.each do |group_user|
+        ids.push(group_user.user_id)
+      end
+      @members = User.where(id: ids)
+      # @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :desc).limit(10).reverse_order
+      @group_chats = GroupChat.where(group_id: @group.id).order(created_at: :asc)
+      @group_chats.each do |chat|
+        add_attribute(chat, :user_name)
+        chat.user_name = User.find(chat.user_id).name
+      end
     else
       flash[:msg] = "You have not joined the group, only group members can access the group chat"
       redirect_to post_path(@group.post)
