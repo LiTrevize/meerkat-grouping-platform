@@ -30,6 +30,8 @@ class PostsController < SessionsController
       comment.from_nickname = update_nickname(@post, comment.from_user_id)
       add_attribute(comment, :to_nickname)
       comment.to_nickname = update_nickname(@post, comment.to_user_id)
+      add_attribute(comment, :sub)
+      comment.sub = Hash.new
     end
     @to_comment_id = params[:to_comment_id]
     @to_user_id = params[:to_user_id]
