@@ -72,7 +72,7 @@
    <%= @post.content %>
 </p>
 <p class="sub_content">
-   &middot; Number of people needed for this group: <%= @post.low_number %> - <%= @post.low_number %>
+   &middot; Number of people needed for this group: <%= @post.low_number %> - <%= @post.high_number %>
 </p>
 
 <% if @post.user_id === @current_user.id%>
