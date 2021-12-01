@@ -48,8 +48,8 @@
     <% @posts.each do |post| %>
       <div class="col-sm-4">
         <div class="card" style="width: 16em; height: 16em; border: solid;">
-          <h4 class="card-title" style="text-align: center; margin-bottom: 5px"><%= post.title %></h4>
           <div style="padding: 0px 5px">
+            <h4 class="card-title text-truncate" style="text-align: center; margin-bottom: 5px"><%= post.title %></h4>
             <% post.tags.each do |tag| %>
               <span class="badge bg-primary" style="border-radius: 0.4em"><%= "#{tag.name} " %></span>
             <% end %>
