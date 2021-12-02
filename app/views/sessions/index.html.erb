@@ -4,10 +4,10 @@
 <style>
   .sign-google {
     background: url('https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip') #f2f2f2;
-    background-position: -9px -7px;
+    background-position: 0px 0px;
     background-repeat: no-repeat;
-    background-size: 37px 40px;
-    padding-left: 42px;
+    background-size: 44px 47px;
+    padding-left: 55px;
   }
   
   .link{
@@ -28,41 +28,28 @@
   </style>
 </head>
 <body>
-  
-  <% if @current_user == nil %>
 
   <div class="px-4 py-5 my-5 text-center">
     <img class="d-block mx-auto mb-4" src="https://www.creativefabrica.com/wp-content/uploads/2020/12/14/Meerkats-clipart-African-cute-animals-Graphics-7163564-3-580x387.jpg" alt="" width="100" height="70">
     <h1 class="display-5 fw-bold">Welcome to Meerkat</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Wanna find some partners at Columbia to do group project, have dinner, go hiking, etc. together? <br> Start from Meerkat! <br> You can select suitable partners, find interesting activities, and join various groups. <br> Meerkat is also friendly to socially awkward people. All the posts and comments will be anonymously published.</p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <a class="btn btn-primary sign-google" href="/auth/google_oauth2" role="button">Log in with Google</a>
-      </div>
-      
+    <div class="col-lg-10 mx-auto">
+      <p class="lead mb-4">Wanna find some partners at Columbia to do group project, have dinner, go hiking, etc. together? <br/> Try Meerkat! You can select suitable partners, find interesting activities, and join various groups. <br/> Meerkat is also friendly to socially awkward people. <br/> Your information won't appear in public posts and comments, <br/> and only visible to your group memebers. </p>
+      <% if @current_user == nil %>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <%# <a class="btn btn-primary sign-google" href="/auth/google_oauth2" role="button">Log in with Google</a> %>
+          <a class="btn btn-outline-primary btn-lg sign-google" href="/auth/google_oauth2" role="button">Log in with Google</a>
+        </div>
+      <% else %>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <%= link_to "Go to Posts", posts_path, :method => :get, :class => "btn btn-primary btn-lg px-4 gap-3"%>
+          &nbsp;&nbsp;&nbsp;
+          <%= link_to "My Profile", profile_path, :method => :get, :class => "btn btn-primary btn-lg px-4 gap-3"%>
+          &nbsp;&nbsp;&nbsp;
+          <%= link_to "Log out", logout_path, :method => :delete, :class => "btn btn-outline-secondary btn-lg px-4"%>
+        </div>
+      <% end %>
     </div>
   </div>
-  
-  
-  <% else %>
-
-  <div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-4" src="https://www.creativefabrica.com/wp-content/uploads/2020/12/14/Meerkats-clipart-African-cute-animals-Graphics-7163564-3-580x387.jpg" alt="" width="100" height="70">
-    <h1 class="display-5 fw-bold">Welcome to Meerkat</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Wanna find some partners at Columbia to do group project, have dinner, go hiking, etc. together? <br> Start from Meerkat! <br> You can select suitable partners, find interesting activities, and join various groups. <br> Meerkat is also friendly to socially awkward people. All the posts and comments will be anonymously published.</p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3"><%= link_to "Go to Posts", posts_path, :method => :get, :class => "link"%></button>
-        &nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3"><%= link_to "My Profile", profile_path, :method => :get, :class => "link"%></button>
-        &nbsp;&nbsp;&nbsp;
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4"><%= link_to "Log out", logout_path, :method => :delete, :class => "link"%></button>
-      </div>
-      
-    </div>
-  </div>
-  
-  <% end %>
   
 </body>
 
