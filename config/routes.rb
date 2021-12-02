@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/profile/new', to: 'profiles#new', as: 'new_profile'
   post '/profile', to: 'profiles#create'
   put '/profile/:id', to: 'profiles#update', as: 'put_profile'
+  get '/profile/:user_id', to: 'profiles#show_member', as: 'member_profile'
 
   # /posts
   get '/posts', to: 'posts#index', as: 'posts'

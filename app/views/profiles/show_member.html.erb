@@ -1,0 +1,20 @@
+<%= render partial: 'posts/header', locals: {title: 'My Account', back_group: params['group']} %>
+
+<h2>Profile</h2>
+
+<%= form_tag put_profile_path(@profile), :method => :put, :class => 'form' do %>
+  <%= label nil, nil, 'Name', :class => 'col-form-label' %>
+  <%= text_field nil, nil, :value => @user.name, :disabled => true, :class => 'form-control' %>
+  <br/>
+  <%= label nil, nil, 'Email', :class => 'col-form-label' %>
+  <%= text_field nil, nil, :value => @user.email, :disabled => true, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :school, 'School', :class => 'col-form-label' %>
+  <%= text_field :profile, :school, :value => @profile.school, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
+  <%= text_field :profile, :degree, :value => @profile.degree, :class => 'form-control' %>
+  <br/>
+  <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
+  <%= text_field :profile, :major, :value => @profile.major, :class => 'form-control' %>
+<% end %>

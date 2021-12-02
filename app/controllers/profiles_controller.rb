@@ -16,6 +16,24 @@ class ProfilesController < SessionsController
     redirect_to posts_path
   end
 
+  def show_member
+    member = User.find(params[:user_id])
+    groups = GroupUser.where(user_id: @current_user.id, status: :accepted)
+    is_member = false
+    groups.each do |group|
+      if GroupUser.where(group_id: group.id, user_id: member.id, status: :accepted)
+        is_member = true
+        break
+      end
+    end
+    if is_member
+      @profile = Profile.find_by_user_id(member.id)
+      @user = member
+    else
+      redirect_back(fallback_location: posts_path)
+    end
+  end
+
   def show
     @profile = Profile.find_by_user_id(@current_user.id)
     # my groups

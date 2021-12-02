@@ -46,6 +46,12 @@
         <%= link_to "Go to Post", post_path(post), :method => :get, :class => "btn btn-outline-primary"%>
       </li>
       <% end %>
+
+      <% if defined? back_group %>
+      <li class="nav-item">
+        <%= link_to "Back to Chat", group_path({id: back_group}), :method => :get, :class => "btn btn-outline-primary"%>
+      </li>
+      <% end %>
     </ul>
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
