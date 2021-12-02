@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <%# <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> %>
 
   </head>
   <style>
@@ -16,64 +16,52 @@
   }
   .link:hover{
     color: white;
-    text-decoration: none;
+    /* text-decoration: none; */
   }
   </style>
-  <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container-fluid bg-light" style="margin: 0px 5px; padding: 0px; width: 100%">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-4 border-bottom">
+    <ul class="nav">
+      <% if defined? new %>
+      <li class="nav-item">
+        <%= link_to "New Post", new_post_path, :method => :get, :class => "btn btn-outline-primary"%>
+      </li>
+      <% end %>
 
-  <ul class="navbar-nav mr-auto">
-    <% if defined? new %>
-    <li class="nav-item">
-      <%= link_to "New Post", new_post_path, :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
+      <% if defined? posts %>
+      <li class="nav-item">
+        <%= link_to "Back to Posts", posts_path, :method => :get, :class => "btn btn-outline-primary"%>
+      </li>
+      <% end %>
 
-    <% if defined? posts %>
-    <li class="nav-item">
-      <%= link_to "Back to Posts", posts_path, :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
+      <% if defined? group %>
+      <li class="nav-item">
+        <%= link_to "Go to Chat", group_path(group), :method => :get, :class => "btn btn-outline-primary"%>
+      </li>
+      <% end %>
 
-    <% if defined? group %>
-    <li class="nav-item">
-      <%= link_to "Go to Chat", group_path(group), :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
+      <% if defined? post %>
+      <li class="nav-item">
+        <%= link_to "Go to Post", post_path(post), :method => :get, :class => "btn btn-outline-primary"%>
+      </li>
+      <% end %>
+    </ul>
 
-    <% if defined? post %>
-    <li class="nav-item">
-      <%= link_to "Go to Post", post_path(post), :method => :get, :class => "btn btn-outline-primary"%>
-    </li>
-    <% end %>
-  </ul>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <h3>Meerkat</h3>
+    </ul>
 
-
-  <div class="container-fluid-nav text-center">
-    <h3><% if defined? title %><%= title %><% end %></h3>
-  </div>
-
-  <ul class="navbar-nav ml-auto">
-    <%# <li class="nav-item">
-      <img class="d-block mx-auto mb-4" src="https://www.creativefabrica.com/wp-content/uploads/2020/12/14/Meerkats-clipart-African-cute-animals-Graphics-7163564-3-580x387.jpg" alt="" width="70">
-    </li> %>
-    <li class="nav-item">
-      <%= link_to "Home", root_path, :method => :get, :class => "nav-link"%>
-    </li>
-    <li class="nav-item">
-      <%= link_to "Me", profile_path, :method => :get, :class => "nav-link" %>
-    </li>
-    <li class="nav-item">
-      <%= link_to "Log out", logout_path, :method => :delete, :class => "nav-link"%>
-    </li>
-  </ul>
-</nav>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <%# <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> %>
-    <%# <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> %>
-    <%# <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> %>
-  </body>
-</html>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <%= link_to "Home", root_path, :method => :get, :class => "nav-link"%>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Me", profile_path, :method => :get, :class => "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Log out", logout_path, :method => :delete, :class => "nav-link"%>
+      </li>
+    </ul>
+  </header>
+</div>
