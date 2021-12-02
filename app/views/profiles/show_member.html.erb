@@ -1,20 +1,48 @@
-<%= render partial: 'posts/header', locals: {title: 'My Account', back_group: params['group']} %>
+<%= render partial: 'posts/header' , locals: {title: 'My Account' , back_group: params['group']} %>
 
-<h2>Profile</h2>
+<div class="container">
+<div class="row">
+  <div class="col-3 align-self-center">
+    <%= form_tag profile_path, :class=> 'form' do %>
+      <div class="card">
+        <div class="card-header text-center card_title">
+          Profile
+        </div>
 
-<%= form_tag put_profile_path(@profile), :method => :put, :class => 'form' do %>
-  <%= label nil, nil, 'Name', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @user.name, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label nil, nil, 'Email', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @user.email, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :school, 'School', :class => 'col-form-label' %>
-  <%= text_field :profile, :school, :value => @profile.school, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
-  <%= text_field :profile, :degree, :value => @profile.degree, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
-  <%= text_field :profile, :major, :value => @profile.major, :class => 'form-control' %>
-<% end %>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <%= label nil, nil, 'Name' , :class=> 'control-label' %>
+                <%= text_field nil, nil, :value=> @current_user.name, :disabled => true, :class => 'form-control' %>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <%= label :profile, :school, 'School' , :class=> 'control-label' %>
+                <%= text_field :profile, :school, :value=> @profile.school, :class => 'form-control', :disabled => true %>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <%= label :profile, :degree, 'Degree' , :class=> 'control-label' %>
+                <%= text_field :profile, :degree, :value=> @profile.degree, :class => 'form-control', :disabled => true %>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <%= label :profile, :major, 'Major' , :class=> 'control-label' %>
+                <%= text_field :profile, :major, :value=> @profile.major, :class => 'form-control', :disabled => true %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+</div>

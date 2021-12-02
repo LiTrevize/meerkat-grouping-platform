@@ -1,285 +1,268 @@
 <style>
-  h1 {text-align: center;}
-  
-  .card_title{
+  h1 {
+    text-align: center;
+  }
+
+  .card_title {
     font-family: "Sans-serif", "Arial", monospace;
-    font-size: 30px;  
-  }  
-  
-  .my_groups_title{
+    font-size: 30px;
+  }
+
+  .my_groups_title {
     font-family: "Sans-serif", "Arial", monospace;
     font-size: 20px;
     font-weight: bold;
   }
-  
-  .link{   
+
+  .link {
     color: #0F52BA;
     text-decoration: none;
   }
-  
-  
 </style>
 
-<%= render partial: '/posts/header', locals: {title: 'My Account'} %>
+<%= render partial: '/posts/header' , locals: {title: 'My Account' } %>
 
-<h2>My Profile</h2>
-
-<%= form_tag put_profile_path(@profile), :method => :put, :class => 'form' do %>
-  <%= label nil, nil, 'Name', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label nil, nil, 'Email', :class => 'col-form-label' %>
-  <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :school, 'School', :class => 'col-form-label' %>
-  <%= text_field :profile, :school, :value => @profile.school, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :degree, 'Degree', :class => 'col-form-label' %>
-  <%= text_field :profile, :degree, :value => @profile.degree, :class => 'form-control' %>
-  <br/>
-  <%= label :profile, :major, 'Major', :class => 'col-form-label' %>
-  <%= text_field :profile, :major, :value => @profile.major, :class => 'form-control' %>
-  <br/>
-  <%= submit_tag 'Save', :class => 'btn btn-primary' %>
-<% end %>
-
-<div class="container">
-  <h1>My Account</h1>
-<div class="row">
-<div class ="col-9">
-<div class="container">  
-  
-  
-<div class="card">
-  <div class="card-header text-center card_title">
-    My Groups
-  </div>
-  <div class="card-body">
-    
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"> 
-         <div class="row my_groups_title">
-           <div class="col-md-1">
-           </div>
-          <div class="col-md-6">
-              Subject
-          </div>
-         <div class="col-md-4">
-              Group chat
-         </div>
-        </div>
-      </li>
-    <% @groups.each do |group| %>
-      <li class="list-group-item">    
-         <div class="row">
-           <div class="col-md-1">
-           </div>
-            <div class="col-md-6">
-              <%= group.title %>
-            </div>    
-            <div class="col-md-4">
-              <%= link_to "go to group chat", group_path({id: group.group_id}), :class => "link" %>
-            </div>     
-        </div>
-        </li>    
-    <% end %>
-    </ul>
-  </div>
-</div>
-  
-<br/>
-<div class="card">
-  <div class="card-header text-center card_title">
-    My Applications
-  </div>
-  <div class="card-body">
-    
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"> 
-         <div class="row my_groups_title">
-           <div class="col-md-1">
-           </div>
-          <div class="col-md-3">
-              Post
-          </div>
-         <div class="col-md-5">
-              Status
-         </div>
-           <div class="col-md-3">
-              Action
-          </div>           
-        </div>
-      </li>
-    <% if @applied.length()<1 %>  
-       <li class="list-group-item">
-         <div class=" row">
-           <div class="col-md-12 text-center">
-                 No action needed
-           </div>
-         </div>
-      </li>
-    <% else %>
-    
-    <% @applied.each do |group| %>
-      <li class="list-group-item">    
-         <div class="row">
-           <div class="col-md-1">
-            </div>   
-            <div class="col-md-3">
-              <%= group.title %>
-            </div>
-           
-            <div class="col-md-5">
-             <% if group.status == 'applied' %>
-            Application was sent.
-          <% else %>
-            <%= "Application was #{group.status}" %>
-          <% end %>
-              
-            </div>    
-            <div class="col-md-3">
-              <% if group.status == :approved %>
-              <div class="btn btn-primary">
-                  <%= link_to "Accept", accept_path({id: group.post_id}), :method => :post, :class => "link" %>
-                  <%= link_to "Refuse", refuse_path({id: group.post_id}), :method => :post, :class => "link" %>
-              </div>
-              <% else %>
-                   None
-              <% end %>
-            </div>          
-          </div>
-         </li>
-       <% end %>
-     <% end %>
-    </ul>
-  </div>
-</div>
-
-<br/>
-<div class="card">
-  <div class="card-header text-center card_title">
-    Applications to review
-  </div>
-  <div class="card-body">
-    
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"> 
-         <div class="row my_groups_title">
-           <div class="col-md-1">
-           </div>
-          <div class="col-md-3">
-              Post
-          </div>
-         <div class="col-md-5">
-              Applicant Message
-         </div>
-           <div class="col-md-3">
-              Action
-          </div>           
-        </div>
-      </li>
-      
-    <% if @pendings.length()<1 %>  
-       <li class="list-group-item">
-         <div class=" row">
-           <div class="col-md-12 text-center">
-                 No action nedded
-           </div>
-         </div>
-      </li>
-    <% else %>
-    <% @pendings.each do |group| %>
-      <li class="list-group-item">    
-         <div class="row">
-           <div class="col-md-1">
-           </div>
-           
-            <div class="col-md-3">
-              <%= group.title %>
-            </div>
-           
-            <div class="col-md-5">
-             <%= group.intro %>
-            </div>
-           
-            <div class="col-md-3">
-              <div class="btn btn-primary">
-               <%= link_to "Approve", approve_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
-               <%= link_to "Reject", reject_path({id: group.post_id, user_id: group.user_id}), :method => :post, :class => "link" %>
-              </div>
-            </div>         
-          </div>
-        </li>    
-      <% end %>
-    <% end %>
-   </ul>    
-  </div>
-</div>
- 
-<br/>  
-  
- 
-</div>
-</div>
-  
-<div class ="col-3">
-<%= form_tag profile_path, :class => 'form' do %>
-<div class="card">
-  <div class="card-header text-center card_title">
-    My Profile
-  </div>
-  
-  <div class="card-body">
-    <div class="row">  
-      <div class="col-md-12">
-        <%= label nil, nil, 'Name', :class => 'control-label' %>
-        <%= text_field nil, nil, :value => @current_user.name, :disabled => true, :class => 'form-control' %>
-      </div>
-    </div>
-    <br/>
-    <div class="row">  
-      <div class="col-md-12">
-        <%= label nil, nil, 'Email', :class => 'control-label' %>
-        <%= text_field nil, nil, :value => @current_user.email, :disabled => true, :class => 'form-control' %>
-      </div>
-    </div>
-    
-    <br/>
-    <div class="row">  
-      <div class="col-md-12">
-       <%= label :profile, :school, 'School', :class => 'control-label' %>
-       <%= text_field :profile, :school, :value => @profile.school, :class => 'form-control' %>
-      </div>
-    </div>
-      
-    <br/>
-    <div class="row">  
-      <div class="col-md-12">
-       <%= label :profile, :degree, 'Degree', :class => 'control-label' %>
-       <%= text_field :profile, :degree, :value => @profile.degree, :class => 'form-control' %>
-      </div>
-    </div>
-      
-    <br/>
-    <div class="row">  
-      <div class="col-md-12">
-       <%= label :profile, :major, 'Major', :class => 'control-label' %>
-       <%= text_field :profile, :major, :value => @profile.major, :class => 'form-control' %>
-      </div>
-    </div>
-    
-    <br/>
+  <div class="container">
+    <h1>My Account</h1>
     <div class="row">
-      <div class="col-md-3">
-       <%= submit_tag 'Save', :class => 'btn btn-primary' %>
+      <div class="col-9">
+        <div class="container">
+
+
+          <div class="card">
+            <div class="card-header text-center card_title">
+              My Groups
+            </div>
+            <div class="card-body">
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="row my_groups_title">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-6">
+                      Subject
+                    </div>
+                    <div class="col-md-4">
+                      Group chat
+                    </div>
+                  </div>
+                </li>
+                <% @groups.each do |group| %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-1">
+                      </div>
+                      <div class="col-md-6">
+                        <%= group.title %>
+                      </div>
+                      <div class="col-md-4">
+                        <%= link_to "go to group chat" , group_path({id: group.group_id}), :class=> "link" %>
+                      </div>
+                    </div>
+                  </li>
+                  <% end %>
+              </ul>
+            </div>
+          </div>
+
+          <br />
+          <div class="card">
+            <div class="card-header text-center card_title">
+              My Applications
+            </div>
+            <div class="card-body">
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="row my_groups_title">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                      Post
+                    </div>
+                    <div class="col-md-5">
+                      Status
+                    </div>
+                    <div class="col-md-3">
+                      Action
+                    </div>
+                  </div>
+                </li>
+                <% if @applied.length()<1 %>
+                  <li class="list-group-item">
+                    <div class=" row">
+                      <div class="col-md-12 text-center">
+                        No action needed
+                      </div>
+                    </div>
+                  </li>
+                  <% else %>
+
+                    <% @applied.each do |group| %>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-1">
+                          </div>
+                          <div class="col-md-3">
+                            <%= group.title %>
+                          </div>
+
+                          <div class="col-md-5">
+                            <% if group.status=='applied' %>
+                              Application was sent.
+                              <% else %>
+                                <%= "Application was #{group.status}" %>
+                                  <% end %>
+
+                          </div>
+                          <div class="col-md-3">
+                            <% if group.status==:approved %>
+                              <div class="btn btn-primary">
+                                <%= link_to "Accept" , accept_path({id: group.post_id}), :method=> :post, :class =>
+                                  "link" %>
+                                  <%= link_to "Refuse" , refuse_path({id: group.post_id}), :method=> :post, :class =>
+                                    "link" %>
+                              </div>
+                              <% else %>
+                                None
+                                <% end %>
+                          </div>
+                        </div>
+                      </li>
+                      <% end %>
+                        <% end %>
+              </ul>
+            </div>
+          </div>
+
+          <br />
+          <div class="card">
+            <div class="card-header text-center card_title">
+              Applications to review
+            </div>
+            <div class="card-body">
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="row my_groups_title">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                      Post
+                    </div>
+                    <div class="col-md-5">
+                      Applicant Message
+                    </div>
+                    <div class="col-md-3">
+                      Action
+                    </div>
+                  </div>
+                </li>
+
+                <% if @pendings.length()<1 %>
+                  <li class="list-group-item">
+                    <div class=" row">
+                      <div class="col-md-12 text-center">
+                        No action nedded
+                      </div>
+                    </div>
+                  </li>
+                  <% else %>
+                    <% @pendings.each do |group| %>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-1">
+                          </div>
+
+                          <div class="col-md-3">
+                            <%= group.title %>
+                          </div>
+
+                          <div class="col-md-5">
+                            <%= group.intro %>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="btn btn-primary">
+                              <%= link_to "Approve" , approve_path({id: group.post_id, user_id: group.user_id}),
+                                :method=> :post, :class => "link" %>
+                                <%= link_to "Reject" , reject_path({id: group.post_id, user_id: group.user_id}),
+                                  :method=> :post, :class => "link" %>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <% end %>
+                        <% end %>
+              </ul>
+            </div>
+          </div>
+
+          <br />
+
+
+        </div>
+      </div>
+
+      <div class="col-3">
+        <%= form_tag profile_path, :class=> 'form' do %>
+          <div class="card">
+            <div class="card-header text-center card_title">
+              My Profile
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <%= label nil, nil, 'Name' , :class=> 'control-label' %>
+                    <%= text_field nil, nil, :value=> @current_user.name, :disabled => true, :class => 'form-control' %>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= label nil, nil, 'Email' , :class=> 'control-label' %>
+                    <%= text_field nil, nil, :value=> @current_user.email, :disabled => true, :class => 'form-control'
+                      %>
+                </div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= label :profile, :school, 'School' , :class=> 'control-label' %>
+                    <%= text_field :profile, :school, :value=> @profile.school, :class => 'form-control' %>
+                </div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= label :profile, :degree, 'Degree' , :class=> 'control-label' %>
+                    <%= text_field :profile, :degree, :value=> @profile.degree, :class => 'form-control' %>
+                </div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <%= label :profile, :major, 'Major' , :class=> 'control-label' %>
+                    <%= text_field :profile, :major, :value=> @profile.major, :class => 'form-control' %>
+                </div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-md-3">
+                  <%= submit_tag 'Save' , :class=> 'btn btn-primary' %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <% end %>
       </div>
     </div>
-    
   </div>
-</div>
-
-<% end %>
-</div>
-</div> 
-</div>
- 
