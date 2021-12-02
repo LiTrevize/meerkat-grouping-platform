@@ -5,8 +5,8 @@ class GroupsController < PostsController
     if is_owner?
       flash[:msg] = 'Cannot apply to your own group'
     else
-      group_user = GroupUser.create(group_id: params[:id], user_id: @current_user.id, status: :applied)
-      flash[:msg] = 'You have applied for this group, please wait for the host to review your application' 
+      group_user = GroupUser.create(group_id: params[:id], user_id: @current_user.id, status: :applied, intro: params[:applyuser][:intro])
+      flash[:msg] = 'Please wait for the host to review your group application'
     end
     redirect_back(fallback_location: posts_path)
   end
@@ -76,12 +76,11 @@ class GroupsController < PostsController
       redirect_to group_path(group)
     end
   end
-
+  
   protected
   def is_owner?
     post_id=Group.find(params[:id]).post.id
     return Post.find(post_id).user_id == @current_user.id
-    #return Post.find(params[:id]).user_id == @current_user.id
   end
 
   def is_member?

@@ -43,23 +43,31 @@ class PostsController < SessionsController
     end
     @to_comment_id = params[:to_comment_id]
     @to_user_id = params[:to_user_id]
+    
     # application status
-    @all_members = []
+    @all_members_name = []
+    @all_members_intro=[]
     GroupUser.where(group_id: @post.group.id, status: :accepted).each do |groupuser|
-      @all_members.push(User.find(groupuser.user_id))
+      @all_members_name.push(User.find(groupuser.user_id).name)
+      @all_members_intro.push(groupuser.intro)
     end
+    
     @all_applied_user=GroupUser.where(group_id: @post.group.id, status: :applied)
     @all_approved_user=GroupUser.where(group_id: @post.group.id, status: :approved)   
     current_group_user=GroupUser.where(group_id: @post.group.id,user_id: @current_user.id).first
     
     @applied_user_name = []
+    @applied_user_intro = []
     @approved_user_name = []   
+    @approved_user_intro = []   
+    
     @approve_url=[]
     @reject_url=[]
     
     for applied_user in @all_applied_user do
       this_user=User.find(applied_user.user_id)
       @applied_user_name.append(this_user.name)
+      @applied_user_intro.append(applied_user.intro)
       this_approve="/post/#{@post.group.id}/approve/#{applied_user.user_id}"
       @approve_url.append(this_approve)     
       this_reject="/post/#{@post.group.id}/reject/#{applied_user.user_id}"
@@ -69,6 +77,7 @@ class PostsController < SessionsController
     for approved_user in @all_approved_user do
       this_user=User.find(approved_user.user_id)
       @approved_user_name.append(this_user.name)
+      @approved_user_intro.append(approved_user.intro)
     end 
     
     if current_group_user == nil 

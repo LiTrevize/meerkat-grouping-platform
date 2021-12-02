@@ -43,9 +43,11 @@ post = Post.create!(user_id: user.id, title: '4995 SAAS Project Team', content: 
 tag = Tag.create!(name: 'coursework', freq: 1)
 PostTag.create!(post_id: post.id, tag_name: tag.name)
 group = Group.create(post_id: post.id)
+
 GroupUser.create(group_id: group.id, user_id: user.id, is_host: true, status: :accepted)
-GroupUser.create(group_id: group.id, user_id: user1.id, status: :accepted)
-GroupUser.create(group_id: group.id, user_id: user2.id, status: :accepted)
+GroupUser.create(group_id: group.id, user_id: user1.id, status: :accepted, intro: "I'm a good person")
+GroupUser.create(group_id: group.id, user_id: user2.id, status: :accepted, intro: "I'm a great person")
+
 # comments
 c1 = Comment.create!(post_id: post.id, content: "What tech stack will you use?", is_public: true, from_user_id: user1.id)
 c2 = Comment.create!(post_id: post.id, content: "Ruby on Rails", is_public: true, from_user_id: user.id, to_comment_id: c1.id, to_user_id: user1.id, to_comment_leader_id: c1.id)
