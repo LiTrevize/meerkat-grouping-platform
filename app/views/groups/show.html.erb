@@ -6,8 +6,8 @@
 
 <style>
 body{
-    margin-top:20px;
-    background:#eee;
+    /* margin-top:20px; */
+    background: #F5F5F5;
 }
 .row.row-broken {
     padding-bottom: 0;
@@ -16,7 +16,7 @@ body{
     padding: 20px;
 }
 .chat {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 250px);
 }
 .decor-default {
     background-color: #ffffff;
@@ -246,17 +246,21 @@ body{
     -webkit-appearance: none;
     border-radius: 0;
 }
+.member {
+  height: calc(100vh - 115px);
+}
 </style>
 
 <%= render partial: 'posts/header', locals: {title: 'Group Chat', posts: '', post: @group.post} %>
 
-<h2><%= @group.post.title %></h2>
+<%# <h2><%= @group.post.title %>
+<%# </h2> %>
 
-<div class="container">
+<div class="container" style="width: 60em">
   <div class="content container-fluid bootstrap snippets bootdey">
     <div class="row row-broken">
       <div class="col-sm-3 col-xs-12">
-        <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000">
+        <div class="col-inside-lg decor-default chat member" style="overflow: hidden; outline: none;" tabindex="5000">
           <div class="chat-users">
             <h6>Members</h6>
               <% @members.each do |member| %>
@@ -272,10 +276,11 @@ body{
           </div>
         </div>
       </div>
-      <div class="col-sm-9 col-xs-12 chat" style="overflow: hidden; outline: none;" tabindex="5001">
-        <div class="col-inside-lg decor-default" style="height: 100%">
+      <div class="col-sm-9 col-xs-12" style="overflow: hidden; outline: none;" tabindex="5001" style="bg-white">
+        <div class="col-inside-lg decor-default" style="padding-bottom: 5px">
           <div class="chat-body">
             <h6>Group Chat</h6>
+            <div class="chat">
             <% @group_chats.each do |chat| %>
             <% if chat.user_id == @current_user.id %>
               <div class="answer right">
@@ -293,15 +298,18 @@ body{
               <div class="time"><%= timef chat.created_at %></div>
             </div>
             <% end %>
-            <%# <div class="answer-add"> %>
-              <%# <input placeholder="Write a message">
+            </div>
+            <%# <div class="answer-add">
+              <input placeholder="Write a message">
               <span class="answer-btn answer-btn-1"></span>
-              <span class="answer-btn answer-btn-2"></span> %>
-                <%= form_tag send_chat_path, :class => 'form' do %>
-                    <%= text_area :msg, :text, :class => 'form-control', :id => 'chat_box', :required => true, "aria-label" => "With textarea" %>
-                    <%= submit_tag 'Send', :class => 'btn btn-primary', :style => "float: right" %>
-                <% end %>
-            <%# </div> %>
+              <span class="answer-btn answer-btn-2"></span>
+            </div> %>
+            <%= form_tag send_chat_path, :class => 'form' do %>
+              <div class="row" style="margin-top: 5px;">
+                <div class="form-group col-10"><%= text_area :msg, :text, :class => 'form-control', :id => 'chat_box', :required => true, "aria-label" => "With textarea" %></div>
+                <div class="form-group col-1"><%= submit_tag 'Send', :class => 'btn btn-primary btn-block p-3' %></div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
