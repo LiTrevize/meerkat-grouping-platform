@@ -77,6 +77,12 @@
 <%= render partial: 'posts/header', locals: {title: 'Post', posts: '', group: @group} %>
 
 <div class="container_all">
+
+  <% flash.each do |type, msg| %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <%= msg %>
+    </div>
+  <% end %>
   
 <h1 class="title">
   <%= @post.title %>
@@ -263,12 +269,6 @@
       Your status: <%=  @current_group_user_status %>
     </p>
     <hr class="hr1">
-    
-    <% flash.each do |type, msg| %>
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <%= msg %>
-      </div>
-    <% end %>
     
     <% if @current_group_user_status == "You haven't applied for this Group" %>
     <p class="table_title">
