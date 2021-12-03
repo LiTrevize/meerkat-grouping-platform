@@ -164,15 +164,11 @@ class PostsController < SessionsController
   end
 
   def update_tags(post)
-    post.post_tags.destroy_all
     post.tags.each do |tag|
       tag.freq -= 1
-      if tag.freq == 0
-        tag.destroy
-      else
-        tag.save
-      end
+      tag.save
     end
+    post.post_tags.destroy_all
     if params[:tags]
       params[:tags].each do |_, name|
         if not name.blank?
@@ -181,9 +177,7 @@ class PostsController < SessionsController
           tag.update(freq: tag.freq + 1)
         end
       end
-      # puts '#######'
-      # puts post.tags
-      # puts post.tags.length
+      
       if post.tags.length == 0
         tag = Tag.find_or_create_by!(name: 'other')
         post.tags.append(tag)
@@ -191,6 +185,7 @@ class PostsController < SessionsController
       end
     end
     post.save
+    Tag.where(freq: 0).destroy_all
   end
 
   class TagStruct
