@@ -131,7 +131,7 @@ class PostsController < SessionsController
   
   private
   def post_info
-    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number, :tag1, :tag2, :tag3)
+    params.require(:post).permit(:title, :content, :start, :end, :low_number, :high_number)
   end
 
   def get_nickname(id)
@@ -164,6 +164,7 @@ class PostsController < SessionsController
   end
 
   def update_tags(post)
+    post.post_tags.destroy_all
     post.tags.each do |tag|
       tag.freq -= 1
       if tag.freq == 0
@@ -172,7 +173,6 @@ class PostsController < SessionsController
         tag.save
       end
     end
-    post.post_tags.destroy_all
     if params[:tags]
       params[:tags].each do |_, name|
         if not name.blank?
