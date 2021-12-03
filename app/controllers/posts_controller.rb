@@ -8,12 +8,13 @@ class PostsController < SessionsController
     if tagnames
       @tags_to_show = tagnames.keys
       post_tags = PostTag.where(tag_name: tagnames.keys)
-      @posts = []
+      ids = []
       post_tags.each do |post_tag|
-        @posts.append(Post.find(post_tag.post_id))
+        ids.push(post_tag.post_id)
       end
+      @posts = Post.where(id: ids).order(created_at: :desc)
     else
-      @posts = Post.all
+      @posts = Post.all.order(created_at: :desc)
     end
   end
   
