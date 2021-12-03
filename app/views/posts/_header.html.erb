@@ -18,37 +18,40 @@
     color: white;
     /* text-decoration: none; */
   }
+    .spacing{
+      padding-right: 5px;
+    }
   </style>
 
 <div class="container-fluid bg-light" style="margin: 0px 5px; padding: 0px; width: 100%">
-  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-4 border-bottom">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 px-3 mb-4 border-bottom">
     <ul class="nav">
       <% if defined? new %>
-      <li class="nav-item">
-        <%= link_to "New Post", new_post_path, :method => :get, :class => "btn btn-outline-primary"%>
+      <li class="nav-item spacing">
+        <%= link_to "New Post", new_post_path, :method => :get, :class => "btn btn-outline-primary "%>
       </li>
       <% end %>
 
       <% if defined? posts %>
-      <li class="nav-item">
+      <li class="nav-item spacing">
         <%= link_to "Back to Posts", posts_path, :method => :get, :class => "btn btn-outline-primary"%>
       </li>
       <% end %>
 
       <% if defined? group %>
-      <li class="nav-item">
+      <li class="nav-item spacing">
         <%= link_to "Go to Chat", group_path(group), :method => :get, :class => "btn btn-outline-primary"%>
       </li>
       <% end %>
 
       <% if defined? post %>
-      <li class="nav-item">
+      <li class="nav-item spacing">
         <%= link_to "Go to Post", post_path(post), :method => :get, :class => "btn btn-outline-primary"%>
       </li>
       <% end %>
 
       <% if defined? back_group %>
-      <li class="nav-item">
+      <li class="nav-item spacing">
         <%= link_to "Back to Chat", group_path({id: back_group}), :method => :get, :class => "btn btn-outline-primary"%>
       </li>
       <% end %>

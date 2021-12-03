@@ -54,8 +54,8 @@
   }
   
   hr.hr1 {
-  border-top: 1px dashed black;
-  padding-bottom: 15px;
+  color:black;
+  height: 7px;
   }
   
   .link{
@@ -94,12 +94,98 @@
    &middot; Created At: <%= timef @post.created_at %>
 </p>
 
+
+<hr class="hr1">
+
+<h5>Comments: </h5>
+
+<%= form_tag create_comment_path, :class => 'form' do %>
+  <%= label :to_comment, :to, 'reply to all', :class => 'col-form-label' %>
+  <%= text_area :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+  <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
+  <%= check_box_tag "is_public", true %>
+  <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+  <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
+  <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
+<% end %>
+
+<hr>
+
+<div class="container">
+  <% @comments.each do |comment| %>
+    <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
+    <div class="row">
+      <div class="col-auto">
+        <span class="media-heading comment-title badge bg-secondary"><%= comment.from_nickname %></span>
+      </div>
+      <div class="col">
+        <div class="comment-text"><%= comment.content %></div>
+        <div class="comment-meta">
+          <span style="margin-right: 10px"><%= timef comment.created_at %></span>
+          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname, to_comment_leader_id: comment.id), method: :get %>
+        </div>
+      </div>
+
+      <% if params[:to_comment_id] == comment.id.to_s %>
+        <%= form_tag create_comment_path, :class => 'form' do %>
+          <%= label :to_comment, :to, "reply to #{comment.from_nickname}", :class => 'col-form-label' %>
+          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+          <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
+          <%= check_box_tag "is_public", true %>
+          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
+          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
+        <% end %>
+      <% end %>
+
+      <% comment.subs.each do |sub| %>
+      <% if sub.is_public or sub.from_user_id == @current_user.id or @post.user_id == @current_user.id or sub.to_user_id == @current_user.id %>
+      <div class="row sub-comment">
+        <div class="col-auto">
+          <span class="media-heading comment-title badge bg-secondary"><%= sub.from_nickname %></span>
+          <% if sub.to_nickname %>
+          <div class="comment-meta" style="margin-top: 5px"><%= "(to #{sub.to_nickname})" %></div>
+          <% end %>
+        </div>
+        <div class="col">
+          <div class="comment-text"><%= sub.content %></div>
+          <div class="comment-meta">
+            <span style="margin-right: 10px"><%= timef sub.created_at %></span>
+            <%= link_to "reply", post_path(@post, to_comment_id: sub.id, to_user_id: sub.from_user_id, to_nickname: sub.from_nickname, to_comment_leader_id: comment.id), method: :get %>
+          </div>
+        </div>
+
+        <% if params[:to_comment_id] == sub.id.to_s %>
+        <%= form_tag create_comment_path, :class => 'form' do %>
+          <%= label :to_comment, :to, "reply to #{sub.from_nickname}", :class => 'col-form-label' %>
+          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+          <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
+          <%= check_box_tag "is_public", true %>
+          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
+          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
+          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
+        <% end %>
+      <% end %>
+      </div>
+      <% end %>
+      <% end %>
+
+      <hr style="margin-top: 16px">
+    </div>
+    <% end %>
+  <% end %>
+</div>
+
+<br/>  
+  
+
+<hr class="hr1">  
 <% if @post.user_id === @current_user.id%>
   <p class="table_title">
     Your status: You are the host
   </p>
-  <hr class="hr1">
-    
+  
+  <hr class="hr1">   
   <br/>
   <p class="table_title">Pending Applications</p>
     
@@ -229,88 +315,6 @@
  
 <br/>
 
-<hr class="hr1">
-
-<h5>Comments: </h5>
-
-<%= form_tag create_comment_path, :class => 'form' do %>
-  <%= label :to_comment, :to, 'reply to all', :class => 'col-form-label' %>
-  <%= text_area :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
-  <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
-  <%= check_box_tag "is_public", true %>
-  <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
-  <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
-  <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
-<% end %>
-
-<hr>
-
-<div class="container">
-  <% @comments.each do |comment| %>
-    <% if comment.is_public or comment.from_user_id == @current_user.id or @post.user_id == @current_user.id or comment.to_user_id == @current_user.id %>
-    <div class="row">
-      <div class="col-auto">
-        <span class="media-heading comment-title badge bg-primary"><%= comment.from_nickname %></span>
-      </div>
-      <div class="col">
-        <div class="comment-text"><%= comment.content %></div>
-        <div class="comment-meta">
-          <span style="margin-right: 10px"><%= timef comment.created_at %></span>
-          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname, to_comment_leader_id: comment.id), method: :get %>
-        </div>
-      </div>
-
-      <% if params[:to_comment_id] == comment.id.to_s %>
-        <%= form_tag create_comment_path, :class => 'form' do %>
-          <%= label :to_comment, :to, "reply to #{comment.from_nickname}", :class => 'col-form-label' %>
-          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
-          <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
-          <%= check_box_tag "is_public", true %>
-          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
-          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
-          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
-        <% end %>
-      <% end %>
-
-      <% comment.subs.each do |sub| %>
-      <% if sub.is_public or sub.from_user_id == @current_user.id or @post.user_id == @current_user.id or sub.to_user_id == @current_user.id %>
-      <div class="row sub-comment">
-        <div class="col-auto">
-          <span class="media-heading comment-title badge bg-primary"><%= sub.from_nickname %></span>
-          <% if sub.to_nickname %>
-          <div class="comment-meta" style="margin-top: 5px"><%= "(to #{sub.to_nickname})" %></div>
-          <% end %>
-        </div>
-        <div class="col">
-          <div class="comment-text"><%= sub.content %></div>
-          <div class="comment-meta">
-            <span style="margin-right: 10px"><%= timef sub.created_at %></span>
-            <%= link_to "reply", post_path(@post, to_comment_id: sub.id, to_user_id: sub.from_user_id, to_nickname: sub.from_nickname, to_comment_leader_id: comment.id), method: :get %>
-          </div>
-        </div>
-
-        <% if params[:to_comment_id] == sub.id.to_s %>
-        <%= form_tag create_comment_path, :class => 'form' do %>
-          <%= label :to_comment, :to, "reply to #{sub.from_nickname}", :class => 'col-form-label' %>
-          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
-          <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
-          <%= check_box_tag "is_public", true %>
-          <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
-          <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
-          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
-        <% end %>
-      <% end %>
-      </div>
-      <% end %>
-      <% end %>
-
-      <hr style="margin-top: 16px">
-    </div>
-    <% end %>
-  <% end %>
-</div>
-
-<br/>
 
 <% if @post.user_id === @current_user.id%>
 

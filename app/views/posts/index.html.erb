@@ -19,44 +19,54 @@
     border-color: rgba(0,0,0,0.125);
     border-width: 1px
   }
+  
+  .tags{
+    margin-left:15px;
+    margin-right:15px;
+  }
   </style>
 </head>
 
 <%= render partial: 'posts/header', locals: {title: "Posts", new: ""} %>
 
 <%# <h1>Posts</h1> %>
-
+<div class="row tags">
 <%= form_tag posts_path(@post), :method => :get, :class => 'form' do %>
   <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
   <% @tags.each do |tag| %>
-    <span class="badge bg-primary" style="border-radius: 0.4em"><%= "#{tag.name} (#{tag.freq})" %></span>
+    <span class="badge bg-secondary" style="border-radius: 0.4em"><%= "#{tag.name} (#{tag.freq})" %></span>
     <%= check_box_tag "tagnames[#{tag.name}]", "1", @tags_to_show.include?(tag.name) %>
   <% end %>
   <br/>
-  <%= submit_tag 'filter', id: 'filter_submit', class: 'btn btn-outline-primary btn-sm' %>
+  <%= submit_tag 'filter', id: 'filter_submit', class: 'btn btn-primary btn-sm' %>
   <%= link_to "reset", posts_path, class: 'btn btn-outline-primary btn-sm' %>
 <% end %>
+</div>
 
 <hr>
-
+<br/>
 <div class="container">
   <div class="row gy-3">
     <% @posts.each do |post| %>
       <div class="col-auto">
         <div class="card" style="width: 16em; height: 20em; padding: 5px;">
-          <div style="padding: 0px 5px">
-            <h4 class="card-title text-truncate" style="text-align: center; margin-bottom: 5px"><%= post.title %></h4>
+          <div style="padding: 0px 5px;">
+            <h4 class="card-title text-truncate" style="text-align: center; margin-bottom: 5px;"><%= post.title %></h4>
             <% post.tags.each do |tag| %>
-              <span class="badge bg-primary" style="border-radius: 0.4em"><%= "#{tag.name} " %></span>
+              <span class="badge bg-secondary" style="border-radius: 0.4em"><%= "#{tag.name} " %></span>
             <% end %>
           </div>
           <div class="card-body" style="padding: 5px">
             <div class="card-text"><p class="card-text">
               <%= post.content[0..177] %><% if post.content.length>=177 %><%= '...' %><% end %>
             </p></div>
+            
+            <div style="color:gray; font-size:13px">            
             <%= "Members: #{interval_format(post.low_number, post.high_number)}" %><br/>
             <%= "Date: #{interval_format(datef(post.start), datef(post.end))}" %><br/>
-            <%= "Created at #{timef post.created_at}" %><br/>
+            <%= "Created at #{timef post.created_at}" %><br/>  
+            </div>
+            
             <div style="position: absolute; bottom: 0; padding-bottom: 5px; width: 14em">
               <%= link_to "More...", post_path(post), class: 'btn btn-outline-primary btn-sm' %>
               <div style="float: right">
