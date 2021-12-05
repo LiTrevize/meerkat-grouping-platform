@@ -31,6 +31,12 @@
 
 <%# <h1>Posts</h1> %>
 <div class="row tags">
+<% flash.each do |type, msg| %>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <%= msg %>
+  </div>
+<% end %>
+
 <%= form_tag posts_path(@post), :method => :get, :class => 'form' do %>
   <%= label nil, nil, 'Tags: ', :class => 'col-form-label' %>
   <% @tags.each do |tag| %>

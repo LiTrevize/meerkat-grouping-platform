@@ -12,9 +12,9 @@ class PostsController < SessionsController
       post_tags.each do |post_tag|
         ids.push(post_tag.post_id)
       end
-      @posts = Post.where(id: ids).order(created_at: :desc)
+      @posts = Post.where(id: ids, deleted: false).order(created_at: :desc)
     else
-      @posts = Post.all.order(created_at: :desc)
+      @posts = Post.where(deleted: false).order(created_at: :desc)
     end
   end
   
@@ -108,7 +108,8 @@ class PostsController < SessionsController
   def destroy
     @post = Post.find(params[:id])
     update_tags(@post)
-    @post.destroy
+    @post.update(deleted: true)
+    GroupUser.where(group_id: @post.group.id).update(status: :deleted)
     redirect_to posts_path
   end
 
