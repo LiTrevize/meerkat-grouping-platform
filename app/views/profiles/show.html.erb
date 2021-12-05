@@ -184,12 +184,12 @@
                           </div>
 
                           <div class="col-md-3">
-                            <div class="btn btn-primary">
+                            <%# <div class=""> %>
                               <%= link_to "Approve" , approve_path({id: group.post_id, user_id: group.user_id}),
-                                :method=> :post, :class => "link" %>
-                                <%= link_to "Reject" , reject_path({id: group.post_id, user_id: group.user_id}),
-                                  :method=> :post, :class => "link" %>
-                            </div>
+                                :method=> :post, :class => "btn btn-primary" %>
+                              <%= link_to "Reject" , reject_path({id: group.post_id, user_id: group.user_id}),
+                                :method=> :post, :class => "btn btn-primary" %>
+                            <%# </div> %>
                           </div>
                         </div>
                       </li>
