@@ -42,7 +42,7 @@ class ProfilesController < SessionsController
       add_attribute(group_user, :title)
       group = Group.find(group_user.group_id)
       begin
-        group_user.title = Post.find(group.post_id).title
+        group_user.title = Post.find_by_id(group.post_id).title
       end
     end
     # my pending action
@@ -69,7 +69,12 @@ class ProfilesController < SessionsController
     @applied = GroupUser.where(user_id: @current_user.id, is_host: false, status: [:applied, :approved, :rejected])
     @applied.each do |group_user|
       group = Group.find(group_user.group_id)
-      post = Post.find(group.post_id)
+      post = Post.find_by_id(group.post_id)
+      if not post
+        add_attribute(group_user, :title)
+        add_attribute(group_user, :post_id)
+        next
+      end
       add_attribute(group_user, :title)
       group_user.title = post.title
       add_attribute(group_user, :post_id)
