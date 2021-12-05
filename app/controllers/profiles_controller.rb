@@ -51,7 +51,7 @@ class ProfilesController < SessionsController
     hosted = GroupUser.where(user_id: @current_user.id, is_host: true)
     @pendings = []
     hosted.each do |host_group_user|
-      group_user = GroupUser.where(group_id: host_group_user.group_id).where.not(user_id: @current_user.id).first
+      group_user = GroupUser.where(group_id: host_group_user.group_id, status: :applied).where.not(user_id: @current_user.id).first
       if not group_user or group_user.status == :deleted
         next
       end
