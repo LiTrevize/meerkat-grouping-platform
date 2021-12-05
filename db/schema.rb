@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_05_220437) do
+ActiveRecord::Schema.define(version: 2021_12_05_224903) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2021_12_05_220437) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "post_id"
+    t.boolean "dismissed", default: false
     t.index ["post_id"], name: "index_groups_on_post_id"
   end
 

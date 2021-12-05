@@ -1,5 +1,7 @@
 class GroupsController < PostsController
   before_action :check_current_user
+  before_action -> { check_group_dismissal false }, only: [:show]
+  before_action -> { check_group_dismissal true }, only: [:send_chat]
 
   def apply
     if is_owner?
@@ -90,6 +92,17 @@ class GroupsController < PostsController
       return true
     else
       return false
+    end
+  end
+
+  def check_group_dismissal(back)
+    group = Group.find(params[:id])
+    if group.dismissed or Post.find(group.post_id).end < Date.today
+      group.update(dismissed: true)
+      flash[:msg] = "This group is dismissed. You can only view history chats."
+      if back
+        redirect_back(fallback_location: posts_path) 
+      end
     end
   end
 

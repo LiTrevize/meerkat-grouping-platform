@@ -256,7 +256,15 @@ body{
 <%# <h2><%= @group.post.title %>
 <%# </h2> %>
 
+
 <div class="container" style="width: 60em">
+
+  <% flash.each do |type, msg| %>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+      <%= msg %>
+  </div>
+  <% end %>
+
   <div class="content container-fluid bootstrap snippets bootdey">
     <div class="row row-broken">
       <div class="col-sm-3 col-xs-12">
