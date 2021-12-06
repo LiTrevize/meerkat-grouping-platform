@@ -8,7 +8,7 @@ Scenario: visit the Meerkat home page for the first time
 Scenario: fill out Profile, go to the home page, and log out
   Given "TestUser@columbia.edu" is logged in
   
-  When I am on the profile page
+  When I am on the create profile page
   Then I should see "Degree"
 
   And I fill in "School" with "SEAS"
@@ -17,7 +17,6 @@ Scenario: fill out Profile, go to the home page, and log out
   And I press "Continue"
   
   Then I should be on the home page
-  And I should see "Hello, Test User"
   And I should see "Log out"
   And I should see "Go to Posts"
   

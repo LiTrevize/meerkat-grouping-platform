@@ -8,9 +8,9 @@ Scenario: User goes to the group chat page
    Given I joined group for post "Test Post"
    When I am on the post page
    Then I should see "Test Post"
-   And I follow "Test Post"
-   Then I should see "Go to Group Chat"
-   Then I follow "Go to Group Chat"
+   And I follow "More..."
+   Then I should see "Go to Chat"
+   Then I follow "Go to Chat"
    And I should see "Group Chat"
    Then I fill in "chat_box" with "hello"
    And I press "Send"

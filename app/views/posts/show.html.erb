@@ -135,7 +135,7 @@
       <% if params[:to_comment_id] == comment.id.to_s %>
         <%= form_tag create_comment_path, :class => 'form' do %>
           <%= label :to_comment, :to, "reply to #{comment.from_nickname}", :class => 'col-form-label' %>
-          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box_l1' %>
           <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
           <%= check_box_tag "is_public", true %>
           <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
@@ -164,7 +164,7 @@
         <% if params[:to_comment_id] == sub.id.to_s %>
         <%= form_tag create_comment_path, :class => 'form' do %>
           <%= label :to_comment, :to, "reply to #{sub.from_nickname}", :class => 'col-form-label' %>
-          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+          <%= text_field :to_comment, :content, :class => 'form-control comment_box_format', :id => 'comment_box_l2' %>
           <%= label :to_comment, :is_public, 'is public', :class => 'col-form-label' %>
           <%= check_box_tag "is_public", true %>
           <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
@@ -276,7 +276,7 @@
     </p>
     <%= form_tag apply_path, :class => 'form' do %>
       <%= label :applyuser, :intro, 'Introduce yourself a bit: ', :class => 'col-form-label' %>
-      <%= text_area :applyuser, :intro, :class => 'form-control comment_box_format', :id => 'comment_box' %>
+      <%= text_area :applyuser, :intro, :class => 'form-control comment_box_format', :id => 'intro' %>
     <br>
     <%= submit_tag 'Apply', :class => 'btn btn-outline-primary' %>
     <% end %>

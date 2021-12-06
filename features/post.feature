@@ -2,10 +2,10 @@ Feature: I post posts
 
 Background: test user already logged in and went to the post page
  Given "TestUser@columbia.edu" is logged in
- When I am on the profile page
+ When I am on the create profile page
  And I press "Continue"
  And I follow "Go to Posts"
- Then I should see "Posts"
+ Then I should see "New Post"
 
 Scenario: create new post, edit post, and delete post
  When I follow "New Post"
@@ -13,6 +13,10 @@ Scenario: create new post, edit post, and delete post
  
  And I fill in "Title" with "Test Post"
  And I fill in "Content" with "Hello, this is a test post"
+ And I fill in "Start Date" with "01/01/2022"
+ And I fill in "End Date" with "01/02/2022"
+ And I fill in "low" with "1"
+ And I fill in "high" with "3"
  And I press "Create"
  Then I should be on the post page
  And I should see "Test Post"
@@ -21,7 +25,7 @@ Scenario: create new post, edit post, and delete post
  Then I should see "Edit Your Post"
  And I fill in "Title" with "Edit Post"
  And I fill in "Content" with "I edit the post"
- And I press "Save"
+ And I press "Save Changes"
  Then I should be on the post page
  And I should see "Edit Post"
  And I should not see "Test Post"
@@ -29,9 +33,9 @@ Scenario: create new post, edit post, and delete post
  When I follow "Delete"
  Then I should not see "Edit Post"
  
-Scenario: Edit Profile in Post page
-  When I follow "My Profile"
-  Then I should be on the old profile page
+Scenario: Edit Profile
+  When I follow "Me"
+  Then I should be on the profile page
   
   And I fill in "School" with "SEAS"
   And I fill in "Degree" with "Bachelor"

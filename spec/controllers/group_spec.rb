@@ -5,7 +5,7 @@ describe GroupsController do
 
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', start: '01/01/2022', end: '01/02/2022')
     @test_group = Group.create!(post_id: @test_post.id)
   end
   
@@ -18,7 +18,7 @@ describe GroupsController do
 
     it "fails for non group member" do
       new_user = User.create!(name: 't2')
-      new_post = Post.create!(user_id: new_user.id)
+      new_post = Post.create!(user_id: new_user.id, end: '01/02/2022')
       new_group = Group.create!(post_id: new_post.id)
       post :send_chat, params: {id: new_group.id, msg: {text: 'hello'}}
       chat = GroupChat.find_by_text('hello')

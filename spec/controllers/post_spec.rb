@@ -7,7 +7,8 @@ describe PostsController do
     
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', :tag1 => 'ab', :tag2 => 'bc',:tag3 => 'de')
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+    Group.create!(post_id: @test_post.id)
   end
   
   describe "all posts"do 
@@ -51,11 +52,11 @@ describe PostsController do
   
   
   describe "delete a post" do
-        it "deletes a post" do
-            delete :destroy, params: {id: @test_post.id}
-            expect(response.body).to_not include("group project")
-        end
+    it "deletes a post" do
+      delete :destroy, params: {id: @test_post.id}
+      expect(response.body).to_not include("test_post")
     end
+  end
   
   describe "find all applied user" do
     it "find things" do

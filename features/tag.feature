@@ -1,11 +1,11 @@
-Feature: I post posts
+Feature: I post posts with tags
 
 Background: test user already logged in and went to the post page
  Given "TestUser@columbia.edu" is logged in
- When I am on the profile page
+ When I am on the create profile page
  And I press "Continue"
  And I follow "Go to Posts"
- Then I should see "Posts"
+ Then I should see "New Post"
 
 Scenario: create new post, assign tags, and find the tag on index page
  When I follow "New Post"
@@ -35,7 +35,4 @@ Scenario: create new post, assign tags, and find the tag on index page
 
 And I press "Create"
  Then I should be on the post page
- And I should see "1"
- And I should see "2"
- And I should see "3" 
  And I should see "other"

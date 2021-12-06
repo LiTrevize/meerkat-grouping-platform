@@ -14,7 +14,7 @@ describe SessionsController do
 
     expect(response).to render_template :index
     expect(assigns(:current_user)).to be_present
-    expect(response.body).to include("Hello, #{@user.name}")
+    expect(response.body).to include("Log out")
   end
   
   it 'log out' do
