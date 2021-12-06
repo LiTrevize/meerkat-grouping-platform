@@ -5,7 +5,12 @@ class ProfilesController < SessionsController
   end
 
   def create
-    @profile = @current_user.create_profile(profile_info)
+    @profile = Profile.find_by_user_id(@current_user.id)
+    if @profile
+      @profile.update_attributes(profile_info)
+    else
+      @profile = @current_user.create_profile(profile_info)
+    end
     session[:uid] = @current_user.id
     redirect_to root_path
   end
