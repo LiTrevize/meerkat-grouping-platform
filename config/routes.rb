@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/profile', to: 'profiles#show', as: 'profile'
   get '/profile/new', to: 'profiles#new', as: 'new_profile'
   post '/profile', to: 'profiles#create'
-  put '/profile/:id', to: 'profiles#update', as: 'put_profile'
+  put '/profile/:id', to: 'profiles#update', as: 'update_profile'
   get '/profile/:user_id', to: 'profiles#show_member', as: 'member_profile'
 
   # /posts

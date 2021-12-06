@@ -13,7 +13,7 @@ class ProfilesController < SessionsController
   def update
     @profile = Profile.find(params[:id])
     @profile.update_attributes(profile_info)
-    redirect_to posts_path
+    redirect_back(fallback_location: profile_path)
   end
 
   def show_member

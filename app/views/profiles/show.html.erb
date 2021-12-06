@@ -206,7 +206,7 @@
       </div>
 
       <div class="col-3">
-        <%= form_tag profile_path, :class=> 'form' do %>
+        <%= form_tag update_profile_path(@profile), :class => 'form', :method => :put do %>
           <div class="card">
             <div class="card-header text-center card_title">
               My Profile
