@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
     # User.connection.commit_db_transaction
     log_in(user)
     if Profile.where(user_id: user.id).length == 0
+      Profile.create(user_id: user.id)
       redirect_to new_profile_path
     else
       redirect_to root_path
