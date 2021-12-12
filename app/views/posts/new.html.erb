@@ -14,20 +14,16 @@
   }  
 </style>
 
-<script>
-function valid_num(low, high) {
-  if (low>high) {
-    alert("Invalid number");
-  }  
-}
-var low=document.getElementById("low").value;
-var high=document.getElementById("high").value;
-valid_num(low, high);
-</script>
-
-
 <%= form_tag posts_path, :class => 'form' do %>
 <div class="card card_position">
+  <% if flash[:msg] %>
+  <% flash[:msg].each do |msg| %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <%= msg %>
+    </div>
+  <% end %>
+  <% end %>
+
   <div class="card-header text-center card_title">
     Complete Your Post
   </div>

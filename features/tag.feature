@@ -36,3 +36,8 @@ Scenario: create new post, assign tags, and find the tag on index page
 And I press "Create"
  Then I should be on the post page
  And I should see "other"
+ 
+And I should see "1"
+ 
+ And I press "filter"
+ And I should see "Test Post"

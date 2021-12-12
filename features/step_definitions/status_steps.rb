@@ -41,3 +41,25 @@ Given /^Group for post "([^"]*)" is dismissed/ do |title|
     post = Post.find_by_title(title)
     group = Group.update(dismissed: true)
 end
+
+Given /^I applied for post "([^"]*)"$/ do |title|
+  post = Post.find_by_title(title)
+  group = Group.find_by_post_id(post.id)
+  GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :applied)
+end
+
+Given /^"([^"]*)" applied for post "([^"]*)" with messsage "([^"]*)"$/ do |name,title, massage|
+  post = Post.find_by_title(title)
+  group = Group.find_by_post_id(post.id)
+  applied_user=User.create!(:name=>name, :email => "test_email1")  
+  GroupUser.create(group_id: group.id, user_id: applied_user.id, status: :applied, intro: massage)
+end
+
+Given /^"([^"]*)" accepted the invitation for "([^"]*)"$/ do |name,title|
+  post = Post.find_by_title(title)
+  group = Group.find_by_post_id(post.id)
+  user=User.find_by_name(name)
+  GroupUser.create(group_id: group.id, user_id: user.id, status: :accepted)
+  profile=Profile.create(user_id: user.id,major: "CS")
+  GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :accepted)
+end 

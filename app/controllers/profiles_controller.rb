@@ -45,11 +45,13 @@ class ProfilesController < SessionsController
     @groups = GroupUser.where(user_id: @current_user.id, status: [:accepted, :dismissed])
     @groups.each do |group_user|
       add_attribute(group_user, :title)
+      add_attribute(group_user, :dismissed)
       group = Group.find(group_user.group_id)
       post = Post.find_by_id(group.post_id)
       if post
         group_user.title = post.title
       end
+      group_user.dismissed = group.dismissed
     end
     # my pending action
     # approve or reject
