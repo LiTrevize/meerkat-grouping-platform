@@ -13,6 +13,10 @@ Scenario: create new post, assign tags, and find the tag on index page
  
  And I fill in "Title" with "Test Post"
  And I fill in "Content" with "Hello, this is a test post"
+  And I fill in "Start Date" with "01/01/2022"
+ And I fill in "End Date" with "01/02/2024"
+ And I fill in "low" with "1"
+ And I fill in "high" with "3"
  And I fill in "tag1" with "1"
  And I fill in "tag2" with "2"
  And I fill in "tag3" with "3"
@@ -29,6 +33,10 @@ Scenario: create new post, assign tags, and find the tag on index page
  
  And I fill in "Title" with "Test Post 2"
  And I fill in "Content" with "Hello, this is a test post 2"
+  And I fill in "Start Date" with "01/01/2022"
+ And I fill in "End Date" with "01/02/2024"
+ And I fill in "low" with "1"
+ And I fill in "high" with "3"
  And I fill in "tag1" with ""
  And I fill in "tag2" with ""
  And I fill in "tag3" with ""
