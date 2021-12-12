@@ -36,3 +36,8 @@ Given /^Nicknames contain \[(.*)\]$/ do |nicknames|
     Nickname.create!(name: name)
   end
 end
+
+Given /^Group for post "([^"]*)" is dismissed/ do |title|
+    post = Post.find_by_title(title)
+    group = Group.update(dismissed: true)
+end
