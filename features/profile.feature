@@ -20,6 +20,14 @@ Scenario: User can see all the groups that he joined in "My Groups"
    And I should see "My Groups"
    And I should see "Test Post_2"
 
+Scenario: User can dismiss the groups manually that he hosted
+   Given I created a post with name "Test Post Dis"
+   And I follow "Me"
+   And I should see "My Groups"
+   And I should see "Test Post Dis"
+   And I should see "Dismiss"
+   Then I follow "Dismiss"
+   Then I should see "Dismissed"
 
 Scenario: User can approve or reject applictions in "Applications to review"
  When I follow "New Post"
