@@ -5,7 +5,7 @@ describe CommentsController do
     @from_user = User.create(:name => 't123', :email => 't123@columbia.edu' )
     @to_user = User.create(:name => 't234', :email => 't234@columbia.edu' )
     @to_user2 = User.create(:name => 't235', :email => 't235@columbia.edu' )
-    @test_post = Post.create(:user_id => @from_user.id, :title => 'test_post', :content => 'hello')
+    @test_post = Post.create(:user_id => @from_user.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
     
     
   end

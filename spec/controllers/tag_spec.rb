@@ -13,7 +13,7 @@ describe PostsController do
     @tag2 = Tag.create!(name: "tag_b", freq: 1)
     @tag3 = Tag.create!(name: "tag_c", freq: 12)
 
-    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
     @test_post_tags_1 = PostTag.create(:post_id => @test_post.id, :tag_name => @tag1.name)
     @test_post_tags_2 = PostTag.create(:post_id => @test_post.id, :tag_name => @tag2.name)
     @test_post_tags_3 = PostTag.create(:post_id => @test_post.id, :tag_name => @tag3.name)
@@ -58,7 +58,7 @@ describe PostsController do
     end
 
     it "no tags" do
-      @test_post2 = Post.create!(:user_id => @user.id, :title => 'test_post2', :content => 'hello2')
+      @test_post2 = Post.create!(:user_id => @user.id, :title => 'test_post2', :content => 'hello2', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
       test_tag_hash_2 = {1 => "", 2 => "", 3 => ""}
       get :update, params: {id: @test_post2.id, tags: test_tag_hash_2, post: {title:'test_post2', content:'hello2', start:"01-01-2021", end:"01-02-2021", low_number:'2', high_number:'3'}}
 

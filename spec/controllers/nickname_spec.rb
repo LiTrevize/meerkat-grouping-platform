@@ -7,7 +7,7 @@ describe PostsController do
 
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
     @test_group = Group.create!(post_id: @test_post.id)
     Nickname.create!([{name: 'Alice'},{name: 'Bob'}])
   end

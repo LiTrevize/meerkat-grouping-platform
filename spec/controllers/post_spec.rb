@@ -7,7 +7,7 @@ describe PostsController do
     
   before :each do
     @user = User.create!(:name => 't1', :email => 't1@columbia.edu' )
-    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+    @test_post = Post.create!(:user_id => @user.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
     Group.create!(post_id: @test_post.id)
   end
   
@@ -45,7 +45,7 @@ describe PostsController do
   
    describe "create new post" do 
       it "successfully create" do              
-          post :create, params: {post: {title: "test",content: "test"},id: 3,user_id:@user.id}
+          post :create, params: {post: {title: "test",content: "test", start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3},id: 3,user_id:@user.id}
           expect(response).to redirect_to(posts_path)              
       end
    end
@@ -60,7 +60,7 @@ describe PostsController do
   
   describe "find all applied user" do
     it "find things" do
-      test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello')
+      test_post = Post.create(:user_id => @user.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
       test_group=Group.create(:post_id=>test_post.id)
       test_user1=User.create(:name => 'test_user1', :email => 't1@columbia.edu')
       test_user2=User.create(:name => 'test_user2', :email => 't1@columbia.edu')
