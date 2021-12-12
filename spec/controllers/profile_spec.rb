@@ -70,5 +70,55 @@ describe ProfilesController do
     end
       
   end  
+  
+  
+  
+  describe "get my applications" do
+    it "find my applications" do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      test_host=User.create(:name => 'test_host', :email => 'th@columbia.edu' )
+      test_apply_post = Post.create(:user_id => test_host.id, :title => 'test_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
+      test_apply_group=Group.create(:post_id=>test_apply_post.id)
+      GroupUser.create(:group_id=>test_apply_group.id, :user_id=>@user.id, :status=>"applied") 
+      @tmp_profile.save
+      get :show
+      expect(response.body).to include("test_post")
+    end
+  end 
+  
+  
+  describe "find my groups" do
+    it "find my groups" do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      test_host=User.create(:name => 'test_host', :email => 'th@columbia.edu' )
+      test_apply_post = Post.create(:user_id => test_host.id, :title => 'test_my_group_post', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
+      test_apply_group=Group.create(:post_id=>test_apply_post.id)
+      GroupUser.create(:group_id=>test_apply_group.id, :user_id=>@user.id, :status=>"accepted") 
+      @tmp_profile.save
+      get :show
+      expect(response.body).to include("test_my_group_post")
+    end
+  end 
+  
+  
+  
+  describe "find applications to review" do 
+    it "find applications to review" do
+      @tmp_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      test_apply_post2 = Post.create(:user_id => @user.id, :title => 'test_post2', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3) 
+      test_apply_group2=Group.create(:post_id=>test_apply_post2.id)
+      host_group_user=GroupUser.create(:group_id=>test_apply_group2.id, :user_id=>@user.id, :status=>"accepted",is_host: true)
+      
+      test_applican=User.create(:name => 'test_applican', :email => 'ta@columbia.edu' )
+      GroupUser.create(:group_id=>host_group_user.group_id, :user_id=>test_applican.id, :status=>"applied",:intro=>"Hi") 
+      
+      #@tmp_profile.save
+      
+      get :show
+      expect(response.body).to include("test_post2")
+      expect(response.body).to include("Hi")
+      
+    end   
+  end
 
 end
