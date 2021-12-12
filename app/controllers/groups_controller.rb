@@ -78,6 +78,14 @@ class GroupsController < PostsController
       redirect_to group_path(group)
     end
   end
+
+  def dismiss
+    group = Group.find(params[:id])
+    if is_owner?
+      group.update(dismissed: true)
+    end
+    redirect_back(fallback_location: profile_path)
+  end
   
   protected
   def is_owner?

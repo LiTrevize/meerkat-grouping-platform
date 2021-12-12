@@ -18,6 +18,11 @@
     color: #0F52BA;
     text-decoration: none;
   }
+
+  button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
 </style>
 
 <%= render partial: '/posts/header' , locals: {title: 'My Account', posts: '' } %>
@@ -38,26 +43,40 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <div class="row my_groups_title">
-                    <div class="col-md-1">
-                    </div>
                     <div class="col-md-6">
                       Subject
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       Group chat
+                    </div>
+                    <div class="col-md-2">
+                      Manage
                     </div>
                   </div>
                 </li>
                 <% @groups.each do |group| %>
                   <li class="list-group-item">
                     <div class="row">
-                      <div class="col-md-1">
-                      </div>
                       <div class="col-md-6">
                         <%= group.title %>
                       </div>
-                      <div class="col-md-4">
-                        <%= link_to "go to group chat" , group_path({id: group.group_id}), :class=> "link" %>
+                      <div class="col-md-3">
+                        <%= link_to "Go to chat" , group_path({id: group.group_id}), :class=> "btn btn-outline-primary" %>
+                      </div>
+                      <div class="col-md-2">
+                        <% if group.is_host %>
+                          <% if not group.dismissed %>
+                            <%= link_to "Dismiss" , dismiss_group_path({id: group.group_id}), :method => "post", :class=> "btn btn-danger" %>
+                          <% else %>
+                            <button type="button" class="btn btn-danger" disabled>Dismissed</button>
+                          <% end %>
+                        <% else %>
+                          <% if not group.dismissed %>
+                            <button type="button" class="btn btn-danger" disabled>Dismiss</button>
+                          <% else %>
+                            <button type="button" class="btn btn-danger" disabled>Dismissed</button>
+                          <% end %>
+                        <% end %>
                       </div>
                     </div>
                   </li>
