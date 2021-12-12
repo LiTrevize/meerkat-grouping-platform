@@ -6,7 +6,6 @@ describe ProfilesController do
 
   before :each do
     @user = User.create(:id => 1, :name => 't1', :email => 't1@columbia.edu' )
-
   end
   
 
@@ -55,5 +54,21 @@ describe ProfilesController do
       expect(new_profile.major).to eq 'photo'
     end
   end
+    
+  describe "test show member" do
+    it 'calls the model method that direct to group member profile' do
+      @user_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      tmp_post = Post.create(:user_id => @user.id, :title => 'test', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
+      tmp_group = Group.create(:post_id => tmp_post.id)
+        
+      tmp_user = User.create(:name => 't2', :email => 't2@columbia.edu')
+      tmp_user_profile = Profile.create(:user_id => tmp_user.id, :school => 'cc', :degree => 'ba', :major => 'arts' )
+      group_user = GroupUser.create(:group_id => tmp_group.id, :user_id => tmp_user.id, :status => "accepted")
+      
+     #test_group_user = GroupUser.where(:group_id => tmp_group.id, :status => "applied") 
+      get :show_member,params: {user_id: tmp_user.id}
+    end
+      
+  end  
 
 end
