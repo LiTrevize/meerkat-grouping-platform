@@ -37,12 +37,16 @@ Given /^Nicknames contain \[(.*)\]$/ do |nicknames|
   end
 end
 
+Given /^Group for post "([^"]*)" is dismissed/ do |title|
+    post = Post.find_by_title(title)
+    group = Group.update(dismissed: true)
+end
+
 Given /^I applied for post "([^"]*)"$/ do |title|
   post = Post.find_by_title(title)
   group = Group.find_by_post_id(post.id)
   GroupUser.create(group_id: group.id, user_id: @current_user.id, status: :applied)
 end
-
 
 Given /^"([^"]*)" applied for post "([^"]*)" with messsage "([^"]*)"$/ do |name,title, massage|
   post = Post.find_by_title(title)
