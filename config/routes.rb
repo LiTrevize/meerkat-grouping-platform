@@ -36,4 +36,6 @@ Rails.application.routes.draw do
   # group chat
   get '/group/:id', to: 'groups#show', as: "group"
   post '/group/:id', to: 'groups#send_chat', as: "send_chat"
+  # dismiss
+  post '/group/:id/dismiss', to: 'groups#dismiss', as: "dismiss_group"
 end

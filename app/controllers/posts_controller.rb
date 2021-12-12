@@ -90,7 +90,7 @@ class PostsController < SessionsController
   
   def create
     post = @current_user.posts.create(post_info)
-    if post
+    if post and post.valid?
       # tag
       update_tags(post)
       # group
@@ -101,7 +101,10 @@ class PostsController < SessionsController
       GroupUser.create(group_id: group.id, user_id: @current_user.id, is_host: true, status: :accepted)
       redirect_to posts_path
     else
-      render 'new'
+      if post
+        flash[:msg] = post.errors.full_messages
+      end
+      redirect_back(fallback_location: new_post_path)
     end
   end
 
@@ -126,8 +129,13 @@ class PostsController < SessionsController
   def update
     @post = Post.find(params[:id])
     @post.update(post_info)
-    update_tags(@post)
-    redirect_to posts_path
+    if @post.valid?
+      update_tags(@post)
+      redirect_to posts_path
+    else
+      flash[:msg] = @post.errors.full_messages
+      redirect_back(fallback_location: edit_post_path)
+    end
   end
   
   
