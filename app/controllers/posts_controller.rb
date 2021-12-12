@@ -104,7 +104,7 @@ class PostsController < SessionsController
       if post
         flash[:msg] = post.errors.full_messages
       end
-      redirect_to new_post_path
+      redirect_back(fallback_location: new_post_path)
     end
   end
 
@@ -129,8 +129,13 @@ class PostsController < SessionsController
   def update
     @post = Post.find(params[:id])
     @post.update(post_info)
-    update_tags(@post)
-    redirect_to posts_path
+    if @post.valid?
+      update_tags(@post)
+      redirect_to posts_path
+    else
+      flash[:msg] = @post.errors.full_messages
+      redirect_back(fallback_location: edit_post_path)
+    end
   end
   
   

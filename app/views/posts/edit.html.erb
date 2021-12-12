@@ -17,6 +17,14 @@
 
 <%= form_tag update_post_path(@post), :method => :put, :class => 'form' do %>
 <div class="card card_position">
+  <% if flash[:msg] %>
+  <% flash[:msg].each do |msg| %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <%= msg %>
+    </div>
+  <% end %>
+  <% end %>
+
   <div class="card-header text-center card_title">
     Edit Your Post
   </div>
