@@ -60,13 +60,16 @@ describe ProfilesController do
       @user_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
       tmp_post = Post.create(:user_id => @user.id, :title => 'test', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
       tmp_group = Group.create(:post_id => tmp_post.id)
-        
+      
       tmp_user = User.create(:name => 't2', :email => 't2@columbia.edu')
       tmp_user_profile = Profile.create(:user_id => tmp_user.id, :school => 'cc', :degree => 'ba', :major => 'arts' )
-      group_user = GroupUser.create(:group_id => tmp_group.id, :user_id => tmp_user.id, :status => "accepted")
-      
-     #test_group_user = GroupUser.where(:group_id => tmp_group.id, :status => "applied") 
-      get :show_member,params: {user_id: tmp_user.id}
+      GroupUser.create(:group_id => tmp_group.id, :user_id => tmp_user.id, :status => "accepted")
+      GroupUser.create(:group_id=>tmp_group.id, :user_id=>@user.id, :status=>"accepted",is_host: true)
+      @user_profile.save
+      tmp_user_profile.save 
+        
+      get :show_member, params: {user_id: tmp_user.id}
+      expect(response.body).to include('cc')
     end
       
   end  
@@ -84,8 +87,7 @@ describe ProfilesController do
       get :show
       expect(response.body).to include("test_post")
     end
-  end 
-  
+  end   
   
   describe "find my groups" do
     it "find my groups" do
@@ -99,8 +101,6 @@ describe ProfilesController do
       expect(response.body).to include("test_my_group_post")
     end
   end 
-  
-  
   
   describe "find applications to review" do 
     it "find applications to review" do
@@ -120,5 +120,7 @@ describe ProfilesController do
       
     end   
   end
+    
+  
 
 end
