@@ -57,16 +57,14 @@ describe ProfilesController do
     
   describe "test show member" do
     it 'calls the model method that direct to group member profile' do
-      @user_profile = Profile.create(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
-      tmp_post = Post.create(:user_id => @user.id, :title => 'test', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
-      tmp_group = Group.create(:post_id => tmp_post.id)
+      user_profile = Profile.create!(:user_id => @user.id, :school => 'seas', :degree => 'bs', :major => 'cs' )
+      tmp_post = Post.create!(:user_id => @user.id, :title => 'test', :content => 'hello', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
+      tmp_group = Group.create!(:post_id => tmp_post.id)
       
-      tmp_user = User.create(:name => 't2', :email => 't2@columbia.edu')
-      tmp_user_profile = Profile.create(:user_id => tmp_user.id, :school => 'cc', :degree => 'ba', :major => 'arts' )
-      GroupUser.create(:group_id => tmp_group.id, :user_id => tmp_user.id, :status => "accepted")
-      GroupUser.create(:group_id=>tmp_group.id, :user_id=>@user.id, :status=>"accepted",is_host: true)
-      @user_profile.save
-      tmp_user_profile.save 
+      tmp_user = User.create!(:name => 't2', :email => 't2@columbia.edu')
+      tmp_user_profile = Profile.create!(:user_id => tmp_user.id, :school => 'cc', :degree => 'ba', :major => 'arts' )
+      GroupUser.create!(:group_id => tmp_group.id, :user_id => tmp_user.id, :status => :accepted)
+      GroupUser.create!(:group_id=>tmp_group.id, :user_id=>@user.id, :status=>:accepted,is_host: true)
         
       get :show_member, params: {user_id: tmp_user.id}
       expect(response.body).to include('cc')

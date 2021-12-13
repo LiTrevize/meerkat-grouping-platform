@@ -50,7 +50,7 @@
       </li>
       <% end %>
 
-      <% if defined? back_group %>
+      <% if defined? back_group and back_group %>
       <li class="nav-item spacing">
         <%= link_to "Back to Chat", group_path({id: back_group}), :method => :get, :class => "btn btn-outline-primary"%>
       </li>
