@@ -11,20 +11,19 @@ describe CommentsController do
   end
     
   describe "test create comment" do
-      it "successfully create" do
-          test_comment = Comment.create(:post_id=>@test_post.id, :content => 'test test', :from_user_id => @from_user.id, :to_user_id => @to_user.id, 
-          :to_comment_id => '', :is_public => true)
-          post :create, params: {id: @test_post.id, from_user_id: @from_user.id, to_user_id: @to_user.id, to_comment: {id: test_comment.id, content: "test"}, is_public:true}
+      it "successfully" do
+          # test_comment = Comment.create(:post_id=>@test_post.id, :content => 'test test', :from_user_id => @from_user.id, :to_user_id => @to_user.id, :to_comment_id => '', :is_public => true)
+          post :create, params: {id: @test_post.id, from_user_id: @from_user.id, to_user_id: @to_user.id, to_comment: {content: "test"}, is_public:true}
           new_comment = Comment.find_by_content('test')
-          expect(new_comment.content).to eq 'test'
+          expect(new_comment).not_to be_nil
       end
-      it "automatically set is_public" do
-          test_comment2 = Comment.create(:post_id=>@test_post.id, :content => 'no', :from_user_id => @from_user.id, :to_user_id => @to_user2.id, 
-          :to_comment_id => '',:is_public => false)
-          post :create, params: {id: @test_post.id, from_user_id: @from_user.id, to_user_id: @to_user.id, to_comment: {id: test_comment2.id, content: "no"}, is_public:true}
-          new_comment2 = Comment.find_by_content('no')
-          expect(new_comment2.is_public).to eq false
-      end 
+
+      it "that reply to another comment" do
+        test_comment = Comment.create(:post_id=>@test_post.id, :content => 'test test', :from_user_id => @from_user.id, :to_user_id => @to_user.id, :is_public => true)
+        post :create, params: {id: @test_post.id, from_user_id: @from_user.id, to_user_id: @to_user.id, to_comment: {id: test_comment.id, leader_id: test_comment.id, content: "reply_comment"}, is_public:true}
+        new_comment = Comment.find_by_content('reply_comment')
+        expect(new_comment.content).not_to be_nil
+      end
       
   end
     

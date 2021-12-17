@@ -9,8 +9,8 @@ class CommentsController < PostsController
         #end
         to_comment_id = params[:to_comment][:id]
         to_comment_leader_id = params[:to_comment][:leader_id]
-        puts '################'
-        puts params[:to_comment]
+        # puts '################'
+        # puts params[:to_comment]
         #if not to_comment_id
             #to_comment_id = nil
         #end
