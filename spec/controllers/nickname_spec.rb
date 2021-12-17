@@ -25,9 +25,18 @@ describe PostsController do
         new_user = User.create!(name: 't2')
         old_id = @test_post.next_nickname_id
         expect(controller.send(:update_nickname, @test_post, new_user.id)).to eq 'Alice'
+        test_comment = Comment.create!(post_id: @test_post.id, :content => 'test comment', :from_user_id => new_user.id, :to_user_id => nil, 
+        :to_comment_id => nil, :is_public => true)
         expect(@test_post.next_nickname_id).to eq old_id+1
+        new_user3 = User.create!(name: 't3')
+        test_sub = Comment.create(:post_id=>@test_post.id, :content => 'test test', :from_user_id => new_user3.id, :to_user_id => new_user.id, 
+          :to_comment_id => test_comment.id, :is_public => true)
+        expect(controller.send(:update_nickname, @test_post, new_user3.id)).to eq 'Bob'
+        
       end
+      
   end
+    
     
 #   describe "test private comment" do
 #       it "creates private comment" do

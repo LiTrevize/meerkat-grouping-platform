@@ -84,5 +84,7 @@ describe PostsController do
       expect(response.body).to include 'test comment'
     end
   end
+    
+
    
 end
