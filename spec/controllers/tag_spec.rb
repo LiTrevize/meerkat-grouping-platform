@@ -47,20 +47,19 @@ describe PostsController do
 
       
   describe "update tags" do
-    it "update tags" do
+    it "with new tags" do
       test_tag_hash = {1 => "tag_a", 2 => "tag_e", 3 => ""}
-      get :update, params: {id: @test_post.id, tags: test_tag_hash, post: {title:'t1', content:'t2', start:"01-01-2021", end:"01-02-2021", low_number:'2', high_number:'3'}}
-
-      # controller.send(:update_tags, @test_post)
-        # expect(controller.send(:get_nickname, 1)).to eq 'Alice'
-        # expect(controller.send(:get_nickname, 2)).to eq 'Bob'
-        # expect(controller.send(:get_nickname, 3)).to eq 'Alice.1'
+      put :update, params: {id: @test_post.id, tags: test_tag_hash, post: {title:'t1', content:'t2', start:"01-01-2022", end:"01-02-2023", low_number:'2', high_number:'3'}}
+      expect(PostTag.where(post_id: @test_post.id, tag_name: "tag_a").first).not_to be_nil
+      expect(PostTag.where(post_id: @test_post.id, tag_name: "tag_e").first).not_to be_nil
+      expect(PostTag.where(post_id: @test_post.id, tag_name: "tag_b").first).to be_nil
     end
 
-    it "no tags" do
+    it "with no tags" do
       @test_post2 = Post.create!(:user_id => @user.id, :title => 'test_post2', :content => 'hello2', start: "01/01/2022", end: "01/02/3022", low_number: 1, high_number: 3)
       test_tag_hash_2 = {1 => "", 2 => "", 3 => ""}
-      get :update, params: {id: @test_post2.id, tags: test_tag_hash_2, post: {title:'test_post2', content:'hello2', start:"01-01-2021", end:"01-02-2021", low_number:'2', high_number:'3'}}
+      put :update, params: {id: @test_post2.id, tags: test_tag_hash_2, post: {title:'test_post2', content:'hello2', start:"01-01-2021", end:"01-02-2022", low_number:'2', high_number:'3'}}
+      expect(PostTag.where(post_id: @test_post2.id, tag_name: "other").first).not_to be_nil
 
     end
 
