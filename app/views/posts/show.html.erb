@@ -128,7 +128,7 @@
         <div class="comment-text"><%= comment.content %></div>
         <div class="comment-meta">
           <span style="margin-right: 10px"><%= timef comment.created_at %></span>
-          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname, to_comment_leader_id: comment.id), method: :get %>
+          <%= link_to "reply", post_path(@post, to_comment_id: comment.id, to_user_id: comment.from_user_id, to_nickname: comment.from_nickname, to_comment_leader_id: comment.id), method: :get, id: 'reply_link_l1' %>
         </div>
       </div>
 
@@ -140,7 +140,7 @@
           <%= check_box_tag "is_public", true %>
           <%= text_field :to_comment, :id, :value => params[:to_comment_id], :hidden => true, :class => 'form-control' %>
           <%= text_field :to_comment, :leader_id, :value => params[:to_comment_leader_id], :hidden => true, :class => 'form-control' %>
-          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm' %>
+          <%= submit_tag 'reply', :class => 'btn btn-outline-primary btn-sm', id: 'reply_btn_l1' %>
         <% end %>
       <% end %>
 

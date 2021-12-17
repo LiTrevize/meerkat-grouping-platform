@@ -25,6 +25,8 @@ module NavigationHelpers
       when /^the profile page$/ then '/profile'
         
       when /^the post page$/ then posts_path
+
+      when /^the create post page$/ then new_post_path
   
       else
         begin

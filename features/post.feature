@@ -33,6 +33,23 @@ Scenario: create new post, edit post, and delete post
  
  When I follow "Delete"
  Then I should not see "Edit Post"
+
+ Scenario: create new post, edit post, and delete post
+ When I follow "New Post"
+ Then I should see "Complete Your Post"
+ 
+ And I fill in "Title" with "Test Post"
+ And I fill in "Content" with "Hello, this is a test post"
+ And I fill in "Start Date" with "01/01/2022"
+ And I fill in "End Date" with "01/02/2021"
+ And I fill in "low" with "5"
+ And I fill in "high" with "3"
+ And I fill in "tag1" with "t1"
+ And I press "Create"
+ Then I should be on the create post page
+ And I should see "At least people cannot be greater than At most people"
+ And I should see "Start date cannot be later than End date"
+ And I should see "End date cannot be prior to today"
  
 Scenario: Edit Profile
   When I follow "Me"
@@ -44,7 +61,7 @@ Scenario: Edit Profile
   And I press "Save"
 
 
-Scenario: use filter
+Scenario: filter all posts by tags
  When I follow "New Post"
  Then I should see "Complete Your Post"
  
